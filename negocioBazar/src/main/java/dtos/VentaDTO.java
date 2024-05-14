@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 import org.bson.types.ObjectId;
 
-
-
 /**
  * Clase que representa la informacion de una venta en el sistema.
  * 
@@ -17,6 +15,7 @@ import org.bson.types.ObjectId;
  */
 public class VentaDTO {
     // Atributos
+    private String codigoInterno;
     private String nombreCliente;
     private String apellidoCliente;
     private float montoTotal;
@@ -78,7 +77,7 @@ public class VentaDTO {
      */
 
     public VentaDTO(String nombreCliente, String apellidoCliente, float montoTotal, MetodoPago metodoPago,
-            UsuarioDTO usuario, Date fechaVenta ) {
+            UsuarioDTO usuario, Date fechaVenta) {
         this.nombreCliente = nombreCliente;
         this.apellidoCliente = apellidoCliente;
         this.montoTotal = montoTotal;
@@ -89,7 +88,14 @@ public class VentaDTO {
 
     // Getters y Setters
 
-    
+    public String getCodigoInterno() {
+        return codigoInterno;
+    }
+
+    public void setCodigoInterno(String codigoInterno) {
+        this.codigoInterno = codigoInterno;
+    }
+
     public String getNombreCliente() {
         return nombreCliente;
     }
@@ -156,5 +162,4 @@ public class VentaDTO {
                 + ", productosVendidos=" + productosVendidos + '}';
     }
 
-   
 }

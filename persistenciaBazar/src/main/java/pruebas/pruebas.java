@@ -34,14 +34,15 @@ public class pruebas {
      */
     public static void main(String[] args) throws PersistenciaException, ParseException {
         GestorProductos gp = new GestorProductos();
-        pruebas p = new pruebas();
+        pruebas pr = new pruebas();
         GestorUsuarios gu = new GestorUsuarios();
         GestorVentas gv = new GestorVentas();
-        p.pruebasVentas(gv, gp, gu);
+        pr.pruebasVentas(gv, gp, gu);
 
     }
 
-    public void pruebasVentas(GestorVentas gv, GestorProductos gp, GestorUsuarios gu) throws PersistenciaException, ParseException {
+    public void pruebasVentas(GestorVentas gv, GestorProductos gp, GestorUsuarios gu)
+            throws PersistenciaException, ParseException {
         ProductoDTO p = new ProductoDTO();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha = sdf.parse("2023-01-01");
@@ -74,6 +75,7 @@ public class pruebas {
         List<ProductoDTO> productos = List.of(p, a, b);
         venta.setProductosVendidos(productos);
         venta.setMetodoPago(MetodoPago.EFECTIVO);
+        venta.setCodigoInterno("JPC001");
         // el monto total es calculado a partir de la suma de el precio de los productos
         // vendidos.
         float montoTotal = 0;
@@ -81,11 +83,11 @@ public class pruebas {
             montoTotal += productoDTO.getPrecio();
         }
         venta.setMontoTotal(montoTotal);
-        Date fechaVenta= sdf.parse("2024-05-14");
+        Date fechaVenta = sdf.parse("2024-05-14");
         venta.setFechaVenta(fechaVenta);
         UsuarioDTO u = new UsuarioDTO();
-        u.setNombre("Jose");
-        u.setApellido("Perez");
+        u.setNombre("Manuel");
+        u.setApellido("Aguilar");
         u.setFechaContratacion(fechaContratacion);
         u.setPuesto(Puesto.GERENTE);
         u.setTelefono("1234567890");
@@ -99,8 +101,35 @@ public class pruebas {
         u.setDireccion(d);
         venta.setUsuario(u);
         gu.setUsuarioLogueado(u);
-        boolean insertado = gv.insertar(venta);
-        System.out.println("Venta insertada: " + insertado);
+
+        Date fechaVenta2 = sdf.parse("2023-01-01");
+        VentaDTO venta2 = new VentaDTO();
+        venta2.setNombreCliente("Manuel");
+        venta2.setApellidoCliente("Aguilar");
+        List<ProductoDTO> productos2 = List.of(p, a, b);
+        venta2.setProductosVendidos(productos2);
+        venta2.setMetodoPago(MetodoPago.EFECTIVO);
+        venta2.setCodigoInterno("JPC002");
+        venta2.setMontoTotal(montoTotal);
+        venta2.setUsuario(u);
+
+        // boolean insertado = gv.insertar(venta);
+        // boolean insertado2 = gv.insertar(venta2);
+        // boolean eliminar = gv.eliminar("JPC001");
+        venta2.setFechaVenta(fechaVenta2);
+        Date desde = sdf.parse("2023-01-01");
+        Date hasta = sdf.parse("2023-12-31");
+        /*
+         * List<VentaDTO> lista = gv.consultarPorRangoFechas(desde, hasta);
+         * for (VentaDTO ventaDTO : lista) {
+         * System.out.println(ventaDTO.toString());
+         * }
+         */
+
+        List<VentaDTO> lista = gv.consultarTodos();
+        for (VentaDTO ventaDTO : lista) {
+            System.out.println(ventaDTO.toString());
+        }
     }
 
     public void pruebasProductos(GestorProductos gp) throws PersistenciaException, ParseException {

@@ -24,6 +24,11 @@ import pojos.Usuario;
 
 import static com.mongodb.client.model.Filters.*;
 
+/**
+ * Clase que se encarga de gestionar los usuarios en la base de datos MongoDB
+ * Implementa la interfaz IGestorUsuarios
+ * @author Fran
+ */
 public class GestorUsuarios implements IGestorUsuarios {
     // Atributos
     private MongoCollection<Document> usuariosCollection;

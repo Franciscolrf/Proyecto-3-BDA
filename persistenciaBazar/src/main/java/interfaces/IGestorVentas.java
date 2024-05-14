@@ -20,7 +20,7 @@ import excepciones.PersistenciaException;
 public interface IGestorVentas {
     boolean insertar(VentaDTO venta) throws PersistenciaException;
 
-    boolean eliminar(ObjectId idVenta) throws PersistenciaException; // Suponiendo que se eliminará por ID de venta
+    boolean eliminar(String codigoInterno) throws PersistenciaException;
 
     boolean modificar(VentaDTO venta) throws PersistenciaException;
 
@@ -29,6 +29,8 @@ public interface IGestorVentas {
     List<VentaDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException;
 
     List<VentaDTO> consultarTodos() throws PersistenciaException;
+
     VentaDTO documentToVentaDTO(Document doc) throws PersistenciaException;
+
     Document ventaDTOToDocument(VentaDTO venta) throws PersistenciaException;
 }

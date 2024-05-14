@@ -18,6 +18,11 @@ import java.util.function.Consumer;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
 
+/**
+ * Clase que se encarga de gestionar los productos en la base de datos MongoDB
+ * Implementa la interfaz IGestorProductos
+ * @author Fran
+ */
 public class GestorProductos implements IGestorProductos {
 
     // Atributos

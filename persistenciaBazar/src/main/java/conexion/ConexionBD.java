@@ -12,11 +12,11 @@ import com.mongodb.client.MongoDatabase;
 import excepciones.PersistenciaException;
 
 /**
- *
- * @author ID145
+ * Clase que se encarga de la conexión con la base de datos MongoDB
+ * @author Fran
  */
 public class ConexionBD {
-    
+    // Atributos
  private static final String DATABASE_NAME = "bazar";
     private static final String CONNECTION_STRING = "mongodb://localhost:27017";
 

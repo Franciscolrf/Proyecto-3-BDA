@@ -19,8 +19,7 @@ import excepciones.PersistenciaException;
 public interface IGestorProductos {
     boolean insertar(ProductoDTO producto) throws PersistenciaException;
 
-    boolean eliminar(Long codigoBarras) throws PersistenciaException; // Suponiendo que se eliminará por código de
-                                                                      // barras
+    boolean eliminar(Long codigoBarras) throws PersistenciaException; 
 
     boolean modificar(ProductoDTO producto) throws PersistenciaException;
 

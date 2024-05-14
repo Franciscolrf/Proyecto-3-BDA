@@ -4,12 +4,13 @@
  */
 package excepciones;
 
-/**
- *
- * @author ID145
+/** 
+ * Excepción que se lanza cuando ocurre un error en la capa de persistencia
+ * @author Fran
  */
 public class PersistenciaException extends Exception {
 
+    
     public PersistenciaException() {
     }
 
