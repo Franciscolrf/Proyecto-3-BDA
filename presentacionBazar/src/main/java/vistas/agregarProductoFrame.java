@@ -73,6 +73,12 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         jLabel1.setText("Código de Barras: ");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(10, 140, 120, 20);
+
+        fieldCodigoBarras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldCodigoBarrasActionPerformed(evt);
+            }
+        });
         getContentPane().add(fieldCodigoBarras);
         fieldCodigoBarras.setBounds(130, 140, 130, 22);
 
@@ -80,6 +86,12 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         jLabel2.setText("Código Interno:");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(350, 140, 110, 20);
+
+        fieldCodigoInterno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldCodigoInternoActionPerformed(evt);
+            }
+        });
         getContentPane().add(fieldCodigoInterno);
         fieldCodigoInterno.setBounds(460, 140, 130, 22);
 
@@ -87,6 +99,12 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         jLabel3.setText("Nombre:");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(60, 200, 60, 20);
+
+        fieldNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNombreActionPerformed(evt);
+            }
+        });
         getContentPane().add(fieldNombre);
         fieldNombre.setBounds(130, 200, 160, 22);
 
@@ -94,6 +112,12 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         jLabel5.setText("Precio:");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(400, 200, 60, 20);
+
+        fieldPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldPrecioActionPerformed(evt);
+            }
+        });
         getContentPane().add(fieldPrecio);
         fieldPrecio.setBounds(460, 200, 70, 22);
 
@@ -116,6 +140,11 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         fieldRestablecer.setBounds(270, 320, 110, 23);
 
         botonAgregar.setText("Agregar Producto");
+        botonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonAgregar);
         botonAgregar.setBounds(470, 320, 140, 23);
 
@@ -133,6 +162,28 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         fieldPrecio.setText("");
     }//GEN-LAST:event_fieldRestablecerActionPerformed
 
+    private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_fieldNombreActionPerformed
+
+    private void fieldCodigoInternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCodigoInternoActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_fieldCodigoInternoActionPerformed
+
+    private void fieldCodigoBarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCodigoBarrasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldCodigoBarrasActionPerformed
+
+    private void fieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldPrecioActionPerformed
+
+    private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAgregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -142,20 +193,27 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+        try
+        {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if ("Nimbus".equals(info.getName()))
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex)
+        {
             java.util.logging.Logger.getLogger(agregarProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } catch (InstantiationException ex)
+        {
             java.util.logging.Logger.getLogger(agregarProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex)
+        {
             java.util.logging.Logger.getLogger(agregarProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex)
+        {
             java.util.logging.Logger.getLogger(agregarProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
