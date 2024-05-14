@@ -1,6 +1,17 @@
 package frames;
 
+import dtos.DireccionDTO;
+import dtos.UsuarioDTO;
+import excepciones.PersistenciaException;
 import frames.logFrame;
+import gestores.GestorUsuarios;
+import pojos.Usuario;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -252,6 +263,16 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
+    private UsuarioDTO.Puesto getPuestoFromComboBox(String puestoString) {
+        switch (puestoString) {
+            case "GERENTE":
+                return UsuarioDTO.Puesto.GERENTE;
+            case "CAJERO":
+                return UsuarioDTO.Puesto.CAJERO;
+            default:
+                throw new IllegalArgumentException("Puesto desconocido: " + puestoString);
+        }
+    }
 
     private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
         fieldNombreUsuario.setText("");
@@ -346,7 +367,34 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Confirmar Contraseña debe ser igual a la Contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        JOptionPane.showMessageDialog(agregarUsuarioFrame.this,"Usuario agregado exitosamente.");
+        GestorUsuarios gu;
+        try {
+            gu = new GestorUsuarios();
+            UsuarioDTO usuario = new UsuarioDTO();
+            usuario.setNombre(nombreUsuario);
+            usuario.setApellido(apellidoUsuario);
+            usuario.setFechaContratacion(new Date());
+            String puestoString = (String) cajeroComboBox.getSelectedItem();
+            usuario.setPuesto(getPuestoFromComboBox(puestoString));
+            usuario.setTelefono(telefono);
+            usuario.setContrasena(contrasena);
+            DireccionDTO direccion = new DireccionDTO();
+            direccion.setCalle(calle);
+            direccion.setColonia(colonia);
+            direccion.setCodigoPostal(codigoPostal);
+            direccion.setCiudad(ciudad);
+            direccion.setNumeroEdificio(numeroEdificio);
+            usuario.setDireccion(direccion);
+            try {
+                gu.insertar(usuario);
+                JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Usuario agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (PersistenciaException e) {
+                JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Error al agregar usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(agregarUsuarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         dispose();
         logFrame log = new logFrame();
         log.setVisible(true);
