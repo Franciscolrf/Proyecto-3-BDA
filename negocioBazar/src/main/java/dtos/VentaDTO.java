@@ -15,7 +15,6 @@ import org.bson.types.ObjectId;
  */
 public class VentaDTO {
     // Atributos
-    private ObjectId _id;
     private String nombreCliente;
     private String apellidoCliente;
     private float montoTotal;
@@ -38,31 +37,6 @@ public class VentaDTO {
      * Constructor vacío
      */
     public VentaDTO() {
-    }
-
-    /**
-     * Crea una instancia con la informacion de una venta realizada en el sistema.
-     * 
-     * @param _id
-     * @param nombreCliente
-     * @param apellidoCliente
-     * @param montoTotal
-     * @param metodoPago
-     * @param usuario
-     * @param fechaVenta
-     * @param productosVendidos
-     */
-
-    public VentaDTO(ObjectId _id, String nombreCliente, String apellidoCliente, float montoTotal, MetodoPago metodoPago,
-            UsuarioDTO usuario, Date fechaVenta, List<ProductoDTO> productosVendidos) {
-        this._id = _id;
-        this.nombreCliente = nombreCliente;
-        this.apellidoCliente = apellidoCliente;
-        this.montoTotal = montoTotal;
-        this.metodoPago = metodoPago;
-        this.usuario = usuario;
-        this.fechaVenta = fechaVenta;
-        this.productosVendidos = productosVendidos;
     }
 
     /**
@@ -90,14 +64,6 @@ public class VentaDTO {
     }
 
     // Getters y Setters
-
-    public ObjectId get_id() {
-        return _id;
-    }
-
-    public void set_id(ObjectId _id) {
-        this._id = _id;
-    }
 
     public String getNombreCliente() {
         return nombreCliente;

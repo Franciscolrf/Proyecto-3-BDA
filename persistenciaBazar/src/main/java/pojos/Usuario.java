@@ -2,54 +2,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dtos;
+package pojos;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
 
 /**
- * Clase que representa la informacion de un usuario en el sistema.
- * @author Fran
+ *
+ * @author ID145
  */
-public class UsuarioDTO {
+public class Usuario {
+    
     // Atributos
+    private ObjectId _id;
     private String nombre;
     private String apellido;
     private Date fechaContratacion;
     private Puesto puesto;
     private String telefono;
     private String contrasena;
-    private DireccionDTO direccion;
+    private Direccion direccion;
 
-    /*
-     * Enumeracion de los puestos disponibles en el sistema.
-     */
     public static enum Puesto {
         GERENTE,
         CAJERO
     }
 
-    // Constructores
-
-    /*
-     * Constructor vacío
-     */
-    public UsuarioDTO() {
+    public Usuario() {
     }
 
-    /**
-     * Crea una instancia con la informacion de un usuario en el sistema sin id.
-     * @param nombre 
-     * @param apellido
-     * @param fechaContratacion
-     * @param puesto
-     * @param telefono
-     * @param contrasena
-     * @param direccion
-     */
-    public UsuarioDTO(  String nombre, String apellido, Date fechaContratacion, Puesto puesto, String telefono, String contrasena, DireccionDTO direccion) {
+    public Usuario(ObjectId _id, String nombre, String apellido, Date fechaContratacion, Puesto puesto, String telefono,
+            String contrasena, Direccion direccion) {
+        this._id = _id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaContratacion = fechaContratacion;
@@ -59,9 +44,24 @@ public class UsuarioDTO {
         this.direccion = direccion;
     }
 
-    // Getters y Setters
+    public Usuario(String nombre, String apellido, Date fechaContratacion, Puesto puesto, String telefono,
+            String contrasena, Direccion direccion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaContratacion = fechaContratacion;
+        this.puesto = puesto;
+        this.telefono = telefono;
+        this.contrasena = contrasena;
+        this.direccion = direccion;
+    }
 
-    
+    public ObjectId get_id() {
+        return _id;
+    }
+
+    public void set_id(ObjectId _id) {
+        this._id = _id;
+    }
 
     public String getNombre() {
         return nombre;
@@ -111,22 +111,25 @@ public class UsuarioDTO {
         this.contrasena = contrasena;
     }
 
-    public DireccionDTO getDireccion() {
+    public Direccion getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(DireccionDTO direccion) {
+    public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
 
-    /*
-     * Metodo que regresa la informacion del usuario en forma de cadena.
-     */
     @Override
     public String toString() {
-        return "Usuario{"  + " nombre=" + nombre + ", apellido=" + apellido + ", fechaContratacion=" + fechaContratacion + ", puesto=" + puesto + ", telefono=" + telefono + ", contrasena=" + contrasena + ", direccion=" + direccion + '}';
+        return "Usuario{" +
+                "_id='" + _id + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", fechaContratacion=" + fechaContratacion +
+                ", puesto=" + puesto +
+                ", telefono='" + telefono + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                ", direccion=" + direccion +
+                '}';
     }
-
-
-
 }
