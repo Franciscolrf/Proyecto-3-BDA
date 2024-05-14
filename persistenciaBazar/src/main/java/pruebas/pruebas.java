@@ -17,6 +17,7 @@ import excepciones.PersistenciaException;
 import gestores.GestorProductos;
 import gestores.GestorUsuarios;
 import gestores.GestorVentas;
+import pojos.Usuario;
 
 /**
  *
@@ -80,11 +81,14 @@ public class pruebas {
     }
 
     public void pruebasUsuarios(GestorUsuarios gu) throws PersistenciaException, ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date u1= sdf.parse("2023-01-01");
+        Date us= sdf.parse("2023-12-31");
         // Usuario 1
         UsuarioDTO u = new UsuarioDTO();
         u.setNombre("Jose");
         u.setApellido("Perez");
-        u.setFechaContratacion(new Date());
+        u.setFechaContratacion(u1);
         u.setPuesto(Puesto.GERENTE);
         u.setTelefono("1234567890");
         u.setContrasena("123456");
@@ -101,7 +105,7 @@ public class pruebas {
         UsuarioDTO u2 = new UsuarioDTO();
         u2.setNombre("Juan");
         u2.setApellido("Perez");
-        u2.setFechaContratacion(new Date());
+        u2.setFechaContratacion(us);
         u2.setPuesto(Puesto.CAJERO);
         u2.setTelefono("6442216360");
         u2.setContrasena("121121");
@@ -112,10 +116,45 @@ public class pruebas {
         d2.setColonia("Centro");
         d2.setCodigoPostal("66666");
         u2.setDireccion(d2);
+        Date desde = sdf.parse("2023-01-01");
+        Date hasta = sdf.parse("2023-12-31");
+
+        // Insertar un usuario
+        UsuarioDTO u3 = new UsuarioDTO();
+        u3.setNombre("Pedro");
+        u3.setApellido("Perez");
+        u3.setFechaContratacion(u1);
+        u3.setPuesto(Puesto.CAJERO);
+        u3.setTelefono("1234567890");
+        DireccionDTO d3 = new DireccionDTO();
+        d3.setCiudad("CDMX");
+        d3.setNumeroEdificio("123");
+        d3.setCalle("Calle");
+        d3.setColonia("Colonia");
+        d3.setCodigoPostal("12345");
+        u3.setDireccion(d3);
+
+        UsuarioDTO u4 = new UsuarioDTO();
+        u4.setNombre("Pedro");
+        u4.setApellido("Aguilar");
+        u4.setFechaContratacion(u1);
+        u4.setPuesto(Puesto.CAJERO);
+        u4.setTelefono("1234567890");
+        DireccionDTO d4 = new DireccionDTO();
+        d4.setCiudad("CDMX");
+        d4.setNumeroEdificio("123");
+        d4.setCalle("Calle");
+        d4.setColonia("Colonia");
+        d4.setCodigoPostal("12345");
+        u4.setDireccion(d4);
+
         try {
-            boolean a = gu.insertar(u2);
-            System.out.println("Insertar: " + a);
-            gu.eliminar(u);
+            gu.insertar(u3);
+            gu.insertar(u4);
+            List<UsuarioDTO> lista = gu.consultarTodos();
+            for (UsuarioDTO usuarioDTO : lista) {
+                System.out.println(usuarioDTO.toString());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

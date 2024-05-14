@@ -1,19 +1,27 @@
 package gestores;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.bson.Document;
-import org.bson.types.ObjectId;
+import org.bson.conversions.Bson;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 import conexion.ConexionBD;
 import dtos.DireccionDTO;
 import dtos.UsuarioDTO;
 import excepciones.PersistenciaException;
 import interfaces.IGestorUsuarios;
+import pojos.Direccion;
+import pojos.Usuario;
+
+import static com.mongodb.client.model.Filters.*;
 
 public class GestorUsuarios implements IGestorUsuarios {
     // Atributos
@@ -31,9 +39,15 @@ public class GestorUsuarios implements IGestorUsuarios {
         usuariosCollection = database.getCollection("usuarios");
     }
 
+    /**
+     * Inserta un usuario en la base de datos.
+     * 
+     * @param usuario El usuario a insertar.
+     * @return true si se insertó correctamente, false en caso contrario.
+     */
     @Override
     public boolean insertar(UsuarioDTO usuario) throws PersistenciaException {
-        if (usuario==null) {
+        if (usuario == null) {
             throw new PersistenciaException("El usuario no puede ser nulo");
         }
 
@@ -45,75 +59,231 @@ public class GestorUsuarios implements IGestorUsuarios {
             throw new PersistenciaException("Error al insertar el usuario", e);
         }
     }
+    // ...
 
+    /**
+     * Elimina un usuario de la base de datos.
+     * 
+     * @param usuario El usuario a eliminar.
+     * @return true si se eliminó correctamente, false en caso contrario.
+     * @throws PersistenciaException
+     */
     @Override
     public boolean eliminar(UsuarioDTO usuario) throws PersistenciaException {
-        if (usuario==null) {
-            throw new PersistenciaException("El id del usuario no puede ser nulo");
+        if (usuario == null || usuario.getNombre() == null) {
+            throw new PersistenciaException("El usuario o su nombre no pueden ser nulos");
         }
-        try{
-            Document doc = usuarioDTOToDocument(usuario);
-            usuariosCollection.deleteOne(doc);
+
+        try {
+            usuariosCollection.deleteOne(eq("nombre", usuario.getNombre()));
             return true;
         } catch (Exception e) {
             throw new PersistenciaException("Error al eliminar el usuario", e);
+        }
     }
 
+    /**
+     * Modifica un usuario en la base de datos.
+     * 
+     * @param usuario El usuario a modificar.
+     * @return true si se modificó correctamente, false en caso contrario.
+     * @throws PersistenciaException
+     */
     @Override
     public boolean modificar(UsuarioDTO usuario) throws PersistenciaException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'modificar'");
+        if (usuario == null || usuario.getNombre() == null) {
+            throw new PersistenciaException("El usuario o su nombre no pueden ser nulos");
+        }
+
+        try {
+            Document doc = usuarioDTOToDocument(usuario);
+            usuariosCollection.replaceOne(eq("nombre", usuario.getNombre()), doc);
+            return true;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al modificar el usuario", e);
+        }
     }
 
+    /**
+     * Consulta usuarios por nombre.
+     * 
+     * @param nombre El nombre del usuario a buscar.
+     * @return Una lista con los usuarios que coinciden con el nombre.
+     * @throws PersistenciaException
+     */
     @Override
     public List<UsuarioDTO> consultarPorNombre(String nombre) throws PersistenciaException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultarPorNombre'");
+        if (nombre == null || nombre.isEmpty()) {
+            throw new PersistenciaException("El nombre no puede ser nulo o vacío");
+        }
+
+        List<UsuarioDTO> usuarios = new ArrayList<>();
+        try {
+            usuariosCollection.find(regex("nombre", nombre, "i")).forEach((Consumer<Document>) doc -> {
+                UsuarioDTO usuario = documentToUsuarioDTO(doc);
+                usuarios.add(usuario);
+            });
+
+            if (usuarios.isEmpty()) {
+                throw new PersistenciaException("No se encontraron usuarios");
+            }
+
+            return usuarios;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar el usuario por nombre", e);
+        }
     }
 
     @Override
     public List<UsuarioDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultarPorRangoFechas'");
+        if (desde == null || hasta == null) {
+            throw new PersistenciaException("Las fechas para la consulta no pueden ser nulas");
+        }
+
+        List<UsuarioDTO> usuarios = new ArrayList<>();
+        try {
+            usuariosCollection.find(and(gte("fechaContratacion", desde), lte("fechaContratacion", hasta)))
+                .forEach((Consumer<Document>) doc -> {
+                    UsuarioDTO usuario = documentToUsuarioDTO(doc);
+                    usuarios.add(usuario);
+                });
+
+            if (usuarios.isEmpty()) {
+                throw new PersistenciaException("No se encontraron usuarios");
+            }
+
+            return usuarios;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar el usuario por rango de fechas", e);
+        }
     }
 
     @Override
     public List<UsuarioDTO> consultarTodos() throws PersistenciaException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'consultarTodos'");
+        List<UsuarioDTO> usuarios = new ArrayList<>();
+        try {
+            usuariosCollection.find().forEach((Consumer<Document>) doc -> {
+                UsuarioDTO usuario = documentToUsuarioDTO(doc);
+                usuarios.add(usuario);
+            });
+
+            if (usuarios.isEmpty()) {
+                throw new PersistenciaException("No se encontraron usuarios");
+            }
+
+            return usuarios;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar los usuarios", e);
+        }
     }
 
+    /**
+     * Convierte un objeto UsuarioDTO a un documento de MongoDB.
+     * 
+     * @param usuario UsuarioDTO a convertir
+     * @return Document
+     */
     private Document usuarioDTOToDocument(UsuarioDTO usuario) {
-        Document doc = new Document("nombre", usuario.getNombre())
+        Document direccionDoc = new Document()
+                .append("ciudad", usuario.getDireccion().getCiudad())
+                .append("numeroEdificio", usuario.getDireccion().getNumeroEdificio())
+                .append("calle", usuario.getDireccion().getCalle())
+                .append("colonia", usuario.getDireccion().getColonia())
+                .append("codigoPostal", usuario.getDireccion().getCodigoPostal());
+
+        return new Document()
+                .append("nombre", usuario.getNombre())
                 .append("apellido", usuario.getApellido())
                 .append("fechaContratacion", usuario.getFechaContratacion())
                 .append("puesto", usuario.getPuesto().name())
                 .append("telefono", usuario.getTelefono())
                 .append("contrasena", usuario.getContrasena())
-                .append("direccion", new Document("ciudad", usuario.getDireccion().getCiudad())
-                        .append("numeroEdificio", usuario.getDireccion().getNumeroEdificio())
-                        .append("calle", usuario.getDireccion().getCalle())
-                        .append("colonia", usuario.getDireccion().getColonia())
-                        .append("codigoPostal", usuario.getDireccion().getCodigoPostal()));
-
-        return doc;
+                .append("direccion", direccionDoc);
     }
 
+    /**
+     * Convierte un documento de MongoDB a un objeto UsuarioDTO.
+     * 
+     * @param doc Documento de MongoDB
+     * @return UsuarioDTO
+     */
     private UsuarioDTO documentToUsuarioDTO(Document doc) {
+        String nombre = doc.getString("nombre");
+        String apellido = doc.getString("apellido");
+        Date fechaContratacion = doc.getDate("fechaContratacion");
+        UsuarioDTO.Puesto puesto = UsuarioDTO.Puesto.valueOf(doc.getString("puesto"));
+        String telefono = doc.getString("telefono");
+        String contrasena = doc.getString("contrasena");
+
         Document direccionDoc = (Document) doc.get("direccion");
-        return new UsuarioDTO(
-                doc.getString("nombre"),
-                doc.getString("apellido"),
-                new Date(doc.getDate("fechaContratacion").getTime()),
-                UsuarioDTO.Puesto.valueOf(doc.getString("puesto")),
-                doc.getString("telefono"),
-                doc.getString("contrasena"),
-                new DireccionDTO(
-                        direccionDoc.getString("ciudad"),
-                        direccionDoc.getString("numeroEdificio"),
-                        direccionDoc.getString("calle"),
-                        direccionDoc.getString("colonia"),
-                        direccionDoc.getString("codigoPostal")));
+        String ciudad = direccionDoc.getString("ciudad");
+        String numeroEdificio = direccionDoc.getString("numeroEdificio");
+        String calle = direccionDoc.getString("calle");
+        String colonia = direccionDoc.getString("colonia");
+        String codigoPostal = direccionDoc.getString("codigoPostal");
+
+        DireccionDTO direccion = new DireccionDTO(ciudad, numeroEdificio, calle, colonia, codigoPostal);
+
+        return new UsuarioDTO(nombre, apellido, fechaContratacion, puesto, telefono, contrasena, direccion);
+    }
+
+    /**
+     * Convierte un documento de MongoDB a un objeto Usuario.
+     * 
+     * @param doc Documento de MongoDB
+     * @return Usuario
+     */
+    private Usuario documentToUsuario(Document doc) {
+        String nombre = doc.getString("nombre");
+        String apellido = doc.getString("apellido");
+        Date fechaContratacion = doc.getDate("fechaContratacion");
+        Usuario.Puesto puesto = Usuario.Puesto.valueOf(doc.getString("puesto"));
+        String telefono = doc.getString("telefono");
+        String contrasena = doc.getString("contrasena");
+
+        Document direccionDoc = (Document) doc.get("direccion");
+        String ciudad = direccionDoc.getString("ciudad");
+        String numeroEdificio = direccionDoc.getString("numeroEdificio");
+        String calle = direccionDoc.getString("calle");
+        String colonia = direccionDoc.getString("colonia");
+        String codigoPostal = direccionDoc.getString("codigoPostal");
+
+        Direccion direccion = new Direccion(ciudad, numeroEdificio, calle, colonia, codigoPostal);
+
+        Usuario usuario = new Usuario();
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setFechaContratacion(fechaContratacion);
+        usuario.setPuesto(puesto);
+        usuario.setTelefono(telefono);
+        usuario.setContrasena(contrasena);
+        usuario.setDireccion(direccion);
+
+        return usuario;
+    }
+
+    /**
+     * Convierte un objeto Usuario a un documento de MongoDB.
+     * 
+     * @param usuario Usuario a convertir
+     * @return Document
+     */
+    private Document usuarioToDocument(Usuario usuario) {
+        Document direccionDoc = new Document()
+                .append("ciudad", usuario.getDireccion().getCiudad())
+                .append("numeroEdificio", usuario.getDireccion().getNumeroEdificio())
+                .append("calle", usuario.getDireccion().getCalle())
+                .append("colonia", usuario.getDireccion().getColonia())
+                .append("codigoPostal", usuario.getDireccion().getCodigoPostal());
+
+        return new Document()
+                .append("nombre", usuario.getNombre())
+                .append("apellido", usuario.getApellido())
+                .append("fechaContratacion", usuario.getFechaContratacion())
+                .append("puesto", usuario.getPuesto().name())
+                .append("telefono", usuario.getTelefono())
+                .append("contrasena", usuario.getContrasena())
+                .append("direccion", direccionDoc);
     }
 
 }
