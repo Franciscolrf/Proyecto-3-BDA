@@ -2,6 +2,7 @@ package dtos;
 
 /**
  * Clase que representa la informacion de una dirección en el sistema.
+ * 
  * @author Fran
  */
 public class DireccionDTO {
@@ -22,6 +23,7 @@ public class DireccionDTO {
 
     /**
      * Crea una instancia con la informacion de una direccion.
+     * 
      * @param ciudad
      * @param numeroEdificio
      * @param calle
@@ -83,6 +85,7 @@ public class DireccionDTO {
      */
     @Override
     public String toString() {
-        return "DireccionDTO{" + "ciudad=" + ciudad + ", numeroEdificio=" + numeroEdificio + ", calle=" + calle + ", colonia=" + colonia + ", codigoPostal=" + codigoPostal + '}';
+        return "DireccionDTO{" + "ciudad=" + ciudad + ", numeroEdificio=" + numeroEdificio + ", calle=" + calle
+                + ", colonia=" + colonia + ", codigoPostal=" + codigoPostal + '}';
     }
 }

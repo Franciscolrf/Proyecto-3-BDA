@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 
 /**
  * Clase que representa la informacion de un usuario en el sistema.
+ * 
  * @author Fran
  */
 public class UsuarioDTO {
@@ -41,7 +42,8 @@ public class UsuarioDTO {
 
     /**
      * Crea una instancia con la informacion de un usuario en el sistema sin id.
-     * @param nombre 
+     * 
+     * @param nombre
      * @param apellido
      * @param fechaContratacion
      * @param puesto
@@ -49,7 +51,8 @@ public class UsuarioDTO {
      * @param contrasena
      * @param direccion
      */
-    public UsuarioDTO(  String nombre, String apellido, Date fechaContratacion, Puesto puesto, String telefono, String contrasena, DireccionDTO direccion) {
+    public UsuarioDTO(String nombre, String apellido, Date fechaContratacion, Puesto puesto, String telefono,
+            String contrasena, DireccionDTO direccion) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaContratacion = fechaContratacion;
@@ -60,8 +63,6 @@ public class UsuarioDTO {
     }
 
     // Getters y Setters
-
-    
 
     public String getNombre() {
         return nombre;
@@ -124,9 +125,9 @@ public class UsuarioDTO {
      */
     @Override
     public String toString() {
-        return "Usuario{"  + " nombre=" + nombre + ", apellido=" + apellido + ", fechaContratacion=" + fechaContratacion + ", puesto=" + puesto + ", telefono=" + telefono + ", contrasena=" + contrasena + ", direccion=" + direccion + '}';
+        return "Usuario{" + " nombre=" + nombre + ", apellido=" + apellido + ", fechaContratacion=" + fechaContratacion
+                + ", puesto=" + puesto + ", telefono=" + telefono + ", contrasena=" + contrasena + ", direccion="
+                + direccion + '}';
     }
-
-
 
 }

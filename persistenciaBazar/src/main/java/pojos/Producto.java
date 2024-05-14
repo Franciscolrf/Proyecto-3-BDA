@@ -2,13 +2,17 @@ package pojos;
 
 import java.util.Date;
 
+import org.bson.types.ObjectId;
+
 /**
  * Clase que representa un producto.
+ * 
  * @author ID145
  */
 public class Producto {
 
     // Atributos
+    private ObjectId _id;
     private Long codigoBarras;
     private String codigoInterno;
     private String nombre;
@@ -25,10 +29,40 @@ public class Producto {
 
     /*
      * Constructor con todos los atributos.
+     * 
+     * @param _id Identificador del producto.
+     * 
      * @param codigoBarras Código de barras del producto.
+     * 
      * @param codigoInterno Código interno del producto.
+     * 
      * @param nombre Nombre del producto.
+     * 
      * @param precio Precio del producto.
+     * 
+     * @param fechaRegistro Fecha de registro del producto.
+     */
+    public Producto(ObjectId _id, Long codigoBarras, String codigoInterno, String nombre, float precio,
+            Date fechaRegistro) {
+        this._id = _id;
+        this.codigoBarras = codigoBarras;
+        this.codigoInterno = codigoInterno;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    /*
+     * Constructor con todos los atributos.
+     * 
+     * @param codigoBarras Código de barras del producto.
+     * 
+     * @param codigoInterno Código interno del producto.
+     * 
+     * @param nombre Nombre del producto.
+     * 
+     * @param precio Precio del producto.
+     * 
      * @param fechaRegistro Fecha de registro del producto.
      */
     public Producto(Long codigoBarras, String codigoInterno, String nombre, float precio, Date fechaRegistro) {
@@ -40,6 +74,14 @@ public class Producto {
     }
 
     // Getters y Setters
+
+    public ObjectId get_id() {
+        return _id;
+    }
+
+    public void set_id(ObjectId _id) {
+        this._id = _id;
+    }
 
     public Long getCodigoBarras() {
         return codigoBarras;

@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 
 /**
  * Clase que representa la informacion de una venta en el sistema.
+ * 
  * @author Fran
  */
 public class VentaDTO {
@@ -122,7 +123,7 @@ public class VentaDTO {
     }
 
     /*
-     * Metodo que regresa la representacion en cadena de la venta. 
+     * Metodo que regresa la representacion en cadena de la venta.
      */
     @Override
     public String toString() {
