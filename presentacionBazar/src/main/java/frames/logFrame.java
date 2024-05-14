@@ -1,8 +1,12 @@
 package frames;
 
+import excepciones.PersistenciaException;
 import javax.swing.JOptionPane;
 import frames.agregarUsuarioFrame;
 import frames.principalFrame;
+import gestores.GestorUsuarios;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -185,7 +189,19 @@ public class logFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(logFrame.this, "Favor de rellenar todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        JOptionPane.showMessageDialog(logFrame.this, "Acción de autenticación");
+        try {
+            GestorUsuarios gu = new GestorUsuarios();
+            gu.iniciarSesion(telefono, contrasena);
+            if (gu.iniciarSesion(telefono, contrasena) == false) {
+                JOptionPane.showMessageDialog(logFrame.this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;  
+            }
+            
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(logFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         dispose();
         principalFrame principal = new principalFrame();
         principal.setVisible(true);

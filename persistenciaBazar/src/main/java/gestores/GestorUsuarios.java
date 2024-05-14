@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -134,6 +135,13 @@ public class GestorUsuarios implements IGestorUsuarios {
         }
     }
 
+    /**
+     * Consulta usuarios por rango de fechas.
+     * @param desde Fecha de inicio del rango.
+     * @param hasta Fecha de fin del rango.
+     * @return Una lista con los usuarios que coinciden con el rango de fechas.
+     * @throws PersistenciaException
+     */
     @Override
     public List<UsuarioDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException {
         if (desde == null || hasta == null) {
@@ -158,6 +166,11 @@ public class GestorUsuarios implements IGestorUsuarios {
         }
     }
 
+    /**
+     * Consulta todos los usuarios.
+     * @return Lista de todos los usuarios.
+     * @throws PersistenciaException
+     */
     @Override
     public List<UsuarioDTO> consultarTodos() throws PersistenciaException {
         List<UsuarioDTO> usuarios = new ArrayList<>();
@@ -176,6 +189,39 @@ public class GestorUsuarios implements IGestorUsuarios {
             throw new PersistenciaException("Error al consultar los usuarios", e);
         }
     }
+
+    /**
+ * Inicia sesión para un usuario dado el número de teléfono y la contraseña.
+ * 
+ * @param telefono   Número de teléfono del usuario
+ * @param contrasena Contraseña del usuario
+ * @return true si la sesión se inició correctamente, false en caso contrario
+ * @throws PersistenciaException Si ocurre un error durante la persistencia de datos
+ */
+public boolean iniciarSesion(String telefono, String contrasena) throws PersistenciaException {
+    try {
+        // Buscar usuario por número de teléfono
+        Document query = new Document("telefono", telefono);
+        FindIterable<Document> iterable = usuariosCollection.find(query);
+
+        for (Document doc : iterable) {
+            UsuarioDTO usuario = documentToUsuarioDTO(doc);
+            if (usuario == null) {
+                throw new PersistenciaException("No se encontró un usuario con el número de teléfono dado");
+            }
+            // Verificar si la contraseña coincide
+            if (usuario.getContrasena().equals(contrasena)) {
+                // Inicio de sesión exitoso
+                return true;
+            }
+        }
+
+        // No se encontró un usuario con el número de teléfono dado o la contraseña no coincide
+        return false;
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al iniciar sesión", e);
+    }
+}
 
     /**
      * Convierte un objeto UsuarioDTO a un documento de MongoDB.

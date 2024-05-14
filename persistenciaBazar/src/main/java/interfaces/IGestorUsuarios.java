@@ -28,4 +28,5 @@ public interface IGestorUsuarios {
     List<UsuarioDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException;
 
     List<UsuarioDTO> consultarTodos() throws PersistenciaException;
+    boolean iniciarSesion(String telefono, String contrasena) throws PersistenciaException;
 }
