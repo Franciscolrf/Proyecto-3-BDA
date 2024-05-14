@@ -9,9 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import dtos.DireccionDTO;
 import dtos.ProductoDTO;
+import dtos.UsuarioDTO;
+import dtos.UsuarioDTO.Puesto;
 import excepciones.PersistenciaException;
 import gestores.GestorProductos;
+import gestores.GestorUsuarios;
+import gestores.GestorVentas;
 
 /**
  *
@@ -26,6 +31,15 @@ public class pruebas {
      */
     public static void main(String[] args) throws PersistenciaException, ParseException {
         GestorProductos gp = new GestorProductos();
+        pruebas p = new pruebas();
+        GestorUsuarios gu = new GestorUsuarios();
+        GestorVentas gv = new GestorVentas();
+        p.pruebasUsuarios(gu);
+
+    }
+
+    public void pruebasProductos(GestorProductos gp) throws PersistenciaException, ParseException {
+
         ProductoDTO p = new ProductoDTO();
         Date fecha = new Date();
         p.setCodigoBarras(1234567890L);
@@ -63,7 +77,48 @@ public class pruebas {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
+    public void pruebasUsuarios(GestorUsuarios gu) throws PersistenciaException, ParseException {
+        // Usuario 1
+        UsuarioDTO u = new UsuarioDTO();
+        u.setNombre("Jose");
+        u.setApellido("Perez");
+        u.setFechaContratacion(new Date());
+        u.setPuesto(Puesto.GERENTE);
+        u.setTelefono("1234567890");
+        u.setContrasena("123456");
+        DireccionDTO d = new DireccionDTO();
+        d.setCiudad("CDMX");
+        d.setNumeroEdificio("123");
+        d.setCalle("Calle");
+        d.setColonia("Colonia");
+        d.setCodigoPostal("12345");
+        u.setDireccion(d);
+
+        // Usuario 2
+
+        UsuarioDTO u2 = new UsuarioDTO();
+        u2.setNombre("Juan");
+        u2.setApellido("Perez");
+        u2.setFechaContratacion(new Date());
+        u2.setPuesto(Puesto.CAJERO);
+        u2.setTelefono("6442216360");
+        u2.setContrasena("121121");
+        DireccionDTO d2 = new DireccionDTO();
+        d2.setCiudad("Obregon");
+        d2.setNumeroEdificio("854");
+        d2.setCalle("Sonora");
+        d2.setColonia("Centro");
+        d2.setCodigoPostal("66666");
+        u2.setDireccion(d2);
+        try {
+            boolean a = gu.insertar(u2);
+            System.out.println("Insertar: " + a);
+            gu.eliminar(u);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 }

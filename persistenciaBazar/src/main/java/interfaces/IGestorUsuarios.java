@@ -19,7 +19,7 @@ import excepciones.PersistenciaException;
 public interface IGestorUsuarios {
     boolean insertar(UsuarioDTO usuario) throws PersistenciaException;
 
-    boolean eliminar(ObjectId idUsuario) throws PersistenciaException; // Suponiendo que se eliminará por ID de usuario
+    boolean eliminar(UsuarioDTO Usuario) throws PersistenciaException; // Suponiendo que se eliminará por ID de usuario
 
     boolean modificar(UsuarioDTO usuario) throws PersistenciaException;
 

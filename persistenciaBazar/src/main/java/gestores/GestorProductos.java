@@ -20,8 +20,15 @@ import static com.mongodb.client.model.Updates.*;
 
 public class GestorProductos implements IGestorProductos {
 
+    // Atributos
     private MongoCollection<Document> productosCollection;
 
+    // Constructores
+
+    /**
+     * Constructor por defecto.
+     * @throws PersistenciaException
+     */
     public GestorProductos() throws PersistenciaException {
         MongoDatabase database = ConexionBD.getDatabase();
         productosCollection = database.getCollection("productos");
