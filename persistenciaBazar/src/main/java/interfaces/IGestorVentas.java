@@ -7,6 +7,7 @@ package interfaces;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import dtos.VentaDTO;
@@ -28,4 +29,6 @@ public interface IGestorVentas {
     List<VentaDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException;
 
     List<VentaDTO> consultarTodos() throws PersistenciaException;
+    VentaDTO documentToVentaDTO(Document doc) throws PersistenciaException;
+    Document ventaDTOToDocument(VentaDTO venta) throws PersistenciaException;
 }

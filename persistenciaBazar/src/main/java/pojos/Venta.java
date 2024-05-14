@@ -29,7 +29,7 @@ public class Venta {
     /**
      * Enumeración que representa los métodos de pago.
      */
-    public static enum MetodoPago {
+    private static enum MetodoPago {
         EFECTIVO,
         TARJETA
     }

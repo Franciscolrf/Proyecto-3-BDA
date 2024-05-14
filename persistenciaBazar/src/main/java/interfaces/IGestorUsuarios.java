@@ -7,10 +7,12 @@ package interfaces;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import dtos.UsuarioDTO;
 import excepciones.PersistenciaException;
+import pojos.Usuario;
 
 /**
  *
@@ -28,5 +30,8 @@ public interface IGestorUsuarios {
     List<UsuarioDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException;
 
     List<UsuarioDTO> consultarTodos() throws PersistenciaException;
+    Document usuarioDTOToDocument(UsuarioDTO usuario);
+    UsuarioDTO documentToUsuarioDTO(Document doc);
+    Usuario documentToUsuario(Document doc);
     boolean iniciarSesion(String telefono, String contrasena) throws PersistenciaException;
 }

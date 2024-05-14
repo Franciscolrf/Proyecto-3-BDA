@@ -7,6 +7,8 @@ package interfaces;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.Document;
+
 import dtos.ProductoDTO;
 import excepciones.PersistenciaException;
 
@@ -27,4 +29,7 @@ public interface IGestorProductos {
     List<ProductoDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException;
 
     List<ProductoDTO> consultarTodos() throws PersistenciaException;
+
+     ProductoDTO documentToProductoDTO(Document doc);
+     Document productoDTOToDocument(ProductoDTO producto);
 }

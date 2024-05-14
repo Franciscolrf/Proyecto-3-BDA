@@ -27,6 +27,7 @@ import static com.mongodb.client.model.Filters.*;
 public class GestorUsuarios implements IGestorUsuarios {
     // Atributos
     private MongoCollection<Document> usuariosCollection;
+    private static UsuarioDTO usuarioLogueado;
 
     // Constructores
 
@@ -137,6 +138,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Consulta usuarios por rango de fechas.
+     * 
      * @param desde Fecha de inicio del rango.
      * @param hasta Fecha de fin del rango.
      * @return Una lista con los usuarios que coinciden con el rango de fechas.
@@ -151,10 +153,10 @@ public class GestorUsuarios implements IGestorUsuarios {
         List<UsuarioDTO> usuarios = new ArrayList<>();
         try {
             usuariosCollection.find(and(gte("fechaContratacion", desde), lte("fechaContratacion", hasta)))
-                .forEach((Consumer<Document>) doc -> {
-                    UsuarioDTO usuario = documentToUsuarioDTO(doc);
-                    usuarios.add(usuario);
-                });
+                    .forEach((Consumer<Document>) doc -> {
+                        UsuarioDTO usuario = documentToUsuarioDTO(doc);
+                        usuarios.add(usuario);
+                    });
 
             if (usuarios.isEmpty()) {
                 throw new PersistenciaException("No se encontraron usuarios");
@@ -168,6 +170,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Consulta todos los usuarios.
+     * 
      * @return Lista de todos los usuarios.
      * @throws PersistenciaException
      */
@@ -191,37 +194,49 @@ public class GestorUsuarios implements IGestorUsuarios {
     }
 
     /**
- * Inicia sesión para un usuario dado el número de teléfono y la contraseña.
- * 
- * @param telefono   Número de teléfono del usuario
- * @param contrasena Contraseña del usuario
- * @return true si la sesión se inició correctamente, false en caso contrario
- * @throws PersistenciaException Si ocurre un error durante la persistencia de datos
- */
-public boolean iniciarSesion(String telefono, String contrasena) throws PersistenciaException {
-    try {
-        // Buscar usuario por número de teléfono
-        Document query = new Document("telefono", telefono);
-        FindIterable<Document> iterable = usuariosCollection.find(query);
+     * Inicia sesión para un usuario dado el número de teléfono y la contraseña.
+     * 
+     * @param telefono   Número de teléfono del usuario
+     * @param contrasena Contraseña del usuario
+     * @return true si la sesión se inició correctamente, false en caso contrario
+     * @throws PersistenciaException Si ocurre un error durante la persistencia de
+     *                               datos
+     */
+    @Override
+    public boolean iniciarSesion(String telefono, String contrasena) throws PersistenciaException {
+        try {
+            // Buscar usuario por número de teléfono
+            Document query = new Document("telefono", telefono);
+            FindIterable<Document> iterable = usuariosCollection.find(query);
 
-        for (Document doc : iterable) {
-            UsuarioDTO usuario = documentToUsuarioDTO(doc);
-            if (usuario == null) {
-                throw new PersistenciaException("No se encontró un usuario con el número de teléfono dado");
+            for (Document doc : iterable) {
+                UsuarioDTO usuario = documentToUsuarioDTO(doc);
+                if (usuario == null) {
+                    throw new PersistenciaException("No se encontró un usuario con el número de teléfono dado");
+                }
+                // Verificar si la contraseña coincide
+                if (usuario.getContrasena().equals(contrasena)) {
+                    // Inicio de sesión exitoso
+                    usuarioLogueado = usuario;
+                    setUsuarioLogueado(usuarioLogueado);
+                    return true;
+                }
             }
-            // Verificar si la contraseña coincide
-            if (usuario.getContrasena().equals(contrasena)) {
-                // Inicio de sesión exitoso
-                return true;
-            }
+
+            // No se encontró un usuario con el número de teléfono dado o la contraseña no
+            // coincide
+            return false;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al iniciar sesión", e);
         }
-
-        // No se encontró un usuario con el número de teléfono dado o la contraseña no coincide
-        return false;
-    } catch (Exception e) {
-        throw new PersistenciaException("Error al iniciar sesión", e);
     }
-}
+
+    public static void setUsuarioLogueado(UsuarioDTO usuario) {
+        usuarioLogueado = usuario;
+    }
+    public static UsuarioDTO getUsuarioLogueado() {
+        return usuarioLogueado;
+    }
 
     /**
      * Convierte un objeto UsuarioDTO a un documento de MongoDB.
@@ -229,7 +244,7 @@ public boolean iniciarSesion(String telefono, String contrasena) throws Persiste
      * @param usuario UsuarioDTO a convertir
      * @return Document
      */
-    private Document usuarioDTOToDocument(UsuarioDTO usuario) {
+    public Document usuarioDTOToDocument(UsuarioDTO usuario) {
         Document direccionDoc = new Document()
                 .append("ciudad", usuario.getDireccion().getCiudad())
                 .append("numeroEdificio", usuario.getDireccion().getNumeroEdificio())
@@ -253,7 +268,7 @@ public boolean iniciarSesion(String telefono, String contrasena) throws Persiste
      * @param doc Documento de MongoDB
      * @return UsuarioDTO
      */
-    private UsuarioDTO documentToUsuarioDTO(Document doc) {
+    public UsuarioDTO documentToUsuarioDTO(Document doc) {
         String nombre = doc.getString("nombre");
         String apellido = doc.getString("apellido");
         Date fechaContratacion = doc.getDate("fechaContratacion");
@@ -279,7 +294,7 @@ public boolean iniciarSesion(String telefono, String contrasena) throws Persiste
      * @param doc Documento de MongoDB
      * @return Usuario
      */
-    private Usuario documentToUsuario(Document doc) {
+    public Usuario documentToUsuario(Document doc) {
         String nombre = doc.getString("nombre");
         String apellido = doc.getString("apellido");
         Date fechaContratacion = doc.getDate("fechaContratacion");

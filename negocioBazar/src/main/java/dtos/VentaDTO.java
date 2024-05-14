@@ -6,8 +6,9 @@ package dtos;
 
 import java.util.Date;
 import java.util.List;
-
 import org.bson.types.ObjectId;
+
+
 
 /**
  * Clase que representa la informacion de una venta en el sistema.
@@ -27,7 +28,7 @@ public class VentaDTO {
     /**
      * Enumeracion de los metodos de pago disponibles en el sistema.
      */
-    private static enum MetodoPago {
+    public static enum MetodoPago {
         EFECTIVO,
         TARJETA
     }
@@ -64,8 +65,31 @@ public class VentaDTO {
         this.productosVendidos = productosVendidos;
     }
 
+    /**
+     * Crea una instancia con la informacion de una venta realizada en el sistema
+     * sin id.
+     * 
+     * @param nombreCliente
+     * @param apellidoCliente
+     * @param montoTotal
+     * @param metodoPago
+     * @param usuario
+     * @param fechaVenta
+     */
+
+    public VentaDTO(String nombreCliente, String apellidoCliente, float montoTotal, MetodoPago metodoPago,
+            UsuarioDTO usuario, Date fechaVenta ) {
+        this.nombreCliente = nombreCliente;
+        this.apellidoCliente = apellidoCliente;
+        this.montoTotal = montoTotal;
+        this.metodoPago = metodoPago;
+        this.usuario = usuario;
+        this.fechaVenta = fechaVenta;
+    }
+
     // Getters y Setters
 
+    
     public String getNombreCliente() {
         return nombreCliente;
     }
@@ -131,4 +155,6 @@ public class VentaDTO {
                 + montoTotal + ", metodoPago=" + metodoPago + ", usuario=" + usuario + ", fechaVenta=" + fechaVenta
                 + ", productosVendidos=" + productosVendidos + '}';
     }
+
+   
 }

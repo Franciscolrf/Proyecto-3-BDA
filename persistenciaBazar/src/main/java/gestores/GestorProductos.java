@@ -189,7 +189,7 @@ public class GestorProductos implements IGestorProductos {
      * @param doc Documento de MongoDB
      * @return ProductoDTO
      */
-    private ProductoDTO documentToProductoDTO(Document doc) {
+    public ProductoDTO documentToProductoDTO(Document doc) {
         Long codigoBarras = doc.getLong("codigoBarras");
         String codigoInterno = doc.getString("codigoInterno");
         String nombre = doc.getString("nombre");
@@ -202,29 +202,7 @@ public class GestorProductos implements IGestorProductos {
         return new ProductoDTO(codigoBarras, codigoInterno, nombre, precio, fechaRegistroDate);
     }
 
-    /**
-     * Convierte un documento de MongoDB a un objeto Producto.
-     * 
-     * @param doc
-     * @return Producto
-     */
-    private Producto documentToProducto(Document doc) {
-        Producto producto = new Producto();
-        producto.setCodigoBarras(doc.getLong("codigoBarras"));
-        producto.setCodigoInterno(doc.getString("codigoInterno"));
-        producto.setNombre(doc.getString("nombre"));
-        producto.setPrecio(doc.getDouble("precio").floatValue());
-        producto.setFechaRegistro(doc.getDate("fechaRegistro"));
-        return producto;
-    }
-
-    /**
-     * Convierte un objeto Producto a un documento de MongoDB.
-     * 
-     * @param producto
-     * @return
-     */
-    private Document productoToDocument(Producto producto) {
+    public Document productoDTOToDocument(ProductoDTO producto) {
         return new Document()
                 .append("codigoBarras", producto.getCodigoBarras())
                 .append("codigoInterno", producto.getCodigoInterno())
@@ -232,5 +210,4 @@ public class GestorProductos implements IGestorProductos {
                 .append("precio", producto.getPrecio())
                 .append("fechaRegistro", producto.getFechaRegistro());
     }
-
 }
