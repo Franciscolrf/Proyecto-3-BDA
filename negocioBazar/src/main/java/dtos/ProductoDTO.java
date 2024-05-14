@@ -8,16 +8,22 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- *
- * @author ID145
+ * Clase que representa la informacion de un producto en el sistema.
+ * @author Fran
  */
 public class ProductoDTO {
+    // Atributos
     private Long codigoBarras;
     private String codigoInterno;
     private String nombre;
     private float precio;
     private Date fechaRegistro;
 
+    // Constructores
+    
+    /*
+     * Constructor vacío
+     */
     public ProductoDTO() {
     }
 
@@ -37,6 +43,8 @@ public class ProductoDTO {
         this.precio = precio;
         this.fechaRegistro = fechaRegistro;
     }
+
+    // Getters y Setters
 
     public Long getCodigoBarras() {
         return codigoBarras;
@@ -78,6 +86,9 @@ public class ProductoDTO {
         this.fechaRegistro = fechaRegistro;
     }
 
+    /*
+     * Metodo que regresa la informacion del producto en forma de cadena.
+     */
     @Override
     public String toString() {
         return "Producto{" + "codigoBarras=" + codigoBarras+ ", codigo=" + codigoInterno + ", nombre=" + nombre + ", precio=" + precio + ", fecha_registro=" + fechaRegistro + '}';

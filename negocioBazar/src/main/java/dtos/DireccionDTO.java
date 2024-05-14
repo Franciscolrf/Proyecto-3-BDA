@@ -1,12 +1,22 @@
 package dtos;
 
+/**
+ * Clase que representa la informacion de una dirección en el sistema.
+ * @author Fran
+ */
 public class DireccionDTO {
+
+    // Atributos
     private String ciudad;
     private String numeroEdificio;
     private String calle;
     private String colonia;
     private String codigoPostal;
 
+    // Constructores
+    /*
+     * Constructor vacío
+     */
     public DireccionDTO() {
     }
 
@@ -25,6 +35,8 @@ public class DireccionDTO {
         this.colonia = colonia;
         this.codigoPostal = codigoPostal;
     }
+
+    // Getters y Setters
 
     public String getCiudad() {
         return ciudad;
@@ -66,6 +78,9 @@ public class DireccionDTO {
         this.codigoPostal = codigoPostal;
     }
 
+    /**
+     * Representación de la dirección en forma de cadena.
+     */
     @Override
     public String toString() {
         return "DireccionDTO{" + "ciudad=" + ciudad + ", numeroEdificio=" + numeroEdificio + ", calle=" + calle + ", colonia=" + colonia + ", codigoPostal=" + codigoPostal + '}';

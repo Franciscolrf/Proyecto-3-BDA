@@ -10,10 +10,11 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
- *
- * @author ID145
+ * Clase que representa la informacion de una venta en el sistema.
+ * @author Fran
  */
 public class VentaDTO {
+    // Atributos
     private ObjectId _id;
     private String nombreCliente;
     private String apellidoCliente;
@@ -23,11 +24,19 @@ public class VentaDTO {
     private Date fechaVenta;
     private List<ProductoDTO> productosVendidos;
 
+    /**
+     * Enumeracion de los metodos de pago disponibles en el sistema.
+     */
     private static enum MetodoPago {
         EFECTIVO,
         TARJETA
     }
 
+    // Constructores
+
+    /*
+     * Constructor vacío
+     */
     public VentaDTO() {
     }
 
@@ -79,6 +88,8 @@ public class VentaDTO {
         this.fechaVenta = fechaVenta;
         this.productosVendidos = productosVendidos;
     }
+
+    // Getters y Setters
 
     public ObjectId get_id() {
         return _id;
@@ -144,6 +155,9 @@ public class VentaDTO {
         this.productosVendidos = productosVendidos;
     }
 
+    /*
+     * Metodo que regresa la representacion en cadena de la venta. 
+     */
     @Override
     public String toString() {
         return "VentaDTO{" + "nombreCliente=" + nombreCliente + ", apellidoCliente=" + apellidoCliente + ", montoTotal="

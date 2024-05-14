@@ -10,10 +10,11 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 
 /**
- *
- * @author ID145
+ * Clase que representa la informacion de un usuario en el sistema.
+ * @author Fran
  */
 public class UsuarioDTO {
+    // Atributos
     private ObjectId _id;
     private String nombre;
     private String apellido;
@@ -23,11 +24,19 @@ public class UsuarioDTO {
     private String contrasena;
     private DireccionDTO direccion;
 
+    /*
+     * Enumeracion de los puestos disponibles en el sistema.
+     */
     public static enum Puesto {
         GERENTE,
         CAJERO
     }
 
+    // Constructores
+
+    /*
+     * Constructor vacío
+     */
     public UsuarioDTO() {
     }
 
@@ -72,6 +81,8 @@ public class UsuarioDTO {
         this.contrasena = contrasena;
         this.direccion = direccion;
     }
+
+    // Getters y Setters
 
     public ObjectId get_id() {
         return _id;
@@ -137,6 +148,9 @@ public class UsuarioDTO {
         this.direccion = direccion;
     }
 
+    /*
+     * Metodo que regresa la informacion del usuario en forma de cadena.
+     */
     @Override
     public String toString() {
         return "Usuario{" + "_id=" + _id + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaContratacion=" + fechaContratacion + ", puesto=" + puesto + ", telefono=" + telefono + ", contrasena=" + contrasena + ", direccion=" + direccion + '}';
