@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vistas;
+package frames;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -67,7 +69,7 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 740, 100);
+        jPanel1.setBounds(0, 0, 740, 0);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Código de Barras: ");
@@ -116,6 +118,11 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         fieldRestablecer.setBounds(270, 320, 110, 23);
 
         botonAgregar.setText("Agregar Producto");
+        botonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonAgregar);
         botonAgregar.setBounds(470, 320, 140, 23);
 
@@ -132,6 +139,48 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         fieldNombre.setText("");
         fieldPrecio.setText("");
     }//GEN-LAST:event_fieldRestablecerActionPerformed
+
+    private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
+        String codigoBarras = fieldCodigoBarras.getText().trim();
+                String codigoInterno = fieldCodigoInterno.getText().trim();
+                String nombre = fieldNombre.getText().trim();
+                String precio = fieldPrecio.getText().trim();
+
+                // Validar que ningún campo esté vacío
+                if (codigoBarras.isEmpty() || codigoInterno.isEmpty() || nombre.isEmpty() || precio.isEmpty()) {
+                    JOptionPane.showMessageDialog(agregarProductoFrame.this, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Validar código de barras
+                if (!codigoBarras.matches("^\\d{10}$")) {
+                    JOptionPane.showMessageDialog(agregarProductoFrame.this, "Código de Barras debe contener solo números y debe ser de 10 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Validar código interno
+                if (!codigoInterno.matches("^[A-Z]{3}\\d{3}$")) {
+                    JOptionPane.showMessageDialog(agregarProductoFrame.this, "Código Interno debe tener el formato de 3 letras y luego 3 números (ejemplo: SAB001).", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Validar nombre
+                if (!nombre.matches("^[a-zA-Z0-9 ]+$")) {
+                    JOptionPane.showMessageDialog(agregarProductoFrame.this, "Nombre solo puede contener letras, números y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Validar precio
+                if (!precio.matches("^\\d+(\\.\\d{1,2})?$") || Double.parseDouble(precio) < 0) {
+                    JOptionPane.showMessageDialog(agregarProductoFrame.this, "Precio debe ser un número no negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+
+                // Si todas las validaciones son exitosas, proceder con la lógica de agregar producto
+                JOptionPane.showMessageDialog(agregarProductoFrame.this, "Producto agregado exitosamente.");
+        
+    }//GEN-LAST:event_botonAgregarActionPerformed
 
     /**
      * @param args the command line arguments

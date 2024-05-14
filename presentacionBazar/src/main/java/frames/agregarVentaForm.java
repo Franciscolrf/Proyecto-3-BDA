@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package vistas;
+package frames;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,9 +30,8 @@ public class agregarVentaForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        botonSalir = new javax.swing.JButton();
+        botonCompletar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -38,14 +39,13 @@ public class agregarVentaForm extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         fieldNombreCliente = new javax.swing.JTextField();
         fieldApellidoCliente = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        metodoPagoComboBox = new javax.swing.JComboBox<>();
         fieldTotal = new javax.swing.JTextField();
         fieldPagoCon = new javax.swing.JTextField();
-        fieldCambio = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaProductos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaProductosEnVenta = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         botonAgregarProductoAVenta = new javax.swing.JButton();
 
@@ -78,18 +78,23 @@ public class agregarVentaForm extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 690, 70);
 
-        jButton2.setText("Salir");
-        getContentPane().add(jButton2);
-        jButton2.setBounds(130, 560, 100, 23);
+        botonSalir.setText("Salir");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonSalir);
+        botonSalir.setBounds(130, 560, 100, 23);
 
-        jButton3.setText("Completar Venta");
-        getContentPane().add(jButton3);
-        jButton3.setBounds(410, 560, 130, 23);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel1.setText("Cambio:");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(510, 290, 60, 22);
+        botonCompletar.setText("Completar Venta");
+        botonCompletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCompletarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonCompletar);
+        botonCompletar.setBounds(410, 560, 130, 23);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Nombre cliente:");
@@ -114,7 +119,7 @@ public class agregarVentaForm extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Pago con:");
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(280, 290, 70, 22);
+        jLabel7.setBounds(370, 290, 70, 22);
 
         fieldNombreCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         getContentPane().add(fieldNombreCliente);
@@ -124,22 +129,26 @@ public class agregarVentaForm extends javax.swing.JFrame {
         getContentPane().add(fieldApellidoCliente);
         fieldApellidoCliente.setBounds(140, 170, 360, 22);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "TARJETA" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        metodoPagoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EFECTIVO", "TARJETA" }));
+        metodoPagoComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                metodoPagoComboBoxActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox1);
-        jComboBox1.setBounds(140, 230, 100, 22);
+        getContentPane().add(metodoPagoComboBox);
+        metodoPagoComboBox.setBounds(140, 230, 100, 22);
+
+        fieldTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldTotalActionPerformed(evt);
+            }
+        });
         getContentPane().add(fieldTotal);
         fieldTotal.setBounds(140, 290, 100, 22);
         getContentPane().add(fieldPagoCon);
-        fieldPagoCon.setBounds(380, 290, 90, 22);
-        getContentPane().add(fieldCambio);
-        fieldCambio.setBounds(580, 290, 64, 22);
+        fieldPagoCon.setBounds(470, 290, 90, 22);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -150,13 +159,14 @@ public class agregarVentaForm extends javax.swing.JFrame {
                 "Nombre", "Codigo Interno", "Precio", "Fecha Registro"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaProductos);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(10, 370, 410, 130);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaProductosEnVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {"SAB001",  new Float(500.0)},
                 {null, null},
                 {null, null},
                 {null, null},
@@ -165,8 +175,16 @@ public class agregarVentaForm extends javax.swing.JFrame {
             new String [] {
                 "Nombre", "Precio"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Float.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tablaProductosEnVenta);
 
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(510, 370, 140, 130);
@@ -182,9 +200,78 @@ public class agregarVentaForm extends javax.swing.JFrame {
         setBounds(0, 0, 707, 655);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void metodoPagoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_metodoPagoComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_metodoPagoComboBoxActionPerformed
+
+    private void botonCompletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompletarActionPerformed
+        String nombreCliente = fieldNombreCliente.getText().trim();
+        String apellidoCliente = fieldApellidoCliente.getText().trim();
+        String pagoConStr = fieldPagoCon.getText().trim();
+        String totalStr = fieldTotal.getText().trim();
+
+        // Validar que los campos no estén vacíos
+        if (nombreCliente.isEmpty() || apellidoCliente.isEmpty() || pagoConStr.isEmpty()) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (tablaProductosEnVenta.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this, "La tabla de productos a vender no puede estar vacía.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar nombre del cliente
+        if (!nombreCliente.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this, "Nombre del Cliente solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar apellido del cliente
+        if (!apellidoCliente.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this, "Apellido del Cliente solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar total y pago con
+        double total;
+        double pagoCon;
+        
+        try {
+            total = Double.parseDouble(totalStr);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this, "Total debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            pagoCon = Double.parseDouble(pagoConStr);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this, "Pago Con debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (pagoCon < total) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this, "Pago Con debe ser mayor o igual al Total.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (pagoCon < 0) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this, "Pago Con no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+
+        // Si todas las validaciones son exitosas, proceder con la lógica de completar la venta
+        JOptionPane.showMessageDialog(agregarVentaForm.this, "Venta completada exitosamente.");
+    }//GEN-LAST:event_botonCompletarActionPerformed
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_botonSalirActionPerformed
+
+    private void fieldTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldTotalActionPerformed
+        fieldTotal.setEditable(false);
+    }//GEN-LAST:event_fieldTotalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,15 +310,12 @@ public class agregarVentaForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregarProductoAVenta;
+    private javax.swing.JButton botonCompletar;
+    private javax.swing.JButton botonSalir;
     private javax.swing.JTextField fieldApellidoCliente;
-    private javax.swing.JTextField fieldCambio;
     private javax.swing.JTextField fieldNombreCliente;
     private javax.swing.JTextField fieldPagoCon;
     private javax.swing.JTextField fieldTotal;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -242,7 +326,8 @@ public class agregarVentaForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JComboBox<String> metodoPagoComboBox;
+    private javax.swing.JTable tablaProductos;
+    private javax.swing.JTable tablaProductosEnVenta;
     // End of variables declaration//GEN-END:variables
 }

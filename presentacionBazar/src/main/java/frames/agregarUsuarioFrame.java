@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package vistas;
+package frames;
+
+import frames.logFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -239,12 +238,11 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_checkboxConfirmarMostrarContrasenaActionPerformed
 
     private void checkboxMostrarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxMostrarContrasenaActionPerformed
-        if(checkboxMostrarContrasena.isSelected()){
-        contrasenaField.setEchoChar((char)0);
-    }
-    else{
-        contrasenaField.setEchoChar('*');
-    }
+        if (checkboxMostrarContrasena.isSelected()) {
+            contrasenaField.setEchoChar((char) 0);
+        } else {
+            contrasenaField.setEchoChar('*');
+        }
     }//GEN-LAST:event_checkboxMostrarContrasenaActionPerformed
 
     private void confirmarContrasenaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarContrasenaFieldActionPerformed
@@ -252,7 +250,7 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmarContrasenaFieldActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
@@ -269,8 +267,88 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRestablecerActionPerformed
 
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
+        // Obtener los valores de los campos
+        String nombreUsuario = fieldNombreUsuario.getText().trim();
+        String apellidoUsuario = fieldApellidoUsuario.getText().trim();
+        String telefono = fieldTelefono.getText().trim();
+        String calle = fieldCalle.getText().trim();
+        String colonia = fieldColonia.getText().trim();
+        String codigoPostal = fieldCodigoPostal.getText().trim();
+        String ciudad = fieldCiudad.getText().trim();
+        String numeroEdificio = fieldNumeroEdificio.getText().trim();
+        String contrasena = new String(contrasenaField.getPassword());
+        String confirmarContrasena = new String(confirmarContrasenaField.getPassword());
+
+        // Validar que ningún campo esté vacío
+        if (nombreUsuario.isEmpty() || apellidoUsuario.isEmpty() || telefono.isEmpty() || calle.isEmpty()
+                || colonia.isEmpty() || codigoPostal.isEmpty() || ciudad.isEmpty() || numeroEdificio.isEmpty()
+                || contrasena.isEmpty() || confirmarContrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar nombre de usuario
+        if (!nombreUsuario.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Nombre de Usuario solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar apellido de usuario
+        if (!apellidoUsuario.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Apellido de Usuario solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar teléfono
+        if (!telefono.matches("^\\d{10}$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Teléfono debe contener solo 10 números.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar calle
+        if (!calle.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Calle solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar colonia
+        if (!colonia.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Colonia solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar código postal
+        if (!codigoPostal.matches("^\\d{5}$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Código Postal debe contener solo 5 números.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar ciudad
+        if (!ciudad.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Ciudad solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar número de edificio
+        if (!numeroEdificio.matches("^\\d+$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Número de Edificio solo puede contener números.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar contraseña
+        if (contrasena.length() < 6) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Contraseña debe tener al menos 6 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar confirmar contraseña
+        if (!contrasena.equals(confirmarContrasena)) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Confirmar Contraseña debe ser igual a la Contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(agregarUsuarioFrame.this,"Usuario agregado exitosamente.");
         dispose();
-        loginFrame log = new loginFrame ();
+        logFrame log = new logFrame();
         log.setVisible(true);
     }//GEN-LAST:event_botonAgregarActionPerformed
 

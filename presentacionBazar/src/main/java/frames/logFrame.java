@@ -1,21 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package vistas;
+package frames;
 
 import javax.swing.JOptionPane;
+import frames.agregarUsuarioFrame;
+import frames.principalFrame;
 
 /**
  *
+ * @author ID145 /**
+ *
  * @author ID145
  */
-public class loginFrame extends javax.swing.JFrame {
+public class logFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form loginFrame
+     * Creates new form logFrame
      */
-    public loginFrame() {
+    public logFrame() {
         initComponents();
     }
 
@@ -178,55 +178,40 @@ public class loginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAceptarActionPerformed
+
         String telefono = telefonoField.getText();
         String contrasena = contrasenaField.getText();
-        if (telefonoField.getText().trim().isEmpty()|| contrasenaField.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(loginFrame.this, "Favor de rellenar todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (telefonoField.getText().trim().isEmpty() || contrasenaField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(logFrame.this, "Favor de rellenar todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        } else {
-            
-            if (!telefono.matches("[0-9]+") || telefono.length() < 10 ) {
-                JOptionPane.showMessageDialog(loginFrame.this, "Teléfono inválido. Ingresar uno de mínimo 10 numeros.", "Error", JOptionPane.ERROR_MESSAGE);
-                telefonoField.setText("");
-                return;
-            }
-            if (contrasena.length()<6) {
-                JOptionPane.showMessageDialog(loginFrame.this, "La contraseña debe tener al menos 6 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
-                contrasenaField.setText("");
-                return;
-            } else {
-            JOptionPane.showMessageDialog(loginFrame.this, "Acción de autenticación");
-                dispose();
-                principalFrame principal = new principalFrame();
-                principal.setVisible(true);
-            }
         }
+        JOptionPane.showMessageDialog(logFrame.this, "Acción de autenticación");
+        dispose();
+        principalFrame principal = new principalFrame();
+        principal.setVisible(true);
 
 
     }//GEN-LAST:event_botonAceptarActionPerformed
 
     private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarseActionPerformed
+
         agregarUsuarioFrame agregarFrame = new agregarUsuarioFrame();
         agregarFrame.setVisible(true);
         dispose();
     }//GEN-LAST:event_botonRegistrarseActionPerformed
 
     private void checkboxMostrarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxMostrarContrasenaActionPerformed
-    if(checkboxMostrarContrasena.isSelected()){
-        contrasenaField.setEchoChar((char)0);
-    }
-    else{
-        contrasenaField.setEchoChar('*');
-    }
+        if (checkboxMostrarContrasena.isSelected()) {
+            contrasenaField.setEchoChar((char) 0);
+        } else {
+            contrasenaField.setEchoChar('*');
+        }
     }//GEN-LAST:event_checkboxMostrarContrasenaActionPerformed
 
     private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
         contrasenaField.setText("");
         telefonoField.setText("");
     }//GEN-LAST:event_botonRestablecerActionPerformed
-
-    
-    
 
     /**
      * @param args the command line arguments
@@ -245,24 +230,23 @@ public class loginFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(loginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(logFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(loginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(logFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(loginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(logFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(loginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(logFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new loginFrame().setVisible(true);
+                new logFrame().setVisible(true);
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAceptar;
     private javax.swing.JButton botonRegistrarse;
@@ -276,4 +260,6 @@ public class loginFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField telefonoField;
     // End of variables declaration//GEN-END:variables
+
 }
+
