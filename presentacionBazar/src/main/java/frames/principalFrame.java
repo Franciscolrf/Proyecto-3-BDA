@@ -8,6 +8,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+
 /**
  *
  * @author ID145
@@ -160,9 +161,19 @@ public class principalFrame extends javax.swing.JFrame {
         menuProductos.setText("Productos");
 
         jMenuItem1.setText("Agregar Producto");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         menuProductos.add(jMenuItem1);
 
         jMenuItem2.setText("Ver Productos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         menuProductos.add(jMenuItem2);
 
         jMenuBar1.add(menuProductos);
@@ -202,6 +213,16 @@ public class principalFrame extends javax.swing.JFrame {
     private void botonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalir1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonSalir1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        agregarProductoFrame ag = new agregarProductoFrame();
+        ag.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        productosFrame pf = new productosFrame();
+        pf.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
