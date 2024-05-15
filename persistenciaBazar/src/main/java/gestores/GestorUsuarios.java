@@ -67,23 +67,26 @@ public class GestorUsuarios implements IGestorUsuarios {
             throw new PersistenciaException("Error al insertar el usuario", e);
         }
     }
-    // ...
 
+    // ...
+//
     /**
      * Elimina un usuario de la base de datos.
      *
-     * @param usuario El usuario a eliminar.
+     * @param codigoInterno El código interno del usuario a eliminar.
      * @return true si se eliminó correctamente, false en caso contrario.
      * @throws PersistenciaException
      */
     @Override
-    public boolean eliminar(UsuarioDTO usuario) throws PersistenciaException {
-        if (usuario == null || usuario.getNombre() == null) {
-            throw new PersistenciaException("El usuario o su nombre no pueden ser nulos");
+    public boolean eliminar(String codigoInterno) throws PersistenciaException {
+        if (codigoInterno == null || codigoInterno.isEmpty()) {
+            throw new PersistenciaException("El código interno no puede ser nulo o vacío");
+
         }
 
         try {
-            usuariosCollection.deleteOne(eq("nombre", usuario.getNombre()));
+            Bson filter = Filters.eq("codigoInterno", codigoInterno);
+            usuariosCollection.deleteOne(filter);
             return true;
         } catch (Exception e) {
             throw new PersistenciaException("Error al eliminar el usuario", e);
@@ -99,13 +102,13 @@ public class GestorUsuarios implements IGestorUsuarios {
      */
     @Override
     public boolean modificar(UsuarioDTO usuario) throws PersistenciaException {
-        if (usuario == null || usuario.getNombre() == null) {
-            throw new PersistenciaException("El usuario o su nombre no pueden ser nulos");
+        if (usuario == null || usuario.getCodigoInterno() == null) {
+            throw new PersistenciaException("El usuario o su código interno no pueden ser nulos");
         }
 
         try {
             Document doc = usuarioDTOToDocument(usuario);
-            usuariosCollection.replaceOne(eq("nombre", usuario.getNombre()), doc);
+            usuariosCollection.replaceOne(eq("codigoInterno", usuario.getCodigoInterno()), doc);
             return true;
         } catch (Exception e) {
             throw new PersistenciaException("Error al modificar el usuario", e);
@@ -321,7 +324,8 @@ public class GestorUsuarios implements IGestorUsuarios {
         String codigoPostal = direccionDoc.getString("codigoPostal");
 
         DireccionDTO direccion = new DireccionDTO(ciudad, numeroEdificio, calle, colonia, codigoPostal);
-        return new UsuarioDTO(nombre, apellido, codigoInterno, fechaContratacion, puesto, telefono, contrasena, direccion);
+        return new UsuarioDTO(nombre, apellido, codigoInterno, fechaContratacion, puesto, telefono, contrasena,
+                direccion);
     }
 
     /**

@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author ID145
  */
 public class usuariosFrame extends javax.swing.JFrame {
-    
+
     GestorUsuarios gu = new GestorUsuarios();
 
     /**
@@ -32,9 +32,9 @@ public class usuariosFrame extends javax.swing.JFrame {
         List<UsuarioDTO> usuarios = gu.consultarTodos();
         cargarUsuarios(usuarios);
     }
-    
+
     public void cargarUsuarios(List<UsuarioDTO> usuarios) throws PersistenciaException {
-        
+
         DefaultTableModel model = (DefaultTableModel) tablaUsuarios.getModel();
         model.setRowCount(0);
         // Llenar la tabla con los usuarios
@@ -47,7 +47,7 @@ public class usuariosFrame extends javax.swing.JFrame {
                 usuario.getTelefono()
             });
         }
-        
+
     }
 
     /**
@@ -138,10 +138,20 @@ public class usuariosFrame extends javax.swing.JFrame {
         jScrollPane1.setBounds(10, 140, 604, 329);
 
         botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonEliminar);
-        botonEliminar.setBounds(530, 500, 73, 23);
+        botonEliminar.setBounds(523, 500, 80, 23);
 
         botonModificar.setText("Modificar");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonModificar);
         botonModificar.setBounds(240, 500, 90, 23);
 
@@ -175,7 +185,7 @@ public class usuariosFrame extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre:");
 
-        botonFIltrarNombre.setText("Buscar por Nombre");
+        botonFIltrarNombre.setText("Buscar por Nombre de Usuario");
         botonFIltrarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonFIltrarNombreActionPerformed(evt);
@@ -186,6 +196,13 @@ public class usuariosFrame extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonFiltrarFechas3)
+                    .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -197,16 +214,11 @@ public class usuariosFrame extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonFIltrarNombre))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 32, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonFiltrarFechas3)
-                    .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                            .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(botonFIltrarNombre)))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +277,7 @@ public class usuariosFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ingrese fechas válidas en formato yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date fechaDesde = sdf.parse(fechaDesdeStr);
@@ -284,7 +296,23 @@ public class usuariosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonFiltrarFechas3ActionPerformed
 
     private void botonFIltrarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFIltrarNombreActionPerformed
+        List<UsuarioDTO> usuarios = null;
+        String nombre = fieldNombre.getText();
+        // Validar que el nombre no esté vacío
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
+        try {
+            // Consultar los usuarios por nombre
+            List<UsuarioDTO> usuariosFiltrados = gu.consultarPorNombre(nombre);
+
+            // Cargar los usuarios filtrados en la tabla
+            cargarUsuarios(usuariosFiltrados);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(usuariosFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botonFIltrarNombreActionPerformed
 
     private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
@@ -299,15 +327,75 @@ public class usuariosFrame extends javax.swing.JFrame {
         } catch (PersistenciaException ex) {
             Logger.getLogger(usuariosFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         fieldFechaDesde.setText("");
         fieldFechaHasta.setText("");
         fieldNombre.setText("");
     }//GEN-LAST:event_botonRestablecerActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        // Obtener la fila seleccionada
+        int filaSeleccionada = tablaUsuarios.getSelectedRow();
+
+        // Verificar si se ha seleccionado una fila
+        if (filaSeleccionada != -1) {
+            // Obtener el código interno de la segunda columna (columna 1)
+            String codigoInterno = (String) tablaUsuarios.getValueAt(filaSeleccionada, 1);
+
+            try {
+                // Llamar al método eliminar del GestorUsuarios
+                boolean eliminado = gu.eliminar(codigoInterno);
+
+                if (eliminado) {
+                    JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente.", "Eliminado", JOptionPane.INFORMATION_MESSAGE);
+
+                    // Actualizar la tabla de usuarios
+                    cargarUsuarios(gu.consultarTodos());
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo eliminar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (PersistenciaException ex) {
+                JOptionPane.showMessageDialog(this, "Error al eliminar el usuario: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        // Obtener la fila seleccionada
+        int filaSeleccionada = tablaUsuarios.getSelectedRow();
+
+// Verificar que se haya seleccionado una fila
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+// Obtener el codigoInterno de la fila seleccionada (segunda columna)
+        String codigoInterno = (String) tablaUsuarios.getValueAt(filaSeleccionada, 1);
+
+        try {
+            UsuarioDTO usuario = gu.consultarPorCodigoInterno(codigoInterno);
+
+            // Verificar si se encontró el usuario
+            if (usuario != null) {
+                // Crear un nuevo frame ModificarUsuarioFrame y pasarle el usuario obtenido
+                modificarUsuarioFrame modificarUsuarioFrame = new modificarUsuarioFrame(usuario);
+                modificarUsuarioFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(usuariosFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+
+    }//GEN-LAST:event_botonModificarActionPerformed
 
     /**
      * @param args the command line arguments

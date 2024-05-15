@@ -21,7 +21,7 @@ import pojos.Usuario;
 public interface IGestorUsuarios {
     boolean insertar(UsuarioDTO usuario) throws PersistenciaException;
 
-    boolean eliminar(UsuarioDTO Usuario) throws PersistenciaException; 
+    boolean eliminar(String codigoInterno) throws PersistenciaException; 
 
     boolean modificar(UsuarioDTO usuario) throws PersistenciaException;
 
