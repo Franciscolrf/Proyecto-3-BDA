@@ -23,12 +23,13 @@ import pojos.Producto;
  */
 public class productosFrame extends javax.swing.JFrame {
 
+    GestorProductos gestorProductos = new GestorProductos();
+
     /**
      * Creates new form productosFrame
      */
     public productosFrame() {
         initComponents();
-        GestorProductos gestorProductos = new GestorProductos();
         try {
 
             List<ProductoDTO> productos = gestorProductos.consultarTodos();
@@ -64,6 +65,7 @@ public class productosFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         fieldNombre = new javax.swing.JTextField();
         botonFIltrarNombre = new javax.swing.JButton();
+        botonRestablecer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -119,7 +121,7 @@ public class productosFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botonModificar);
-        botonModificar.setBounds(340, 490, 90, 23);
+        botonModificar.setBounds(280, 490, 90, 23);
 
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -151,6 +153,7 @@ public class productosFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre:");
 
@@ -200,17 +203,26 @@ public class productosFrame extends javax.swing.JFrame {
                 .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonFiltrarFechas)
-                .addGap(16, 16, 16)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botonFIltrarNombre)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(690, 160, 210, 320);
+        jPanel2.setBounds(690, 160, 210, 370);
+
+        botonRestablecer.setText("Restablecer");
+        botonRestablecer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRestablecerActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonRestablecer);
+        botonRestablecer.setBounds(400, 490, 100, 23);
 
         setBounds(0, 0, 922, 592);
     }// </editor-fold>//GEN-END:initComponents
@@ -292,8 +304,7 @@ public class productosFrame extends javax.swing.JFrame {
         // Verificar si se ha seleccionado una fila
         if (selectedRow != -1) {
             // Obtener el código interno del producto en la fila seleccionada
-            String codigoInterno =(String) tablaProductos.getValueAt(selectedRow, 1);
-
+            String codigoInterno = (String) tablaProductos.getValueAt(selectedRow, 1);
 
             // Llamar al método para eliminar el producto
             try {
@@ -317,36 +328,57 @@ public class productosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonEliminarActionPerformed
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
-         // Obtener el índice de la fila seleccionada en la tabla
-    int selectedRow = tablaProductos.getSelectedRow();
+        // Obtener el índice de la fila seleccionada en la tabla
+        int selectedRow = tablaProductos.getSelectedRow();
 
-    // Verificar si se ha seleccionado una fila
-    if (selectedRow != -1) {
-        // Obtener el código interno del producto en la fila seleccionada
-        String codigoInterno = (String) tablaProductos.getValueAt(selectedRow, 1); // Suponiendo que la columna del código interno es la segunda (índice 1)
+        // Verificar si se ha seleccionado una fila
+        if (selectedRow != -1) {
+            // Obtener el código interno del producto en la fila seleccionada
+            String codigoInterno = (String) tablaProductos.getValueAt(selectedRow, 1); // Suponiendo que la columna del código interno es la segunda (índice 1)
 
-        // Obtener el producto del gestor
-        try {
-            GestorProductos gestorProductos = new GestorProductos();
-            Producto producto = gestorProductos.consultarPorCodigoInterno(codigoInterno);
-            if (producto != null) {
-                // Mostrar el frame de modificar producto
-                modificarProductoFrame modificarFrame = new modificarProductoFrame(producto);
-                modificarFrame.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Producto no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            // Obtener el producto del gestor
+            try {
+                GestorProductos gestorProductos = new GestorProductos();
+                Producto producto = gestorProductos.consultarPorCodigoInterno(codigoInterno);
+                if (producto != null) {
+                    // Mostrar el frame de modificar producto
+                    modificarProductoFrame modificarFrame = new modificarProductoFrame(producto);
+                    modificarFrame.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Producto no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (PersistenciaException ex) {
+                JOptionPane.showMessageDialog(this, "Error al obtener el producto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (PersistenciaException ex) {
-            JOptionPane.showMessageDialog(this, "Error al obtener el producto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.");
-    }
     }//GEN-LAST:event_botonModificarActionPerformed
 
     private void botonFIltrarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFIltrarNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonFIltrarNombreActionPerformed
+        String nombre = fieldNombre.getText();
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre para filtrar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            List<ProductoDTO> productosPorNombre = gestorProductos.consultarPorNombre(nombre);
+
+            // Mostrar las ventas filtradas por nombre en la tabla
+            mostrarProductosEnTabla(productosPorNombre);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(productosFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }    }//GEN-LAST:event_botonFIltrarNombreActionPerformed
+
+    private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
+        List<ProductoDTO> productos = null;
+        try {
+            productos = gestorProductos.consultarTodos();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(productosFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mostrarProductosEnTabla(productos);
+    }//GEN-LAST:event_botonRestablecerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,6 +420,7 @@ public class productosFrame extends javax.swing.JFrame {
     private javax.swing.JButton botonFIltrarNombre;
     private javax.swing.JButton botonFiltrarFechas;
     private javax.swing.JButton botonModificar;
+    private javax.swing.JButton botonRestablecer;
     private javax.swing.JButton botonSalir;
     private javax.swing.JTextField fieldFechaDesde;
     private javax.swing.JTextField fieldFechaHasta;
