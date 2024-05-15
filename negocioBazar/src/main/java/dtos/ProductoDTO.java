@@ -22,7 +22,7 @@ public class ProductoDTO {
 
     // Constructores
 
-    /*
+    /**
      * Constructor vacío
      */
     public ProductoDTO() {
@@ -32,8 +32,8 @@ public class ProductoDTO {
      * Crea una instancia con la informacion de un producto en el catalogo de
      * productos.
      * 
-     * @param codigoBarras
-     * @param codigoInterno
+     * @param codigoBarras  Código de barras del producto.
+     * @param codigoInterno Código interno del producto.
      * @param nombre        Nombre del producto.
      * @param precio        Precio del producto.
      * @param fechaRegistro Fecha de registro del producto en el sistema.

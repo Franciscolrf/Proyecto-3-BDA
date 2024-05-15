@@ -15,7 +15,8 @@ public class DireccionDTO {
     private String codigoPostal;
 
     // Constructores
-    /*
+    
+    /**
      * Constructor vacío
      */
     public DireccionDTO() {
@@ -24,11 +25,11 @@ public class DireccionDTO {
     /**
      * Crea una instancia con la informacion de una direccion.
      * 
-     * @param ciudad
-     * @param numeroEdificio
-     * @param calle
-     * @param colonia
-     * @param codigoPostal
+     * @param ciudad         La ciudad de la dirección.
+     * @param numeroEdificio El número del edificio de la dirección.
+     * @param calle          La calle de la dirección.
+     * @param colonia        La colonia de la dirección.
+     * @param codigoPostal   El código postal de la dirección.
      */
     public DireccionDTO(String ciudad, String numeroEdificio, String calle, String colonia, String codigoPostal) {
         this.ciudad = ciudad;
