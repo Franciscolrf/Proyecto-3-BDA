@@ -27,18 +27,19 @@ import static com.mongodb.client.model.Filters.*;
 /**
  * Clase que se encarga de gestionar los usuarios en la base de datos MongoDB
  * Implementa la interfaz IGestorUsuarios
+ *
  * @author Fran
  */
 public class GestorUsuarios implements IGestorUsuarios {
+
     // Atributos
     private MongoCollection<Document> usuariosCollection;
     private static UsuarioDTO usuarioLogueado;
 
     // Constructores
-
     /**
      * Constructor por defecto.
-     * 
+     *
      * @throws PersistenciaException
      */
     public GestorUsuarios() throws PersistenciaException {
@@ -48,7 +49,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Inserta un usuario en la base de datos.
-     * 
+     *
      * @param usuario El usuario a insertar.
      * @return true si se insertó correctamente, false en caso contrario.
      */
@@ -70,7 +71,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Elimina un usuario de la base de datos.
-     * 
+     *
      * @param usuario El usuario a eliminar.
      * @return true si se eliminó correctamente, false en caso contrario.
      * @throws PersistenciaException
@@ -91,7 +92,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Modifica un usuario en la base de datos.
-     * 
+     *
      * @param usuario El usuario a modificar.
      * @return true si se modificó correctamente, false en caso contrario.
      * @throws PersistenciaException
@@ -113,7 +114,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Consulta usuarios por nombre.
-     * 
+     *
      * @param nombre El nombre del usuario a buscar.
      * @return Una lista con los usuarios que coinciden con el nombre.
      * @throws PersistenciaException
@@ -143,7 +144,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Consulta usuarios por rango de fechas.
-     * 
+     *
      * @param desde Fecha de inicio del rango.
      * @param hasta Fecha de fin del rango.
      * @return Una lista con los usuarios que coinciden con el rango de fechas.
@@ -175,7 +176,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Consulta todos los usuarios.
-     * 
+     *
      * @return Lista de todos los usuarios.
      * @throws PersistenciaException
      */
@@ -199,13 +200,41 @@ public class GestorUsuarios implements IGestorUsuarios {
     }
 
     /**
+     * Consulta un usuario por su código interno. Solo devolverá 1 usuario ya
+     * que el código interno es único.
+     *
+     * @param telefono Número de teléfono del usuario a buscar.
+     * @return UsuarioDTO con el número de teléfono dado.
+     * @throws PersistenciaException Si ocurre un error durante la persistencia
+     * de datos.
+     */
+    public UsuarioDTO consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException {
+        if (codigoInterno == null || codigoInterno.isEmpty()) {
+            throw new PersistenciaException("El código interno no puede ser nulo o vacío");
+        }
+
+        try {
+            Document doc = usuariosCollection.find(eq("codigoInterno", codigoInterno)).first();
+            if (doc == null) {
+                throw new PersistenciaException("No se encontró un usuario con el código interno dado");
+            }
+            return documentToUsuarioDTO(doc);
+
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar el usuario por código interno", e);
+        }
+
+    }
+
+    /**
      * Inicia sesión para un usuario dado el número de teléfono y la contraseña.
-     * 
-     * @param telefono   Número de teléfono del usuario
+     *
+     * @param telefono Número de teléfono del usuario
      * @param contrasena Contraseña del usuario
-     * @return true si la sesión se inició correctamente, false en caso contrario
-     * @throws PersistenciaException Si ocurre un error durante la persistencia de
-     *                               datos
+     * @return true si la sesión se inició correctamente, false en caso
+     * contrario
+     * @throws PersistenciaException Si ocurre un error durante la persistencia
+     * de datos
      */
     @Override
     public boolean iniciarSesion(String telefono, String contrasena) throws PersistenciaException {
@@ -239,13 +268,14 @@ public class GestorUsuarios implements IGestorUsuarios {
     public static void setUsuarioLogueado(UsuarioDTO usuario) {
         usuarioLogueado = usuario;
     }
+
     public static UsuarioDTO getUsuarioLogueado() {
         return usuarioLogueado;
     }
 
     /**
      * Convierte un objeto UsuarioDTO a un documento de MongoDB.
-     * 
+     *
      * @param usuario UsuarioDTO a convertir
      * @return Document
      */
@@ -260,6 +290,7 @@ public class GestorUsuarios implements IGestorUsuarios {
         return new Document()
                 .append("nombre", usuario.getNombre())
                 .append("apellido", usuario.getApellido())
+                .append("codigoInterno", usuario.getCodigoInterno())
                 .append("fechaContratacion", usuario.getFechaContratacion())
                 .append("puesto", usuario.getPuesto().name())
                 .append("telefono", usuario.getTelefono())
@@ -269,7 +300,7 @@ public class GestorUsuarios implements IGestorUsuarios {
 
     /**
      * Convierte un documento de MongoDB a un objeto UsuarioDTO.
-     * 
+     *
      * @param doc Documento de MongoDB
      * @return UsuarioDTO
      */
@@ -280,6 +311,7 @@ public class GestorUsuarios implements IGestorUsuarios {
         UsuarioDTO.Puesto puesto = UsuarioDTO.Puesto.valueOf(doc.getString("puesto"));
         String telefono = doc.getString("telefono");
         String contrasena = doc.getString("contrasena");
+        String codigoInterno = doc.getString("codigoInterno");
 
         Document direccionDoc = (Document) doc.get("direccion");
         String ciudad = direccionDoc.getString("ciudad");
@@ -289,13 +321,12 @@ public class GestorUsuarios implements IGestorUsuarios {
         String codigoPostal = direccionDoc.getString("codigoPostal");
 
         DireccionDTO direccion = new DireccionDTO(ciudad, numeroEdificio, calle, colonia, codigoPostal);
-
-        return new UsuarioDTO(nombre, apellido, fechaContratacion, puesto, telefono, contrasena, direccion);
+        return new UsuarioDTO(nombre, apellido, codigoInterno, fechaContratacion, puesto, telefono, contrasena, direccion);
     }
 
     /**
      * Convierte un documento de MongoDB a un objeto Usuario.
-     * 
+     *
      * @param doc Documento de MongoDB
      * @return Usuario
      */
@@ -306,6 +337,7 @@ public class GestorUsuarios implements IGestorUsuarios {
         Usuario.Puesto puesto = Usuario.Puesto.valueOf(doc.getString("puesto"));
         String telefono = doc.getString("telefono");
         String contrasena = doc.getString("contrasena");
+        String codigoInterno = doc.getString("codigoInterno");
 
         Document direccionDoc = (Document) doc.get("direccion");
         String ciudad = direccionDoc.getString("ciudad");
@@ -324,13 +356,14 @@ public class GestorUsuarios implements IGestorUsuarios {
         usuario.setTelefono(telefono);
         usuario.setContrasena(contrasena);
         usuario.setDireccion(direccion);
+        usuario.setCodigoInterno(codigoInterno);
 
         return usuario;
     }
 
     /**
      * Convierte un objeto Usuario a un documento de MongoDB.
-     * 
+     *
      * @param usuario Usuario a convertir
      * @return Document
      */
@@ -345,6 +378,7 @@ public class GestorUsuarios implements IGestorUsuarios {
         return new Document()
                 .append("nombre", usuario.getNombre())
                 .append("apellido", usuario.getApellido())
+                .append("codigoInterno", usuario.getCodigoInterno())
                 .append("fechaContratacion", usuario.getFechaContratacion())
                 .append("puesto", usuario.getPuesto().name())
                 .append("telefono", usuario.getTelefono())

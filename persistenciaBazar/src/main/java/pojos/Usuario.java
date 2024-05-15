@@ -13,9 +13,10 @@ import org.bson.types.ObjectId;
  * @author ID145
  */
 public class Usuario {
-    
+
     // Atributos
     private ObjectId _id;
+    private String codigoInterno;
     private String nombre;
     private String apellido;
     private Date fechaContratacion;
@@ -53,6 +54,14 @@ public class Usuario {
         this.telefono = telefono;
         this.contrasena = contrasena;
         this.direccion = direccion;
+    }
+
+    public String getCodigoInterno() {
+        return codigoInterno;
+    }
+
+    public void setCodigoInterno(String codigoInterno) {
+        this.codigoInterno = codigoInterno;
     }
 
     public ObjectId get_id() {
@@ -121,15 +130,15 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "_id='" + _id + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", apellido='" + apellido + '\'' +
-                ", fechaContratacion=" + fechaContratacion +
-                ", puesto=" + puesto +
-                ", telefono='" + telefono + '\'' +
-                ", contrasena='" + contrasena + '\'' +
-                ", direccion=" + direccion +
-                '}';
+        return "Usuario{"
+                + "_id='" + _id + '\''
+                + ", nombre='" + nombre + '\''
+                + ", apellido='" + apellido + '\''
+                + ", fechaContratacion=" + fechaContratacion
+                + ", puesto=" + puesto
+                + ", telefono='" + telefono + '\''
+                + ", contrasena='" + contrasena + '\''
+                + ", direccion=" + direccion
+                + '}';
     }
 }

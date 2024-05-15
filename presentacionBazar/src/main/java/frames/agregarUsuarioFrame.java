@@ -65,6 +65,8 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         checkboxMostrarContrasena = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
         confirmarContrasenaField = new javax.swing.JPasswordField();
+        jLabel13 = new javax.swing.JLabel();
+        fieldCodigoInterno = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -239,6 +241,13 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         getContentPane().add(confirmarContrasenaField);
         confirmarContrasenaField.setBounds(170, 430, 160, 26);
 
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel13.setText("Codigo Interno:");
+        getContentPane().add(jLabel13);
+        jLabel13.setBounds(540, 310, 100, 20);
+        getContentPane().add(fieldCodigoInterno);
+        fieldCodigoInterno.setBounds(650, 310, 130, 20);
+
         setBounds(0, 0, 863, 619);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -305,6 +314,7 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         String numeroEdificio = fieldNumeroEdificio.getText().trim();
         String contrasena = new String(contrasenaField.getPassword());
         String confirmarContrasena = new String(confirmarContrasenaField.getPassword());
+        String codigoInterno = fieldCodigoInterno.getText().trim();
 
         // Validar que ningún campo esté vacío
         if (nombreUsuario.isEmpty() || apellidoUsuario.isEmpty() || telefono.isEmpty() || calle.isEmpty()
@@ -373,10 +383,19 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Confirmar Contraseña debe ser igual a la Contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        // Validar código interno
+        if (!codigoInterno.matches("^[A-Z]{3}\\d{3}$")) {
+            JOptionPane.showMessageDialog(agregarUsuarioFrame.this,
+                    "Código Interno debe tener el formato de 3 letras y luego 3 números (ejemplo: SAB001).", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         GestorUsuarios gu;
         try {
             gu = new GestorUsuarios();
             UsuarioDTO usuario = new UsuarioDTO();
+            usuario.setCodigoInterno(codigoInterno);
             usuario.setNombre(nombreUsuario);
             usuario.setApellido(apellidoUsuario);
             usuario.setFechaContratacion(new Date());
@@ -457,6 +476,7 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JTextField fieldApellidoUsuario;
     private javax.swing.JTextField fieldCalle;
     private javax.swing.JTextField fieldCiudad;
+    private javax.swing.JTextField fieldCodigoInterno;
     private javax.swing.JTextField fieldCodigoPostal;
     private javax.swing.JTextField fieldColonia;
     private javax.swing.JTextField fieldNombreUsuario;
@@ -466,6 +486,7 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

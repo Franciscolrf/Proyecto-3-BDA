@@ -28,7 +28,7 @@ public interface IGestorUsuarios {
     List<UsuarioDTO> consultarPorNombre(String nombre) throws PersistenciaException;
 
     List<UsuarioDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException;
-
+    UsuarioDTO consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException;
     List<UsuarioDTO> consultarTodos() throws PersistenciaException;
     Document usuarioDTOToDocument(UsuarioDTO usuario);
     UsuarioDTO documentToUsuarioDTO(Document doc);

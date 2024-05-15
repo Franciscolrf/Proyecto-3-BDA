@@ -275,6 +275,11 @@ public class principalFrame extends javax.swing.JFrame {
         menuUsuarios.add(jMenuItem5);
 
         jMenuItem6.setText("Ver Usuarios");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         menuUsuarios.add(jMenuItem6);
 
         jMenuBar1.add(menuUsuarios);
@@ -292,7 +297,7 @@ public class principalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarSesionActionPerformed
-        
+
         dispose();
         logFrame lf = new logFrame();
         lf.setVisible(true);
@@ -421,17 +426,27 @@ public class principalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonFIltrarNombreActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-       agregarUsuarioFrame agf = new agregarUsuarioFrame();
-       agf.setVisible(true);
+        agregarUsuarioFrame agf = new agregarUsuarioFrame();
+        agf.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void botonSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalir2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonSalir2ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        usuariosFrame uf = null;
+        try {
+            uf = new usuariosFrame();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        uf.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

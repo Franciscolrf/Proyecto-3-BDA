@@ -16,6 +16,7 @@ import org.bson.types.ObjectId;
  */
 public class UsuarioDTO {
     // Atributos
+    private String codigoInterno;
     private String nombre;
     private String apellido;
     private Date fechaContratacion;
@@ -61,9 +62,30 @@ public class UsuarioDTO {
         this.contrasena = contrasena;
         this.direccion = direccion;
     }
+    
+    public UsuarioDTO(String nombre, String apellido,String codigoInterno, Date fechaContratacion, Puesto puesto, String telefono,
+            String contrasena, DireccionDTO direccion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.codigoInterno=codigoInterno;
+        this.fechaContratacion = fechaContratacion;
+        this.puesto = puesto;
+        this.telefono = telefono;
+        this.contrasena = contrasena;
+        this.direccion = direccion;
+    }
 
     // Getters y Setters
 
+    public String getCodigoInterno() {
+        return codigoInterno;
+    }
+
+    public void setCodigoInterno(String codigoInterno) {
+        this.codigoInterno = codigoInterno;
+    }
+
+    
     public String getNombre() {
         return nombre;
     }
