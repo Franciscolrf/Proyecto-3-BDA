@@ -22,15 +22,18 @@ import gestores.GestorVentas;
 import pojos.Usuario;
 
 /**
- *
- * @author ID145
+ * Clase de pruebas para la persistencia de los datos
+ * 
+ * @author Fran
  */
 public class pruebas {
 
     /**
+     * Método main para las pruebas
+     * 
      * @param args the command line arguments
-     * @throws PersistenciaException
-     * @throws ParseException
+     * @throws PersistenciaException por si hay un error en la persistencia
+     * @throws ParseException        por si hay un error en el parseo de fechas
      */
     public static void main(String[] args) throws PersistenciaException, ParseException {
         GestorProductos gp = new GestorProductos();
@@ -41,6 +44,15 @@ public class pruebas {
 
     }
 
+    /**
+     * Método para realizar pruebas de ventas
+     * 
+     * @param gv el gestor de ventas
+     * @param gp el gestor de productos
+     * @param gu el gestor de usuarios
+     * @throws PersistenciaException por si hay un error en la persistencia
+     * @throws ParseException        por si hay un error en el parseo de fechas
+     */
     public void pruebasVentas(GestorVentas gv, GestorProductos gp, GestorUsuarios gu)
             throws PersistenciaException, ParseException {
         ProductoDTO p = new ProductoDTO();
@@ -132,6 +144,13 @@ public class pruebas {
         }
     }
 
+    /**
+     * Método para realizar pruebas de productos
+     * 
+     * @param gp el gestor de productos
+     * @throws PersistenciaException por si hay un error en la persistencia
+     * @throws ParseException        por si hay un error en el parseo de fechas
+     */
     public void pruebasProductos(GestorProductos gp) throws PersistenciaException, ParseException {
 
         ProductoDTO p = new ProductoDTO();
@@ -173,6 +192,13 @@ public class pruebas {
         }
     }
 
+    /**
+     * Método para realizar pruebas de usuarios
+     * 
+     * @param gu el gestor de usuarios
+     * @throws PersistenciaException por si hay un error en la persistencia
+     * @throws ParseException        por si hay un error en el parseo de fechas
+     */
     public void pruebasUsuarios(GestorUsuarios gu) throws PersistenciaException, ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date u1 = sdf.parse("2023-01-01");

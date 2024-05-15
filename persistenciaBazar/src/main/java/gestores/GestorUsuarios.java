@@ -40,7 +40,7 @@ public class GestorUsuarios implements IGestorUsuarios {
     /**
      * Constructor por defecto.
      *
-     * @throws PersistenciaException
+     * @throws PersistenciaException Si ocurre un error al conectarse a la base de datos.
      */
     public GestorUsuarios() throws PersistenciaException {
         MongoDatabase database = ConexionBD.getDatabase();
@@ -52,6 +52,7 @@ public class GestorUsuarios implements IGestorUsuarios {
      *
      * @param usuario El usuario a insertar.
      * @return true si se insertó correctamente, false en caso contrario.
+     * @throws PersistenciaException Si ocurre un error durante la persistencia.
      */
     @Override
     public boolean insertar(UsuarioDTO usuario) throws PersistenciaException {
@@ -75,7 +76,7 @@ public class GestorUsuarios implements IGestorUsuarios {
      *
      * @param codigoInterno El código interno del usuario a eliminar.
      * @return true si se eliminó correctamente, false en caso contrario.
-     * @throws PersistenciaException
+     * @throws PersistenciaException Si ocurre un error durante la persistencia.
      */
     @Override
     public boolean eliminar(String codigoInterno) throws PersistenciaException {
@@ -98,7 +99,7 @@ public class GestorUsuarios implements IGestorUsuarios {
      *
      * @param usuario El usuario a modificar.
      * @return true si se modificó correctamente, false en caso contrario.
-     * @throws PersistenciaException
+     * @throws PersistenciaException Si ocurre un error durante la persistencia.
      */
     @Override
     public boolean modificar(UsuarioDTO usuario) throws PersistenciaException {
@@ -120,7 +121,7 @@ public class GestorUsuarios implements IGestorUsuarios {
      *
      * @param nombre El nombre del usuario a buscar.
      * @return Una lista con los usuarios que coinciden con el nombre.
-     * @throws PersistenciaException
+     * @throws PersistenciaException Si ocurre un error durante la consulta.
      */
     @Override
     public List<UsuarioDTO> consultarPorNombre(String nombre) throws PersistenciaException {
@@ -151,7 +152,7 @@ public class GestorUsuarios implements IGestorUsuarios {
      * @param desde Fecha de inicio del rango.
      * @param hasta Fecha de fin del rango.
      * @return Una lista con los usuarios que coinciden con el rango de fechas.
-     * @throws PersistenciaException
+     * @throws PersistenciaException Si ocurre un error durante la consulta.
      */
     @Override
     public List<UsuarioDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException {
@@ -181,7 +182,7 @@ public class GestorUsuarios implements IGestorUsuarios {
      * Consulta todos los usuarios.
      *
      * @return Lista de todos los usuarios.
-     * @throws PersistenciaException
+     * @throws PersistenciaException Si ocurre un error durante la consulta.
      */
     @Override
     public List<UsuarioDTO> consultarTodos() throws PersistenciaException {
@@ -203,13 +204,11 @@ public class GestorUsuarios implements IGestorUsuarios {
     }
 
     /**
-     * Consulta un usuario por su código interno. Solo devolverá 1 usuario ya
-     * que el código interno es único.
+     * Consulta un usuario por código interno.
      *
-     * @param telefono Número de teléfono del usuario a buscar.
-     * @return UsuarioDTO con el número de teléfono dado.
-     * @throws PersistenciaException Si ocurre un error durante la persistencia
-     *                               de datos.
+     * @param codigoInterno Código interno del usuario a buscar.
+     * @return UsuarioDTO con el código interno dado.
+     * @throws PersistenciaException Si ocurre un error durante la consulta.
      */
     public UsuarioDTO consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException {
         if (codigoInterno == null || codigoInterno.isEmpty()) {
@@ -271,7 +270,7 @@ public class GestorUsuarios implements IGestorUsuarios {
     /**
      * Cierra la sesión del usuario actual.
      *
-     * @param usuario
+     * @param usuario Usuario logeado.
      */
     public static void setUsuarioLogueado(UsuarioDTO usuario) {
         usuarioLogueado = usuario;
@@ -280,7 +279,7 @@ public class GestorUsuarios implements IGestorUsuarios {
     /**
      * Obtiene el usuario logueado.
      * 
-     * @return UsuarioDTO
+     * @return UsuarioDTO Usuario logueado
      */
     public static UsuarioDTO getUsuarioLogueado() {
         return usuarioLogueado;
@@ -342,7 +341,7 @@ public class GestorUsuarios implements IGestorUsuarios {
      * Convierte un documento de MongoDB a un objeto Usuario.
      *
      * @param doc Documento de MongoDB
-     * @return Usuario
+     * @return Usuario 
      */
     public Usuario documentToUsuario(Document doc) {
         String nombre = doc.getString("nombre");

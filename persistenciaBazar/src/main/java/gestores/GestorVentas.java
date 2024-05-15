@@ -37,14 +37,14 @@ public class GestorVentas implements IGestorVentas {
     // Atributos
     private MongoCollection<Document> ventasCollection;
     private GestorProductos gestorProductos = new GestorProductos();
-    private GestorUsuarios gestorUsuarios = new GestorUsuarios();
 
     // Constructores
 
     /**
      * Constructor por defecto.
      * 
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al conectarse a la base de
+     *                               datos.
      */
     public GestorVentas() throws PersistenciaException {
         MongoDatabase database = ConexionBD.getDatabase();
@@ -54,9 +54,9 @@ public class GestorVentas implements IGestorVentas {
     /**
      * Inserta una venta en la base de datos.
      * 
-     * @param venta
+     * @param venta la venta a insertar.
      * @return true si la venta se insertó correctamente, false en caso contrario.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al insertar la venta.
      */
     @Override
     public boolean insertar(VentaDTO venta) throws PersistenciaException {
@@ -76,9 +76,9 @@ public class GestorVentas implements IGestorVentas {
     /**
      * Elimina una venta de la base de datos.
      * 
-     * @param venta
+     * @param codigoInterno el código interno de la venta a eliminar.
      * @return true si la venta se eliminó correctamente, false en caso contrario.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al eliminar la venta.
      */
     @Override
     public boolean eliminar(String codigoInterno) throws PersistenciaException {
@@ -106,9 +106,9 @@ public class GestorVentas implements IGestorVentas {
     /**
      * Modifica una venta en la base de datos.
      * 
-     * @param venta
+     * @param venta la venta a modificar.
      * @return true si la venta se modificó correctamente, false en caso contrario.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al modificar la venta.
      */
     @Override
     public boolean modificar(VentaDTO venta) throws PersistenciaException {
@@ -139,9 +139,9 @@ public class GestorVentas implements IGestorVentas {
     /**
      * Consulta ventas por nombre de cliente.
      * 
-     * @param nombreCliente
+     * @param nombreCliente el nombre del cliente a buscar.
      * @return lista de ventas con el nombre del cliente especificado.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al consultar las ventas.
      */
     @Override
     public List<VentaDTO> consultarPorNombreCliente(String nombreCliente) throws PersistenciaException {
@@ -172,9 +172,9 @@ public class GestorVentas implements IGestorVentas {
     /**
      * Consulta ventas por apellido de cliente.
      * 
-     * @param codigoInterno
+     * @param codigoInterno el apellido del cliente a buscar.
      * @return lista de ventas con el apellido del cliente especificado.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al consultar las ventas.
      */
     @Override
     public VentaDTO consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException {
@@ -206,10 +206,10 @@ public class GestorVentas implements IGestorVentas {
     /**
      * Consulta ventas por rango de fechas.
      * 
-     * @param desde
-     * @param hasta
+     * @param desde fecha de inicio del rango.
+     * @param hasta fecha de fin del rango.
      * @return lista de ventas realizadas en el rango de fechas especificado.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al consultar las ventas.
      */
     @Override
     public List<VentaDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException {
@@ -241,7 +241,7 @@ public class GestorVentas implements IGestorVentas {
      * Consulta todas las ventas.
      * 
      * @return lista de todas las ventas.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al consultar las ventas.
      */
     @Override
     public List<VentaDTO> consultarTodos() throws PersistenciaException {
@@ -264,9 +264,9 @@ public class GestorVentas implements IGestorVentas {
     /**
      * Convierte un documento de venta a un objeto VentaDTO.
      * 
-     * @param doc
+     * @param doc documento de venta.
      * @return objeto VentaDTO con la información del documento.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al convertir el documento.
      */
     @Override
     public VentaDTO documentToVentaDTO(Document doc) throws PersistenciaException {
@@ -323,9 +323,9 @@ public class GestorVentas implements IGestorVentas {
     /**
      * Convierte un objeto VentaDTO a un documento.
      * 
-     * @param venta
+     * @param venta objeto VentaDTO.
      * @return documento con la información de la venta.
-     * @throws PersistenciaException
+     * @throws PersistenciaException si hay un error al convertir el objeto.
      */
     @Override
     public Document ventaDTOToDocument(VentaDTO venta) throws PersistenciaException {

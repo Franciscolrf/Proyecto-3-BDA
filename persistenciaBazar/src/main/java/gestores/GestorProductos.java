@@ -35,7 +35,6 @@ public class GestorProductos implements IGestorProductos {
     /**
      * Constructor por defecto.
      * 
-     * @throws PersistenciaException
      */
     public GestorProductos() {
         MongoDatabase database = ConexionBD.getDatabase();
@@ -48,6 +47,7 @@ public class GestorProductos implements IGestorProductos {
      * @param producto Producto a insertar
      * 
      * @return true si se insertó correctamente, false en caso contrario
+     * @throws PersistenciaException por si hay un error al insertar el producto.
      */
     @Override
     public boolean insertar(ProductoDTO producto) throws PersistenciaException {
@@ -72,9 +72,10 @@ public class GestorProductos implements IGestorProductos {
     /**
      * Elimina un producto.
      * 
-     * @param codigoBarras Código de barras del producto a eliminar
+     * @param codigoInterno Código interno del producto a eliminar
      * 
      * @return true si se eliminó correctamente, false en caso contrario
+     * @throws PersistenciaException por si hay un error al eliminar el producto.
      */
     @Override
     public boolean eliminar(String codigoInterno) throws PersistenciaException {
@@ -96,6 +97,7 @@ public class GestorProductos implements IGestorProductos {
      * @param producto Producto a modificar
      * 
      * @return true si se modificó correctamente, false en caso contrario
+     * @throws PersistenciaException por si hay un error al modificar el producto.
      */
     @Override
     public boolean modificar(ProductoDTO producto) throws PersistenciaException {
@@ -119,6 +121,7 @@ public class GestorProductos implements IGestorProductos {
      * 
      * @param codigoInterno Código interno del producto a buscar
      * @return Producto que coincide con el código interno
+     * @throws PersistenciaException por si hay un error en la consulta.
      */
     @Override
     public Producto consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException {
@@ -142,6 +145,7 @@ public class GestorProductos implements IGestorProductos {
      * 
      * @param nombre Nombre del producto a buscar
      * @return Lista de productos que coinciden con el nombre
+     * @throws PersistenciaException por si hay un error en la consulta.
      */
     @Override
     public List<ProductoDTO> consultarPorNombre(String nombre) throws PersistenciaException {
@@ -167,11 +171,11 @@ public class GestorProductos implements IGestorProductos {
      * 
      * @param nombre Nombre del producto a buscar
      * @return Producto que coincide con el nombre
-     * @throws PersistenciaException
+     * @throws PersistenciaException por si hay un error en la consulta.
      */
     public Producto consultarPorNombreSingular(String nombre) throws PersistenciaException {
         if (nombre == null || nombre.isEmpty()) {
-            throw new  PersistenciaException("El nombre no puede ser nulo o vacío");
+            throw new PersistenciaException("El nombre no puede ser nulo o vacío");
         }
 
         try {
@@ -183,7 +187,7 @@ public class GestorProductos implements IGestorProductos {
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar el producto por nombre", e);
         }
-        
+
     }
 
     /**
@@ -192,6 +196,7 @@ public class GestorProductos implements IGestorProductos {
      * @param desde Fecha de inicio del rango
      * @param hasta Fecha de fin del rango
      * @return Lista de productos que se registraron en el rango de fechas
+     * @throws PersistenciaException por si hay un error en la consulta.
      */
     @Override
     public List<ProductoDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException {
@@ -218,6 +223,7 @@ public class GestorProductos implements IGestorProductos {
      * Consulta todos los productos.
      * 
      * @return Lista de todos los productos
+     * @throws PersistenciaException por si hay un error en la consulta.
      */
     @Override
     public List<ProductoDTO> consultarTodos() throws PersistenciaException {
@@ -288,6 +294,8 @@ public class GestorProductos implements IGestorProductos {
     /**
      * Convierte un objeto Producto a productoDTO.
      * 
+     * @param producto Producto a convertir
+     * @return ProductoDTO
      */
     public ProductoDTO productoToProductoDTO(Producto producto) {
         ProductoDTO productoDTO = new ProductoDTO();

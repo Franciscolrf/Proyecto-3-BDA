@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 /**
  * Clase que representa un producto.
  * 
- * @author ID145
+ * @author Fran
  */
 public class Producto {
 
@@ -21,13 +21,13 @@ public class Producto {
 
     // Constructores
 
-    /*
+    /**
      * Constructor por defecto.
      */
     public Producto() {
     }
 
-    /*
+    /**
      * Constructor con todos los atributos.
      * 
      * @param _id Identificador del producto.
@@ -52,7 +52,7 @@ public class Producto {
         this.fechaRegistro = fechaRegistro;
     }
 
-    /*
+    /**
      * Constructor con todos los atributos.
      * 
      * @param codigoBarras Código de barras del producto.
@@ -183,8 +183,9 @@ public class Producto {
         this.fechaRegistro = fechaRegistro;
     }
 
-    /*
+    /**
      * Método que devuelve una cadena de texto con los atributos del producto.
+     * @return una cadena de texto con los atributos del producto.
      */
     @Override
     public String toString() {

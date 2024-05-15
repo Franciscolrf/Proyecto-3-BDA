@@ -9,8 +9,9 @@ import java.util.Date;
 import org.bson.types.ObjectId;
 
 /**
- *
- * @author ID145
+ * Clase que representa un usuario.
+ * 
+ * @author Fran
  */
 public class Usuario {
 
@@ -25,14 +26,43 @@ public class Usuario {
     private String contrasena;
     private Direccion direccion;
 
+    /**
+     * Enumeración que representa los puestos de los usuarios.
+     * 
+     */
+    /**
+     * Representa los posibles puestos de un usuario en la empresa.
+     */
     public static enum Puesto {
+        /**
+         * Representa un puesto de gerente.
+         */
         GERENTE,
+
+        /**
+         * Representa un puesto de cajero.
+         */
         CAJERO
     }
 
+    /**
+     * Constructor por defecto.
+     */
     public Usuario() {
     }
 
+    /**
+     * Constructor con todos los atributos.
+     * 
+     * @param _id               Identificador del usuario.
+     * @param nombre            Nombre del usuario.
+     * @param apellido          Apellido del usuario.
+     * @param fechaContratacion Fecha de contratación del usuario.
+     * @param puesto            Puesto del usuario.
+     * @param telefono          Teléfono del usuario.
+     * @param contrasena        Contraseña del usuario.
+     * @param direccion         Dirección del usuario.
+     */
     public Usuario(ObjectId _id, String nombre, String apellido, Date fechaContratacion, Puesto puesto, String telefono,
             String contrasena, Direccion direccion) {
         this._id = _id;
@@ -45,6 +75,17 @@ public class Usuario {
         this.direccion = direccion;
     }
 
+    /**
+     * Constructor con todos los atributos excepto el identificador.
+     * 
+     * @param nombre            Nombre del usuario.
+     * @param apellido          Apellido del usuario.
+     * @param fechaContratacion Fecha de contratación del usuario.
+     * @param puesto            Puesto del usuario.
+     * @param telefono          Teléfono del usuario.
+     * @param contrasena        Contraseña del usuario.
+     * @param direccion         Dirección del usuario.
+     */
     public Usuario(String nombre, String apellido, Date fechaContratacion, Puesto puesto, String telefono,
             String contrasena, Direccion direccion) {
         this.nombre = nombre;
@@ -57,167 +98,172 @@ public class Usuario {
     }
 
     /**
- * Obtiene el código interno del usuario.
- *
- * @return El código interno del usuario.
- */
-public String getCodigoInterno() {
-    return codigoInterno;
-}
+     * Obtiene el código interno del usuario.
+     *
+     * @return El código interno del usuario.
+     */
+    public String getCodigoInterno() {
+        return codigoInterno;
+    }
 
-/**
- * Establece el código interno del usuario.
- *
- * @param codigoInterno El código interno del usuario.
- */
-public void setCodigoInterno(String codigoInterno) {
-    this.codigoInterno = codigoInterno;
-}
+    /**
+     * Establece el código interno del usuario.
+     *
+     * @param codigoInterno El código interno del usuario.
+     */
+    public void setCodigoInterno(String codigoInterno) {
+        this.codigoInterno = codigoInterno;
+    }
 
-/**
- * Obtiene el identificador único del usuario.
- *
- * @return El identificador único del usuario.
- */
-public ObjectId get_id() {
-    return _id;
-}
+    /**
+     * Obtiene el identificador único del usuario.
+     *
+     * @return El identificador único del usuario.
+     */
+    public ObjectId get_id() {
+        return _id;
+    }
 
-/**
- * Establece el identificador único del usuario.
- *
- * @param _id El identificador único del usuario.
- */
-public void set_id(ObjectId _id) {
-    this._id = _id;
-}
+    /**
+     * Establece el identificador único del usuario.
+     *
+     * @param _id El identificador único del usuario.
+     */
+    public void set_id(ObjectId _id) {
+        this._id = _id;
+    }
 
-/**
- * Obtiene el nombre del usuario.
- *
- * @return El nombre del usuario.
- */
-public String getNombre() {
-    return nombre;
-}
+    /**
+     * Obtiene el nombre del usuario.
+     *
+     * @return El nombre del usuario.
+     */
+    public String getNombre() {
+        return nombre;
+    }
 
-/**
- * Establece el nombre del usuario.
- *
- * @param nombre El nombre del usuario.
- */
-public void setNombre(String nombre) {
-    this.nombre = nombre;
-}
+    /**
+     * Establece el nombre del usuario.
+     *
+     * @param nombre El nombre del usuario.
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-/**
- * Obtiene el apellido del usuario.
- *
- * @return El apellido del usuario.
- */
-public String getApellido() {
-    return apellido;
-}
+    /**
+     * Obtiene el apellido del usuario.
+     *
+     * @return El apellido del usuario.
+     */
+    public String getApellido() {
+        return apellido;
+    }
 
-/**
- * Establece el apellido del usuario.
- *
- * @param apellido El apellido del usuario.
- */
-public void setApellido(String apellido) {
-    this.apellido = apellido;
-}
+    /**
+     * Establece el apellido del usuario.
+     *
+     * @param apellido El apellido del usuario.
+     */
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
-/**
- * Obtiene la fecha de contratación del usuario.
- *
- * @return La fecha de contratación del usuario.
- */
-public Date getFechaContratacion() {
-    return fechaContratacion;
-}
+    /**
+     * Obtiene la fecha de contratación del usuario.
+     *
+     * @return La fecha de contratación del usuario.
+     */
+    public Date getFechaContratacion() {
+        return fechaContratacion;
+    }
 
-/**
- * Establece la fecha de contratación del usuario.
- *
- * @param fechaContratacion La fecha de contratación del usuario.
- */
-public void setFechaContratacion(Date fechaContratacion) {
-    this.fechaContratacion = fechaContratacion;
-}
+    /**
+     * Establece la fecha de contratación del usuario.
+     *
+     * @param fechaContratacion La fecha de contratación del usuario.
+     */
+    public void setFechaContratacion(Date fechaContratacion) {
+        this.fechaContratacion = fechaContratacion;
+    }
 
-/**
- * Obtiene el puesto del usuario.
- *
- * @return El puesto del usuario.
- */
-public Puesto getPuesto() {
-    return puesto;
-}
+    /**
+     * Obtiene el puesto del usuario.
+     *
+     * @return El puesto del usuario.
+     */
+    public Puesto getPuesto() {
+        return puesto;
+    }
 
-/**
- * Establece el puesto del usuario.
- *
- * @param puesto El puesto del usuario.
- */
-public void setPuesto(Puesto puesto) {
-    this.puesto = puesto;
-}
+    /**
+     * Establece el puesto del usuario.
+     *
+     * @param puesto El puesto del usuario.
+     */
+    public void setPuesto(Puesto puesto) {
+        this.puesto = puesto;
+    }
 
-/**
- * Obtiene el teléfono del usuario.
- *
- * @return El teléfono del usuario.
- */
-public String getTelefono() {
-    return telefono;
-}
+    /**
+     * Obtiene el teléfono del usuario.
+     *
+     * @return El teléfono del usuario.
+     */
+    public String getTelefono() {
+        return telefono;
+    }
 
-/**
- * Establece el teléfono del usuario.
- *
- * @param telefono El teléfono del usuario.
- */
-public void setTelefono(String telefono) {
-    this.telefono = telefono;
-}
+    /**
+     * Establece el teléfono del usuario.
+     *
+     * @param telefono El teléfono del usuario.
+     */
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
-/**
- * Obtiene la contraseña del usuario.
- *
- * @return La contraseña del usuario.
- */
-public String getContrasena() {
-    return contrasena;
-}
+    /**
+     * Obtiene la contraseña del usuario.
+     *
+     * @return La contraseña del usuario.
+     */
+    public String getContrasena() {
+        return contrasena;
+    }
 
-/**
- * Establece la contraseña del usuario.
- *
- * @param contrasena La contraseña del usuario.
- */
-public void setContrasena(String contrasena) {
-    this.contrasena = contrasena;
-}
+    /**
+     * Establece la contraseña del usuario.
+     *
+     * @param contrasena La contraseña del usuario.
+     */
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
 
-/**
- * Obtiene la dirección del usuario.
- *
- * @return La dirección del usuario.
- */
-public Direccion getDireccion() {
-    return direccion;
-}
+    /**
+     * Obtiene la dirección del usuario.
+     *
+     * @return La dirección del usuario.
+     */
+    public Direccion getDireccion() {
+        return direccion;
+    }
 
-/**
- * Establece la dirección del usuario.
- *
- * @param direccion La dirección del usuario.
- */
-public void setDireccion(Direccion direccion) {
-    this.direccion = direccion;
-}
+    /**
+     * Establece la dirección del usuario.
+     *
+     * @param direccion La dirección del usuario.
+     */
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
+    }
 
+    /**
+     * Devuelve una cadena que representa al usuario.
+     * 
+     * @return Una cadena que representa al usuario.
+     */
     @Override
     public String toString() {
         return "Usuario{"

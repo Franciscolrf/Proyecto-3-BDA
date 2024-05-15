@@ -19,24 +19,26 @@ public class Direccion {
 
     // Constructores
 
-    /*
+    /**
      * Constructor por defecto.
      */
     public Direccion() {
     }
 
-    /*
+    /**
      * Constructor con todos los atributos.
      * 
-     * @param ciudad Ciudad de la dirección.
+     * @param _id            Identificador de la dirección.
+     * 
+     * @param ciudad         Ciudad de la dirección.
      * 
      * @param numeroEdificio Número de edificio de la dirección.
      * 
-     * @param calle Calle de la dirección.
+     * @param calle          Calle de la dirección.
      * 
-     * @param colonia Colonia de la dirección.
+     * @param colonia        Colonia de la dirección.
      * 
-     * @param codigoPostal Código postal de la dirección.
+     * @param codigoPostal   Código postal de la dirección.
      */
     public Direccion(ObjectId _id, String ciudad, String numeroEdificio, String calle, String colonia,
             String codigoPostal) {
@@ -48,18 +50,18 @@ public class Direccion {
         this.codigoPostal = codigoPostal;
     }
 
-    /*
+    /**
      * Constructor con todos los atributos.
      * 
-     * @param ciudad Ciudad de la dirección.
+     * @param ciudad         Ciudad de la dirección.
      * 
      * @param numeroEdificio Número de edificio de la dirección.
      * 
-     * @param calle Calle de la dirección.
+     * @param calle          Calle de la dirección.
      * 
-     * @param colonia Colonia de la dirección.
+     * @param colonia        Colonia de la dirección.
      * 
-     * @param codigoPostal Código postal de la dirección.
+     * @param codigoPostal   Código postal de la dirección.
      */
     public Direccion(String ciudad, String numeroEdificio, String calle, String colonia, String codigoPostal) {
         this.ciudad = ciudad;
@@ -179,8 +181,10 @@ public class Direccion {
         this.codigoPostal = codigoPostal;
     }
 
-    /*
+    /**
      * Método toString.
+     * 
+     * @return Una cadena que representa el objeto.
      */
     @Override
     public String toString() {

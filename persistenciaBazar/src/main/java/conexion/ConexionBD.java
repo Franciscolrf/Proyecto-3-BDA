@@ -24,6 +24,13 @@ public class ConexionBD {
     private static MongoClient mongoClient;
     private static MongoDatabase database;
 
+
+    /**
+     * Constructor por defecto.
+     */
+    public ConexionBD() {
+        
+    }
     /**
      * Método para obtener el cliente de MongoDB
      * 

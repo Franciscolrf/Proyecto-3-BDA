@@ -20,7 +20,7 @@ public class PersistenciaException extends Exception {
     /**
      * Constructor con mensaje.
      * 
-     * @param msg
+     * @param msg Mensaje de la excepción.
      */
     public PersistenciaException(String msg) {
         super(msg);
@@ -29,8 +29,8 @@ public class PersistenciaException extends Exception {
     /**
      * Constructor con mensaje y causa.
      * 
-     * @param msg
-     * @param causa
+     * @param msg Mensaje de la excepción.
+     * @param causa Causa de la excepción.
      */
     public PersistenciaException(String msg, Throwable causa) {
         super(msg, causa);
