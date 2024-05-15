@@ -275,6 +275,10 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_confirmarContrasenaFieldActionPerformed
 
+    /**
+     * Cierra la ventana de agregar usuario.
+     * @param evt
+     */
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
@@ -289,6 +293,10 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Restablece los campos de la ventana de agregar usuario.
+     * @param evt
+     */
     private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
         fieldNombreUsuario.setText("");
         fieldApellidoUsuario.setText("");
@@ -302,6 +310,10 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         confirmarContrasenaField.setText("");
     }//GEN-LAST:event_botonRestablecerActionPerformed
 
+    /**
+     * Agrega un usuario a la base de datos.
+     * @param evt
+     */
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         // Obtener los valores de los campos
         String nombreUsuario = fieldNombreUsuario.getText().trim();

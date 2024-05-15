@@ -324,12 +324,22 @@ public class principalFrame extends javax.swing.JFrame {
         pf.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    /**
+     * Valida que la fecha tenga el formato correcto.
+     * @param fecha
+     * @return boolean true si la fecha tiene el formato correcto, false en caso contrario.
+     */
     private boolean validarFormatoFecha(String fecha) {
         // Expresión regular para validar el formato yyyy-MM-dd
         String regex = "^\\d{4}-\\d{2}-\\d{2}$";
         return fecha.matches(regex);
     }
 
+    /**
+     * Valida que los valores de la fecha sean válidos.
+     * @param fecha
+     * @return boolean true si los valores de la fecha son válidos, false en caso contrario.
+     */
     private boolean validarValoresFecha(String fecha) {
         // Obtener los componentes de la fecha
         String[] componentes = fecha.split("-");
@@ -345,6 +355,10 @@ public class principalFrame extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Muestra los productos en la tabla.
+     * @param productos
+     */
     private void mostrarProductosEnTabla(List<ProductoDTO> productos) {
         // Limpiar la tabla
         DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
@@ -361,6 +375,11 @@ public class principalFrame extends javax.swing.JFrame {
             model.addRow(row);
         }
     }
+    /**
+     * Filtra los productos por fechas.
+     * @param evt
+     * 
+     */
     private void botonFiltrarFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFiltrarFechasActionPerformed
         GestorProductos gp = new GestorProductos();
         // Obtener las fechas ingresadas
@@ -407,6 +426,10 @@ public class principalFrame extends javax.swing.JFrame {
         vf.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    /**
+     * Restablece los valores de los campos de texto y muestra todos los productos en la tabla.
+     * @param evt
+     */
     private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
         List<ProductoDTO> productos = null;
         try {
@@ -420,6 +443,10 @@ public class principalFrame extends javax.swing.JFrame {
         fieldNombre.setText("");
     }//GEN-LAST:event_botonRestablecerActionPerformed
 
+    /**
+     * Filtra los productos por nombre.
+     * @param evt
+     */
     private void botonFIltrarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFIltrarNombreActionPerformed
         String nombre = fieldNombre.getText();
         if (nombre.isEmpty()) {
@@ -528,6 +555,10 @@ public class principalFrame extends javax.swing.JFrame {
     private javax.swing.JMenu menuVentas;
     private javax.swing.JTable tablaProductos;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Clase interna para el modelo de la tabla de productos.
+     */
     public class ProductosTableModel extends javax.swing.table.DefaultTableModel {
 
         private final String[] columnNames = {"Nombre", "Codigo Interno", "Precio", "Fecha Registro"};

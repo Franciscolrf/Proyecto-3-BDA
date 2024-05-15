@@ -48,42 +48,93 @@ public class ProductoDTO {
 
     // Getters y Setters
 
+    /**
+     * Devuelve el código de barras del producto.
+     *
+     * @return Un Long que representa el código de barras del producto.
+     */
     public Long getCodigoBarras() {
         return codigoBarras;
     }
 
+    /**
+     * Establece el código de barras del producto.
+     *
+     * @param id Un Long que representa el código de barras a establecer.
+     */
     public void setCodigoBarras(Long id) {
         this.codigoBarras = id;
     }
 
+    /**
+     * Establece el código interno del producto.
+     *
+     * @param codigo Una cadena que representa el código interno a establecer.
+     */
     public void setCodigoInterno(String codigo) {
         this.codigoInterno = codigo;
     }
 
+    /**
+     * Devuelve el código interno del producto.
+     *
+     * @return Una cadena que representa el código interno del producto.
+     */
     public String getCodigoInterno() {
         return this.codigoInterno;
     }
 
+    /**
+     * Devuelve el nombre del producto.
+     *
+     * @return Una cadena que representa el nombre del producto.
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * Establece el nombre del producto.
+     *
+     * @param nombre Una cadena que representa el nombre a establecer.
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * Devuelve el precio del producto.
+     *
+     * @return Un float que representa el precio del producto.
+     */
     public float getPrecio() {
         return precio;
     }
 
+    /**
+     * Establece el precio del producto.
+     *
+     * @param precio Un float que representa el precio a establecer.
+     */
     public void setPrecio(float precio) {
         this.precio = precio;
     }
 
+    /**
+     * Devuelve la fecha de registro del producto.
+     *
+     * @return Un objeto Date que representa la fecha de registro del producto.
+     */
     public Date getFechaRegistro() {
         return this.fechaRegistro;
     }
 
+    /**
+     * Establece la fecha de registro del producto.
+     *
+     * @param fechaRegistro Un objeto Date que representa la fecha de registro a
+     *                      establecer.
+     */
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }

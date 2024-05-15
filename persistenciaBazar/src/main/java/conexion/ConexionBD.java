@@ -13,17 +13,22 @@ import excepciones.PersistenciaException;
 
 /**
  * Clase que se encarga de la conexión con la base de datos MongoDB
+ * 
  * @author Fran
  */
 public class ConexionBD {
     // Atributos
- private static final String DATABASE_NAME = "bazar";
+    private static final String DATABASE_NAME = "bazar";
     private static final String CONNECTION_STRING = "mongodb://localhost:27017";
 
     private static MongoClient mongoClient;
     private static MongoDatabase database;
 
-    // Método para obtener el cliente de MongoDB
+    /**
+     * Método para obtener el cliente de MongoDB
+     * 
+     * @return el cliente de MongoDB
+     */
     public static MongoClient getMongoClient() {
         if (mongoClient == null) {
             // Configuración del cliente de MongoDB
@@ -38,6 +43,11 @@ public class ConexionBD {
         return mongoClient;
     }
 
+    /**
+     * Método para obtener la base de datos
+     * 
+     * @return la base de datos
+     */
     public static MongoDatabase getDatabase() {
 
         // Obtener el cliente de MongoDB
@@ -45,10 +55,12 @@ public class ConexionBD {
 
         // Obtener la base de datos
         return client.getDatabase(DATABASE_NAME);
-     
-}
 
-    // Método para cerrar la conexión
+    }
+
+    /**
+     * Método para cerrar la conexión con la base de datos
+     */
     public static void close() {
         if (mongoClient != null) {
             mongoClient.close();

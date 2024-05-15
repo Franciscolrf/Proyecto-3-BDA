@@ -169,13 +169,20 @@ public class GestorVentas implements IGestorVentas {
         return ventas;
     }
 
+    /**
+     * Consulta ventas por apellido de cliente.
+     * 
+     * @param codigoInterno
+     * @return lista de ventas con el apellido del cliente especificado.
+     * @throws PersistenciaException
+     */
     @Override
     public VentaDTO consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException {
         if (codigoInterno == null) {
             throw new PersistenciaException("El codigo interno no puede ser nulo");
 
         }
-        
+
         try {
             // Crear el filtro para buscar la venta por su codigoInterno
             Document query = new Document("codigoInterno", codigoInterno);
@@ -348,11 +355,5 @@ public class GestorVentas implements IGestorVentas {
                 .append("metodoPago", venta.getMetodoPago().name())
                 .append("productosVendidos", productosVendidosDocs);
     }
-
-    /**
-     * Documento a DTO
-     */
-
-
 
 }

@@ -77,70 +77,149 @@ public class UsuarioDTO {
 
     // Getters y Setters
 
-    public String getCodigoInterno() {
-        return codigoInterno;
-    }
+    /**
+ * Devuelve el código interno del usuario.
+ *
+ * @return Una cadena que representa el código interno del usuario.
+ */
+public String getCodigoInterno() {
+    return codigoInterno;
+}
 
-    public void setCodigoInterno(String codigoInterno) {
-        this.codigoInterno = codigoInterno;
-    }
+/**
+ * Establece el código interno del usuario.
+ *
+ * @param codigoInterno Una cadena que representa el código interno a establecer.
+ */
+public void setCodigoInterno(String codigoInterno) {
+    this.codigoInterno = codigoInterno;
+}
 
-    
-    public String getNombre() {
-        return nombre;
-    }
+/**
+ * Devuelve el nombre del usuario.
+ *
+ * @return Una cadena que representa el nombre del usuario.
+ */
+public String getNombre() {
+    return nombre;
+}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+/**
+ * Establece el nombre del usuario.
+ *
+ * @param nombre Una cadena que representa el nombre a establecer.
+ */
+public void setNombre(String nombre) {
+    this.nombre = nombre;
+}
 
-    public String getApellido() {
-        return apellido;
-    }
+/**
+ * Devuelve el apellido del usuario.
+ *
+ * @return Una cadena que representa el apellido del usuario.
+ */
+public String getApellido() {
+    return apellido;
+}
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+/**
+ * Establece el apellido del usuario.
+ *
+ * @param apellido Una cadena que representa el apellido a establecer.
+ */
+public void setApellido(String apellido) {
+    this.apellido = apellido;
+}
 
-    public Date getFechaContratacion() {
-        return fechaContratacion;
-    }
+/**
+ * Devuelve la fecha de contratación del usuario.
+ *
+ * @return Un objeto Date que representa la fecha de contratación del usuario.
+ */
+public Date getFechaContratacion() {
+    return fechaContratacion;
+}
 
-    public void setFechaContratacion(Date fechaContratacion) {
-        this.fechaContratacion = fechaContratacion;
-    }
+/**
+ * Establece la fecha de contratación del usuario.
+ *
+ * @param fechaContratacion Un objeto Date que representa la fecha de contratación a establecer.
+ */
+public void setFechaContratacion(Date fechaContratacion) {
+    this.fechaContratacion = fechaContratacion;
+}
 
-    public Puesto getPuesto() {
-        return puesto;
-    }
+/**
+ * Devuelve el puesto del usuario.
+ *
+ * @return Un objeto Puesto que representa el puesto del usuario.
+ */
+public Puesto getPuesto() {
+    return puesto;
+}
 
-    public void setPuesto(Puesto puesto) {
-        this.puesto = puesto;
-    }
+/**
+ * Establece el puesto del usuario.
+ *
+ * @param puesto Un objeto Puesto que representa el puesto a establecer.
+ */
+public void setPuesto(Puesto puesto) {
+    this.puesto = puesto;
+}
 
-    public String getTelefono() {
-        return telefono;
-    }
+/**
+ * Devuelve el teléfono del usuario.
+ *
+ * @return Una cadena que representa el teléfono del usuario.
+ */
+public String getTelefono() {
+    return telefono;
+}
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
+/**
+ * Establece el teléfono del usuario.
+ *
+ * @param telefono Una cadena que representa el teléfono a establecer.
+ */
+public void setTelefono(String telefono) {
+    this.telefono = telefono;
+}
 
-    public String getContrasena() {
-        return contrasena;
-    }
+/**
+ * Devuelve la contraseña del usuario.
+ *
+ * @return Una cadena que representa la contraseña del usuario.
+ */
+public String getContrasena() {
+    return contrasena;
+}
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
+/**
+ * Establece la contraseña del usuario.
+ *
+ * @param contrasena Una cadena que representa la contraseña a establecer.
+ */
+public void setContrasena(String contrasena) {
+    this.contrasena = contrasena;
+}
 
-    public DireccionDTO getDireccion() {
-        return direccion;
-    }
+/**
+ * Devuelve la dirección del usuario.
+ *
+ * @return Un objeto DireccionDTO que representa la dirección del usuario.
+ */
+public DireccionDTO getDireccion() {
+    return direccion;
+}
 
-    public void setDireccion(DireccionDTO direccion) {
-        this.direccion = direccion;
-    }
+/**
+ * Establece la dirección del usuario.
+ *
+ * @param direccion Un objeto DireccionDTO que representa la dirección a establecer.
+ */
+public void setDireccion(DireccionDTO direccion) {
+    this.direccion = direccion;
+}
 
     /*
      * Metodo que regresa la informacion del usuario en forma de cadena.

@@ -75,50 +75,110 @@ public class Producto {
 
     // Getters y Setters
 
+    /**
+     * Obtiene el identificador único del objeto.
+     *
+     * @return El identificador único del objeto.
+     */
     public ObjectId get_id() {
         return _id;
     }
 
+    /**
+     * Establece el identificador único del objeto.
+     *
+     * @param _id El identificador único del objeto.
+     */
     public void set_id(ObjectId _id) {
         this._id = _id;
     }
 
+    /**
+     * Obtiene el código de barras del objeto.
+     *
+     * @return El código de barras del objeto.
+     */
     public Long getCodigoBarras() {
         return codigoBarras;
     }
 
+    /**
+     * Establece el código de barras del objeto.
+     *
+     * @param codigoBarras El código de barras del objeto.
+     */
     public void setCodigoBarras(Long codigoBarras) {
         this.codigoBarras = codigoBarras;
     }
 
+    /**
+     * Obtiene el código interno del objeto.
+     *
+     * @return El código interno del objeto.
+     */
     public String getCodigoInterno() {
         return codigoInterno;
     }
 
+    /**
+     * Establece el código interno del objeto.
+     *
+     * @param codigoInterno El código interno del objeto.
+     */
     public void setCodigoInterno(String codigoInterno) {
         this.codigoInterno = codigoInterno;
     }
 
+    /**
+     * Obtiene el nombre del objeto.
+     *
+     * @return El nombre del objeto.
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * Establece el nombre del objeto.
+     *
+     * @param nombre El nombre del objeto.
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * Obtiene el precio del objeto.
+     *
+     * @return El precio del objeto.
+     */
     public float getPrecio() {
         return precio;
     }
 
+    /**
+     * Establece el precio del objeto.
+     *
+     * @param precio El precio del objeto.
+     */
     public void setPrecio(float precio) {
         this.precio = precio;
     }
 
+    /**
+     * Obtiene la fecha de registro del objeto.
+     *
+     * @return La fecha de registro del objeto.
+     */
     public Date getFechaRegistro() {
         return fechaRegistro;
     }
 
+    /**
+     * Establece la fecha de registro del objeto.
+     *
+     * @param fechaRegistro La fecha de registro del objeto.
+     */
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }

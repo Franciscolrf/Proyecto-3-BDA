@@ -35,6 +35,9 @@ public class modificarUsuarioFrame extends javax.swing.JFrame {
         initComponents();
     }
 
+    /**
+     * Inicializa los campos de texto con los datos del usuario a modificar
+     */
     public void initFields() {
         fieldNombreUsuario.setText(usuario.getNombre());
         fieldApellidoUsuario.setText(usuario.getApellido());
@@ -303,6 +306,10 @@ public class modificarUsuarioFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que se ejecuta al presionar el botón "Agregar Usuario"
+     * @param evt
+     */
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         GestorUsuarios gu = null;
         try {

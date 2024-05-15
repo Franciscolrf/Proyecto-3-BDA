@@ -102,69 +102,149 @@ public class Venta {
     }
 
     // Getters y Setters
-    public ObjectId get_id() {
-        return _id;
-    }
+    /**
+ * Devuelve el ID del objeto.
+ *
+ * @return Un ObjectId que representa el ID del objeto.
+ */
+public ObjectId get_id() {
+    return _id;
+}
 
-    public void set_id(ObjectId _id) {
-        this._id = _id;
-    }
+/**
+ * Establece el ID del objeto.
+ *
+ * @param _id Un ObjectId que se establecerá como el ID del objeto.
+ */
+public void set_id(ObjectId _id) {
+    this._id = _id;
+}
 
-    public String getNombreCliente() {
-        return nombreCliente;
-    }
+/**
+ * Devuelve el nombre del cliente.
+ *
+ * @return Una cadena que representa el nombre del cliente.
+ */
+public String getNombreCliente() {
+    return nombreCliente;
+}
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
-    }
+/**
+ * Establece el nombre del cliente.
+ *
+ * @param nombreCliente Una cadena que se establecerá como el nombre del cliente.
+ */
+public void setNombreCliente(String nombreCliente) {
+    this.nombreCliente = nombreCliente;
+}
 
-    public String getApellidoCliente() {
-        return apellidoCliente;
-    }
+/**
+ * Devuelve el apellido del cliente.
+ *
+ * @return Una cadena que representa el apellido del cliente.
+ */
+public String getApellidoCliente() {
+    return apellidoCliente;
+}
 
-    public void setApellidoCliente(String apellidoCliente) {
-        this.apellidoCliente = apellidoCliente;
-    }
+/**
+ * Establece el apellido del cliente.
+ *
+ * @param apellidoCliente Una cadena que se establecerá como el apellido del cliente.
+ */
+public void setApellidoCliente(String apellidoCliente) {
+    this.apellidoCliente = apellidoCliente;
+}
 
-    public float getMontoTotal() {
-        return montoTotal;
-    }
+/**
+ * Devuelve el monto total de la venta.
+ *
+ * @return Un float que representa el monto total de la venta.
+ */
+public float getMontoTotal() {
+    return montoTotal;
+}
 
-    public void setMontoTotal(float montoTotal) {
-        this.montoTotal = montoTotal;
-    }
+/**
+ * Establece el monto total de la venta.
+ *
+ * @param montoTotal Un float que se establecerá como el monto total de la venta.
+ */
+public void setMontoTotal(float montoTotal) {
+    this.montoTotal = montoTotal;
+}
 
-    public MetodoPago getMetodoPago() {
-        return metodoPago;
-    }
+/**
+ * Devuelve el método de pago de la venta.
+ *
+ * @return Un objeto MetodoPago que representa el método de pago de la venta.
+ */
+public MetodoPago getMetodoPago() {
+    return metodoPago;
+}
 
-    public void setMetodoPago(MetodoPago metodoPago) {
-        this.metodoPago = metodoPago;
-    }
+/**
+ * Establece el método de pago de la venta.
+ *
+ * @param metodoPago Un objeto MetodoPago que se establecerá como el método de pago de la venta.
+ */
+public void setMetodoPago(MetodoPago metodoPago) {
+    this.metodoPago = metodoPago;
+}
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+/**
+ * Devuelve el usuario que realizó la venta.
+ *
+ * @return Un objeto Usuario que representa al usuario que realizó la venta.
+ */
+public Usuario getUsuario() {
+    return usuario;
+}
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+/**
+ * Establece el usuario que realizó la venta.
+ *
+ * @param usuario Un objeto Usuario que se establecerá como el usuario que realizó la venta.
+ */
+public void setUsuario(Usuario usuario) {
+    this.usuario = usuario;
+}
 
-    public Date getFechaVenta() {
-        return fechaVenta;
-    }
+/**
+ * Devuelve la fecha de la venta.
+ *
+ * @return Un objeto Date que representa la fecha de la venta.
+ */
+public Date getFechaVenta() {
+    return fechaVenta;
+}
 
-    public void setFechaVenta(Date fechaVenta) {
-        this.fechaVenta = fechaVenta;
-    }
+/**
+ * Establece la fecha de la venta.
+ *
+ * @param fechaVenta Un objeto Date que se establecerá como la fecha de la venta.
+ */
+public void setFechaVenta(Date fechaVenta) {
+    this.fechaVenta = fechaVenta;
+}
 
-    public List<Producto> getProductosVendidos() {
-        return productosVendidos;
-    }
+/**
+ * Devuelve la lista de productos vendidos.
+ *
+ * @return Una lista de objetos Producto que representa los productos vendidos.
+ */
+public List<Producto> getProductosVendidos() {
+    return productosVendidos;
+}
 
-    public void setProductosVendidos(List<Producto> productosVendidos) {
-        this.productosVendidos = productosVendidos;
-    }
+/**
+ * Establece la lista de productos vendidos.
+ *
+ * @param productosVendidos Una lista de objetos Producto que se establecerá como los productos vendidos.
+ */
+public void setProductosVendidos(List<Producto> productosVendidos) {
+    this.productosVendidos = productosVendidos;
+}
 
     /*
      * Método toString.

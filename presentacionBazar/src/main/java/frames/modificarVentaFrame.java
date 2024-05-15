@@ -37,6 +37,10 @@ public class modificarVentaFrame extends javax.swing.JFrame {
         initComponents();
     }
 
+    /**
+     * Inicializa los campos del formulario con los valores de la venta a
+     * modificar.
+     */
     private void initFields() {
         fieldNombreCliente.setText(venta.getNombreCliente());
         fieldApellidoCliente.setText(venta.getApellidoCliente());
@@ -187,6 +191,10 @@ public class modificarVentaFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_metodoPagoComboBoxActionPerformed
 
+    /**
+     * Método que se ejecuta al hacer click en el botón "Modificar Venta".
+     * @param evt
+     */
     private void botonCompletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompletarActionPerformed
         GestorVentas gv = null;
         try {

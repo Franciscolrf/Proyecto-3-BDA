@@ -158,6 +158,12 @@ public class modificarProductoFrame extends javax.swing.JFrame {
         setBounds(0, 0, 658, 403);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Consulta un producto por su código interno y muestra sus datos en los campos
+     * de texto.
+     * @param evt
+     *           Evento de clic en el botón "Consultar".
+     */
     private void botonConsultarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_botonConsultarActionPerformed
         String codigoInterno = fieldCodigoInterno.getText();
 //
@@ -196,6 +202,10 @@ public class modificarProductoFrame extends javax.swing.JFrame {
         dispose(); // TODO add your handling code here:
     }// GEN-LAST:event_botonSalirActionPerformed
 
+    /**
+     * Restablece los campos de texto a su estado inicial.
+     * @param evt
+     */
     private void fieldRestablecerActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fieldRestablecerActionPerformed
         fieldCodigoBarras.setText("");
         fieldCodigoInterno.setText("");
@@ -204,6 +214,9 @@ public class modificarProductoFrame extends javax.swing.JFrame {
         //
     }// GEN-LAST:event_fieldRestablecerActionPerformed
 
+    /**
+     * Llena los campos de texto con los datos del producto a modificar.
+     */
     private void populateFields() {
         fieldNombre.setText(producto.getNombre());
         fieldCodigoBarras.setText(String.valueOf(producto.getCodigoBarras()));
@@ -211,6 +224,11 @@ public class modificarProductoFrame extends javax.swing.JFrame {
         fieldPrecio.setText(String.valueOf(producto.getPrecio()));
     }
 
+    /**
+     * Modifica un producto con los datos ingresados en los campos de texto.
+     * @param evt
+     * @throws PersistenciaException
+     */
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) throws PersistenciaException {// GEN-FIRST:event_botonAgregarActionPerformed
         String nombre = fieldNombre.getText();
         String codigoBarrasStr = fieldCodigoBarras.getText();

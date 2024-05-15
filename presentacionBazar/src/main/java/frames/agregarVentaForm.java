@@ -238,6 +238,10 @@ public class agregarVentaForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_metodoPagoComboBoxActionPerformed
 
+    /**
+     * Método para completar la venta
+     * @param evt
+     */
     private void botonCompletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompletarActionPerformed
         String nombreCliente = fieldNombreCliente.getText().trim();
         String apellidoCliente = fieldApellidoCliente.getText().trim();
@@ -366,6 +370,9 @@ public class agregarVentaForm extends javax.swing.JFrame {
     }//GEN-LAST:event_botonCompletarActionPerformed
     // Método para limpiar el formulario después de completar la venta
 
+    /**
+     * Método para limpiar el formulario después de completar la venta
+     */
     private void limpiarFormulario() {
         fieldNombreCliente.setText("");
         fieldApellidoCliente.setText("");
@@ -470,6 +477,9 @@ public class agregarVentaForm extends javax.swing.JFrame {
     private javax.swing.JTable tablaProductos;
     private javax.swing.JTable tablaProductosEnVenta;
     // End of variables declaration//GEN-END:variables
+    /**
+     * Clase para el modelo de la tabla de productos
+     */
     private class ProductosTableModel extends javax.swing.table.DefaultTableModel {
 
         private final String[] columnNames = {"Nombre", "Codigo Interno", "Precio", "Fecha Registro"};

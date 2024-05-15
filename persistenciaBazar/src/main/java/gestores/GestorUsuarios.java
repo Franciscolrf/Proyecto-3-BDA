@@ -69,7 +69,7 @@ public class GestorUsuarios implements IGestorUsuarios {
     }
 
     // ...
-//
+    //
     /**
      * Elimina un usuario de la base de datos.
      *
@@ -209,7 +209,7 @@ public class GestorUsuarios implements IGestorUsuarios {
      * @param telefono Número de teléfono del usuario a buscar.
      * @return UsuarioDTO con el número de teléfono dado.
      * @throws PersistenciaException Si ocurre un error durante la persistencia
-     * de datos.
+     *                               de datos.
      */
     public UsuarioDTO consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException {
         if (codigoInterno == null || codigoInterno.isEmpty()) {
@@ -232,12 +232,12 @@ public class GestorUsuarios implements IGestorUsuarios {
     /**
      * Inicia sesión para un usuario dado el número de teléfono y la contraseña.
      *
-     * @param telefono Número de teléfono del usuario
+     * @param telefono   Número de teléfono del usuario
      * @param contrasena Contraseña del usuario
      * @return true si la sesión se inició correctamente, false en caso
-     * contrario
+     *         contrario
      * @throws PersistenciaException Si ocurre un error durante la persistencia
-     * de datos
+     *                               de datos
      */
     @Override
     public boolean iniciarSesion(String telefono, String contrasena) throws PersistenciaException {
@@ -268,10 +268,20 @@ public class GestorUsuarios implements IGestorUsuarios {
         }
     }
 
+    /**
+     * Cierra la sesión del usuario actual.
+     *
+     * @param usuario
+     */
     public static void setUsuarioLogueado(UsuarioDTO usuario) {
         usuarioLogueado = usuario;
     }
 
+    /**
+     * Obtiene el usuario logueado.
+     * 
+     * @return UsuarioDTO
+     */
     public static UsuarioDTO getUsuarioLogueado() {
         return usuarioLogueado;
     }

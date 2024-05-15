@@ -188,6 +188,11 @@ public class logFrame extends javax.swing.JFrame {
         dispose();
     }// GEN-LAST:event_botonSalirActionPerformed
 
+    /**
+     * Método que se encarga de verificar si el usuario y la contraseña son
+     * correctos. En caso de que no lo sean, se muestra un mensaje de error.
+     * @param evt
+     */
     private void botonAceptarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_botonAceptarActionPerformed
 
         String telefono = telefonoField.getText();
@@ -216,6 +221,10 @@ public class logFrame extends javax.swing.JFrame {
 
     }// GEN-LAST:event_botonAceptarActionPerformed
 
+    /**
+     * Método que se encarga de abrir la ventana de registro de usuario.
+     * @param evt
+     */
     private void botonRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_botonRegistrarseActionPerformed
 
         agregarUsuarioFrame agregarFrame = new agregarUsuarioFrame();
@@ -223,6 +232,10 @@ public class logFrame extends javax.swing.JFrame {
         dispose();
     }// GEN-LAST:event_botonRegistrarseActionPerformed
 
+    /**
+     * Método que se encarga de mostrar la contraseña en texto plano.
+     * @param evt
+     */
     private void checkboxMostrarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_checkboxMostrarContrasenaActionPerformed
         if (checkboxMostrarContrasena.isSelected()) {
             contrasenaField.setEchoChar((char) 0);

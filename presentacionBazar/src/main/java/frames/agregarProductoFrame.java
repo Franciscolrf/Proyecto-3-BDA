@@ -152,6 +152,11 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         //
     }// GEN-LAST:event_fieldRestablecerActionPerformed
 
+    /**
+     * Agregar producto
+     * @param evt
+     * @throws PersistenciaException
+     */
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) throws PersistenciaException {// GEN-FIRST:event_botonAgregarActionPerformed
         String codigoBarras = fieldCodigoBarras.getText().trim();
         String codigoInterno = fieldCodigoInterno.getText().trim();
