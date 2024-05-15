@@ -23,6 +23,8 @@ import dtos.VentaDTO;
 import dtos.VentaDTO.MetodoPago;
 import excepciones.PersistenciaException;
 import interfaces.IGestorVentas;
+import pojos.Venta;
+
 import static com.mongodb.client.model.Filters.*;
 
 /**
@@ -165,6 +167,33 @@ public class GestorVentas implements IGestorVentas {
             throw new PersistenciaException("Error al consultar las ventas por nombre de cliente: " + nombreCliente, e);
         }
         return ventas;
+    }
+
+    @Override
+    public VentaDTO consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException {
+        if (codigoInterno == null) {
+            throw new PersistenciaException("El codigo interno no puede ser nulo");
+
+        }
+        
+        try {
+            // Crear el filtro para buscar la venta por su codigoInterno
+            Document query = new Document("codigoInterno", codigoInterno);
+
+            // Buscar la venta en la base de datos
+            Document ventaDoc = ventasCollection.find(query).first();
+
+            // Verificar si se encontró la venta
+            if (ventaDoc != null) {
+                // Convertir el documento encontrado a un objeto VentaDTO
+                return documentToVentaDTO(ventaDoc);
+            } else {
+                // La venta no fue encontrada
+                throw new PersistenciaException("No se encontró ninguna venta con el código interno: " + codigoInterno);
+            }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar la venta con código interno: " + codigoInterno, e);
+        }
     }
 
     /**
@@ -319,5 +348,11 @@ public class GestorVentas implements IGestorVentas {
                 .append("metodoPago", venta.getMetodoPago().name())
                 .append("productosVendidos", productosVendidosDocs);
     }
+
+    /**
+     * Documento a DTO
+     */
+
+
 
 }

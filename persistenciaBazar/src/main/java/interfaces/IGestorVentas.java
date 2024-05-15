@@ -12,6 +12,7 @@ import org.bson.types.ObjectId;
 
 import dtos.VentaDTO;
 import excepciones.PersistenciaException;
+import pojos.Venta;
 
 /**
  *
@@ -33,4 +34,5 @@ public interface IGestorVentas {
     VentaDTO documentToVentaDTO(Document doc) throws PersistenciaException;
 
     Document ventaDTOToDocument(VentaDTO venta) throws PersistenciaException;
+    VentaDTO consultarPorCodigoInterno(String codigoInterno)throws PersistenciaException;
 }

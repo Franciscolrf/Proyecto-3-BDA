@@ -126,6 +126,12 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         jLabel1.setText("Nombre:");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(20, 100, 60, 20);
+
+        fieldNombreUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNombreUsuarioActionPerformed(evt);
+            }
+        });
         getContentPane().add(fieldNombreUsuario);
         fieldNombreUsuario.setBounds(80, 100, 230, 22);
         getContentPane().add(fieldApellidoUsuario);
@@ -399,6 +405,10 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         logFrame log = new logFrame();
         log.setVisible(true);
     }//GEN-LAST:event_botonAgregarActionPerformed
+
+    private void fieldNombreUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNombreUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

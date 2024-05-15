@@ -21,7 +21,9 @@ import javax.swing.table.DefaultTableModel;
  * @author ID145
  */
 public class ventasFrame extends javax.swing.JFrame {
-        GestorVentas gv = new GestorVentas();
+
+    GestorVentas gv = new GestorVentas();
+
     /**
      * Creates new form ventasFrame
      */
@@ -118,10 +120,20 @@ public class ventasFrame extends javax.swing.JFrame {
         jScrollPane1.setBounds(10, 140, 604, 329);
 
         botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonEliminar);
         botonEliminar.setBounds(530, 490, 90, 23);
 
         botonModificar.setText("Modificar");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonModificar);
         botonModificar.setBounds(270, 490, 90, 23);
 
@@ -149,7 +161,13 @@ public class ventasFrame extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre:");
 
-        botonFIltrarNombre.setText("Buscar por Nombre");
+        fieldNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNombreActionPerformed(evt);
+            }
+        });
+
+        botonFIltrarNombre.setText("Buscar por Nombre de Cliente");
         botonFIltrarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonFIltrarNombreActionPerformed(evt);
@@ -160,6 +178,13 @@ public class ventasFrame extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonFiltrarFechas)
+                    .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -171,16 +196,11 @@ public class ventasFrame extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonFIltrarNombre))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 32, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonFiltrarFechas)
-                    .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
+                            .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(botonFIltrarNombre)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,9 +287,9 @@ public class ventasFrame extends javax.swing.JFrame {
             mostrarVentasEnTabla(ventasFiltradas);
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this, "Error al parsear las fechas.", "Error", JOptionPane.ERROR_MESSAGE);
-        }   catch (PersistenciaException ex) {
-                Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botonFiltrarFechasActionPerformed
 
     private void mostrarVentasEnTabla(List<VentaDTO> ventas) {
@@ -300,20 +320,102 @@ public class ventasFrame extends javax.swing.JFrame {
         }
     }
     private void botonFIltrarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFIltrarNombreActionPerformed
-        // TODO add your handling code here:
+        String nombre = fieldNombre.getText();
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre para filtrar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            List<VentaDTO> ventasPorNombre = gv.consultarPorNombreCliente(nombre);
+
+            // Mostrar las ventas filtradas por nombre en la tabla
+            mostrarVentasEnTabla(ventasPorNombre);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botonFIltrarNombreActionPerformed
 
     private void botonRestableceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestableceActionPerformed
         List<VentaDTO> ventas = null;
-            try {
-                ventas = gv.consultarTodos();
-            } catch (PersistenciaException ex) {
-                Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            ventas = gv.consultarTodos();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         fieldFechaDesde.setText("");
         fieldFechaHasta.setText("");
         mostrarVentasEnTabla(ventas);
     }//GEN-LAST:event_botonRestableceActionPerformed
+
+    private void fieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNombreActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        // Obtener la fila seleccionada
+    int filaSeleccionada = tablaVentas.getSelectedRow();
+    
+    // Verificar que se haya seleccionado una fila
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una venta para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Obtener el codigoInterno de la fila seleccionada (segunda columna)
+    String codigoInterno = (String) tablaVentas.getValueAt(filaSeleccionada, 1);
+
+    try {
+        boolean eliminado = gv.eliminar(codigoInterno);
+        
+        if (eliminado) {
+            JOptionPane.showMessageDialog(this, "Venta eliminada correctamente.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            
+           List<VentaDTO> ventas = null;
+        try {
+            ventas = gv.consultarTodos();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            mostrarVentasEnTabla(ventas);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar la venta.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (PersistenciaException ex) {
+        Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        // Obtener la fila seleccionada
+    int filaSeleccionada = tablaVentas.getSelectedRow();
+    
+    // Verificar que se haya seleccionado una fila
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una venta para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Obtener el codigoInterno de la fila seleccionada (segunda columna)
+    String codigoInterno = (String) tablaVentas.getValueAt(filaSeleccionada, 1);
+    
+
+    try {
+        VentaDTO venta = gv.consultarPorCodigoInterno(codigoInterno);
+        
+        // Verificar si se encontró la venta
+        if (venta != null) {
+            // Crear un nuevo frame ModificarVentaFrame y pasarle la venta obtenida
+            modificarVentaFrame modificarVentaFrame = new modificarVentaFrame(venta);
+            modificarVentaFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró la venta.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (PersistenciaException ex) {
+        Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
+
+    }//GEN-LAST:event_botonModificarActionPerformed
 
     /**
      * @param args the command line arguments
