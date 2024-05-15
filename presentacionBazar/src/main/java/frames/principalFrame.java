@@ -287,6 +287,11 @@ public class principalFrame extends javax.swing.JFrame {
         menuAcercaDe.setText("Acerca de...");
 
         jMenuItem9.setText("Información");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         menuAcercaDe.add(jMenuItem9);
 
         jMenuBar1.add(menuAcercaDe);
@@ -443,6 +448,10 @@ public class principalFrame extends javax.swing.JFrame {
         }
         uf.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        JOptionPane.showMessageDialog(this, "Creado por: Francisco - ITSON - 00000247037");
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
