@@ -75,7 +75,7 @@ public class ventasFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(363, 363, 363)
                 .addComponent(jLabel4)
-                .addContainerGap(383, Short.MAX_VALUE))
+                .addContainerGap(433, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,7 +86,7 @@ public class ventasFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 860, 100);
+        jPanel1.setBounds(0, 0, 910, 100);
 
         tablaVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -241,7 +241,7 @@ public class ventasFrame extends javax.swing.JFrame {
         getContentPane().add(botonRestablece);
         botonRestablece.setBounds(390, 490, 110, 23);
 
-        setBounds(0, 0, 866, 647);
+        setBounds(0, 0, 926, 656);
     }// </editor-fold>//GEN-END:initComponents
 
     private void inicializarTablaVentas() throws PersistenciaException {
@@ -472,7 +472,6 @@ public class ventasFrame extends javax.swing.JFrame {
     private javax.swing.JButton botonFiltrarFechas;
     private javax.swing.JButton botonModificar;
     private javax.swing.JButton botonRestablece;
-    private javax.swing.JButton botonRestablecer;
     private javax.swing.JButton botonSalir;
     private javax.swing.JTextField fieldFechaDesde;
     private javax.swing.JTextField fieldFechaHasta;

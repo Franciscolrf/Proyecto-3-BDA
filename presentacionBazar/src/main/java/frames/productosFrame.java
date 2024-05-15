@@ -83,7 +83,7 @@ public class productosFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(354, 354, 354)
                 .addComponent(jLabel4)
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addContainerGap(415, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +94,7 @@ public class productosFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 910, 100);
+        jPanel1.setBounds(0, 0, 940, 100);
 
         botonSalir.setText("Salir");
         botonSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -224,7 +224,7 @@ public class productosFrame extends javax.swing.JFrame {
         getContentPane().add(botonRestablecer);
         botonRestablecer.setBounds(400, 490, 100, 23);
 
-        setBounds(0, 0, 922, 592);
+        setBounds(0, 0, 959, 597);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed

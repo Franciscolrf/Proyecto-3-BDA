@@ -126,6 +126,12 @@ public class principalFrame extends javax.swing.JFrame {
             }
         });
 
+        fieldFechaDesde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldFechaDesdeActionPerformed(evt);
+            }
+        });
+
         botonFIltrarNombre.setText("Buscar por Nombre");
         botonFIltrarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +203,7 @@ public class principalFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botonCerrarSesion);
-        botonCerrarSesion.setBounds(92, 380, 100, 23);
+        botonCerrarSesion.setBounds(92, 380, 130, 23);
 
         jScrollPane2.setViewportView(tablaProductos);
 
@@ -452,6 +458,10 @@ public class principalFrame extends javax.swing.JFrame {
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         JOptionPane.showMessageDialog(this, "Creado por: Francisco - ITSON - 00000247037");
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void fieldFechaDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldFechaDesdeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldFechaDesdeActionPerformed
 
     /**
      * @param args the command line arguments
