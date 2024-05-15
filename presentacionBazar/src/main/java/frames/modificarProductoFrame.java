@@ -11,17 +11,26 @@ import javax.swing.JOptionPane;
 import dtos.ProductoDTO;
 import excepciones.PersistenciaException;
 import gestores.GestorProductos;
+import pojos.Producto;
 
 /**
- * Frame para agregar un producto
+ * Frame para modificar un producto.
  * @author Fran
  */
-public class agregarProductoFrame extends javax.swing.JFrame {
+public class modificarProductoFrame extends javax.swing.JFrame {
+
+    private Producto producto;
 
     /**
      * Creates new form agregarProductoFrame
+     * @param producto Producto a modificar.
      */
-    public agregarProductoFrame() {
+    public modificarProductoFrame(Producto producto) {
+        this.producto = producto;
+        initComponents();
+    }
+
+    private modificarProductoFrame() {
         initComponents();
     }
 
@@ -32,7 +41,8 @@ public class agregarProductoFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -48,6 +58,7 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         botonSalir = new javax.swing.JButton();
         fieldRestablecer = new javax.swing.JButton();
         botonAgregar = new javax.swing.JButton();
+        botonConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -56,24 +67,22 @@ public class agregarProductoFrame extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Agregar Producto");
+        jLabel4.setText("Modificar Producto");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(175, 175, 175)
-                .addComponent(jLabel4)
-                .addContainerGap(265, Short.MAX_VALUE))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(175, 175, 175)
+                                .addComponent(jLabel4)
+                                .addContainerGap(238, Short.MAX_VALUE)));
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel4)
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel4)
+                                .addContainerGap(31, Short.MAX_VALUE)));
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 740, 100);
@@ -122,12 +131,12 @@ public class agregarProductoFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(fieldRestablecer);
-        fieldRestablecer.setBounds(240, 320, 110, 23);
+        fieldRestablecer.setBounds(190, 320, 110, 23);
 
-        botonAgregar.setText("Agregar Producto");
+        botonAgregar.setText("Modificar");
         botonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try { 
+                try {
                     botonAgregarActionPerformed(evt);
                 } catch (PersistenciaException e) {
                     e.printStackTrace();
@@ -135,15 +144,68 @@ public class agregarProductoFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botonAgregar);
-        botonAgregar.setBounds(470, 320, 140, 23);
+        botonAgregar.setBounds(490, 320, 100, 23);
 
-        setBounds(0, 0, 695, 472);
+        botonConsultar.setText("Consultar");
+        botonConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonConsultarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonConsultar);
+        botonConsultar.setBounds(350, 320, 100, 23);
+
+        setBounds(0, 0, 658, 403);
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Consulta un producto por su código interno y muestra sus datos en los campos
+     * de texto.
+     * @param evt
+     *           Evento de clic en el botón "Consultar".
+     */
+    private void botonConsultarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_botonConsultarActionPerformed
+        String codigoInterno = fieldCodigoInterno.getText();
+//
+        // Validaciones
+        if (codigoInterno.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo de Código Interno no puede estar vacío.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!codigoInterno.matches("^[A-Z]{3}\\d{3}$")) {
+            JOptionPane.showMessageDialog(this,
+                    "Código Interno debe tener el formato de 3 letras y luego 3 números (ejemplo: SAB001).", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            GestorProductos gestorProductos = new GestorProductos();
+            Producto producto = gestorProductos.consultarPorCodigoInterno(codigoInterno);
+
+            if (producto != null) {
+                fieldCodigoBarras.setText(String.valueOf(producto.getCodigoBarras())); // Convertir Long a String
+                fieldNombre.setText(producto.getNombre());
+                fieldPrecio.setText(String.valueOf(producto.getPrecio()));
+            } else {
+                JOptionPane.showMessageDialog(this, "Producto no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(this, "Error al obtener el producto: " + ex.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }// GEN-LAST:event_botonConsultarActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_botonSalirActionPerformed
         dispose(); // TODO add your handling code here:
     }// GEN-LAST:event_botonSalirActionPerformed
 
+    /**
+     * Restablece los campos de texto a su estado inicial.
+     * @param evt
+     */
     private void fieldRestablecerActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_fieldRestablecerActionPerformed
         fieldCodigoBarras.setText("");
         fieldCodigoInterno.setText("");
@@ -153,70 +215,84 @@ public class agregarProductoFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_fieldRestablecerActionPerformed
 
     /**
-     * Agregar producto
+     * Llena los campos de texto con los datos del producto a modificar.
+     */
+    private void populateFields() {
+        fieldNombre.setText(producto.getNombre());
+        fieldCodigoBarras.setText(String.valueOf(producto.getCodigoBarras()));
+        fieldCodigoInterno.setText(producto.getCodigoInterno());
+        fieldPrecio.setText(String.valueOf(producto.getPrecio()));
+    }
+
+    /**
+     * Modifica un producto con los datos ingresados en los campos de texto.
      * @param evt
      * @throws PersistenciaException
      */
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) throws PersistenciaException {// GEN-FIRST:event_botonAgregarActionPerformed
-        String codigoBarras = fieldCodigoBarras.getText().trim();
-        String codigoInterno = fieldCodigoInterno.getText().trim();
-        String nombre = fieldNombre.getText().trim();
-        String precio = fieldPrecio.getText().trim();
+        String nombre = fieldNombre.getText();
+        String codigoBarrasStr = fieldCodigoBarras.getText();
+        String codigoInterno = fieldCodigoInterno.getText();
+        String precio = fieldPrecio.getText();
 
-        // Validar que ningún campo esté vacío
-        if (codigoBarras.isEmpty() || codigoInterno.isEmpty() || nombre.isEmpty() || precio.isEmpty()) {
-            JOptionPane.showMessageDialog(agregarProductoFrame.this, "Todos los campos deben estar llenos.", "Error",
+        // Validaciones
+        if (nombre.isEmpty() || codigoBarrasStr.isEmpty() || codigoInterno.isEmpty() || precio.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos.", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Validar código de barras
-        if (!codigoBarras.matches("^\\d{10}$")) {
-            JOptionPane.showMessageDialog(agregarProductoFrame.this,
+        if (!codigoBarrasStr.matches("^\\d{10}$")) {
+            JOptionPane.showMessageDialog(this,
                     "Código de Barras debe contener solo números y debe ser de 10 caracteres.", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Validar código interno
         if (!codigoInterno.matches("^[A-Z]{3}\\d{3}$")) {
-            JOptionPane.showMessageDialog(agregarProductoFrame.this,
+            JOptionPane.showMessageDialog(this,
                     "Código Interno debe tener el formato de 3 letras y luego 3 números (ejemplo: SAB001).", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Validar nombre
         if (!nombre.matches("^[a-zA-Z0-9 ]+$")) {
-            JOptionPane.showMessageDialog(agregarProductoFrame.this,
-                    "Nombre solo puede contener letras, números y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Validar precio
-        if (!precio.matches("^\\d+(\\.\\d{1,2})?$") || Double.parseDouble(precio) < 0) {
-            JOptionPane.showMessageDialog(agregarProductoFrame.this, "Precio debe ser un número no negativo.", "Error",
+            JOptionPane.showMessageDialog(this, "Nombre solo puede contener letras, números y espacios.", "Error",
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        GestorProductos gp = new GestorProductos();
-        ProductoDTO producto = new ProductoDTO();
-        producto.setCodigoBarras(Long.parseLong(codigoBarras));
-        producto.setCodigoInterno(codigoInterno);
-        producto.setNombre(nombre);
-        producto.setPrecio(Float.parseFloat(precio));
-        producto.setFechaRegistro(new Date());
+        if (!precio.matches("^\\d+(\\.\\d{1,2})?$") || Double.parseDouble(precio) < 0) {
+            JOptionPane.showMessageDialog(this, "Precio debe ser un número no negativo.", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        if (gp.insertar(producto)) {
-            JOptionPane.showMessageDialog(agregarProductoFrame.this, "Producto agregado exitosamente.");
-            dispose();
+        // Modificar el producto
+        try {
+            GestorProductos gestorProductos = new GestorProductos();
+            Producto producto = gestorProductos.consultarPorCodigoInterno(codigoInterno);
+            if (producto != null) {
+                producto.setNombre(nombre);
+                producto.setCodigoBarras(Long.parseLong(codigoBarrasStr)); // Convertir String a Long
+                producto.setCodigoInterno(codigoInterno);
+                producto.setPrecio((float) Double.parseDouble(precio));
+                ProductoDTO productodto = gestorProductos.productoToProductoDTO(producto);
+                gestorProductos.modificar(productodto);
+                JOptionPane.showMessageDialog(this, "Producto modificado exitosamente.");
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Producto no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(this, "Error al modificar el producto: " + ex.getMessage(), "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
     }// GEN-LAST:event_botonAgregarActionPerformed
 
     /**
-     * Main
+     * Main method to run the frame.
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -237,30 +313,36 @@ public class agregarProductoFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(agregarProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+            java.util.logging.Logger.getLogger(modificarProductoFrame.class.getName()).log(
+                    java.util.logging.Level.SEVERE,
                     null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(agregarProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+            java.util.logging.Logger.getLogger(modificarProductoFrame.class.getName()).log(
+                    java.util.logging.Level.SEVERE,
                     null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(agregarProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+            java.util.logging.Logger.getLogger(modificarProductoFrame.class.getName()).log(
+                    java.util.logging.Level.SEVERE,
                     null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(agregarProductoFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+            java.util.logging.Logger.getLogger(modificarProductoFrame.class.getName()).log(
+                    java.util.logging.Level.SEVERE,
                     null, ex);
         }
+        // </editor-fold>
         // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new agregarProductoFrame().setVisible(true);
+                new modificarProductoFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
+    private javax.swing.JButton botonConsultar;
     private javax.swing.JButton botonSalir;
     private javax.swing.JTextField fieldCodigoBarras;
     private javax.swing.JTextField fieldCodigoInterno;

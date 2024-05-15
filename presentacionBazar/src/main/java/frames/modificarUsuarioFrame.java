@@ -2,29 +2,56 @@ package frames;
 
 import dtos.DireccionDTO;
 import dtos.UsuarioDTO;
+import dtos.UsuarioDTO.Puesto;
 import excepciones.PersistenciaException;
 import frames.logFrame;
 import gestores.GestorUsuarios;
-import pojos.Usuario;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 import javax.swing.JOptionPane;
 
 /**
- * Clase que representa la ventana de agregar usuario.
+ * Frame para modificar un usuario existente en la base de datos
  * @author Fran
  */
-public class agregarUsuarioFrame extends javax.swing.JFrame {
+public class modificarUsuarioFrame extends javax.swing.JFrame {
+
+    UsuarioDTO usuario;
+    
 
     /**
      * Creates new form agregarUsuarioFrame
      */
-    public agregarUsuarioFrame() {
+    public modificarUsuarioFrame(UsuarioDTO usuario) throws PersistenciaException {
+
+        this.usuario = usuario;
         initComponents();
+        initFields();
+    }
+
+    public modificarUsuarioFrame() {
+        initComponents();
+    }
+
+    /**
+     * Inicializa los campos de texto con los datos del usuario a modificar
+     */
+    public void initFields() {
+        fieldNombreUsuario.setText(usuario.getNombre());
+        fieldApellidoUsuario.setText(usuario.getApellido());
+        cajeroComboBox.setSelectedItem(usuario.getPuesto().toString());
+        fieldTelefono.setText(usuario.getTelefono());
+        contrasenaField.setText(usuario.getContrasena());
+        fieldCodigoInterno.setEditable(false);
+        fieldCodigoInterno.setText(usuario.getCodigoInterno());
+        fieldCalle.setText(usuario.getDireccion().getCalle());
+        fieldCiudad.setText(usuario.getDireccion().getCiudad());
+        fieldColonia.setText(usuario.getDireccion().getColonia());
+        fieldCodigoPostal.setText(usuario.getDireccion().getCodigoPostal());
+        fieldNumeroEdificio.setText(usuario.getDireccion().getNumeroEdificio());
+
     }
 
     /**
@@ -40,7 +67,6 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         botonCancelar = new javax.swing.JButton();
         botonAgregar = new javax.swing.JButton();
-        botonRestablecer = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         fieldNombreUsuario = new javax.swing.JTextField();
         fieldApellidoUsuario = new javax.swing.JTextField();
@@ -75,14 +101,14 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Agregar Usuario");
+        jLabel4.setText("Modificar Usuario");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(283, Short.MAX_VALUE)
+                .addContainerGap(256, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(293, 293, 293))
         );
@@ -106,23 +132,14 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         getContentPane().add(botonCancelar);
         botonCancelar.setBounds(70, 530, 90, 23);
 
-        botonAgregar.setText("Agregar Usuario");
+        botonAgregar.setText("Modificar Usuario");
         botonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAgregarActionPerformed(evt);
             }
         });
         getContentPane().add(botonAgregar);
-        botonAgregar.setBounds(650, 530, 120, 23);
-
-        botonRestablecer.setText("Restablecer");
-        botonRestablecer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRestablecerActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botonRestablecer);
-        botonRestablecer.setBounds(360, 530, 130, 23);
+        botonAgregar.setBounds(610, 530, 160, 23);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Nombre:");
@@ -275,10 +292,6 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_confirmarContrasenaFieldActionPerformed
 
-    /**
-     * Cierra la ventana de agregar usuario.
-     * @param evt
-     */
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
@@ -294,147 +307,136 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Restablece los campos de la ventana de agregar usuario.
-     * @param evt
-     */
-    private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
-        fieldNombreUsuario.setText("");
-        fieldApellidoUsuario.setText("");
-        fieldTelefono.setText("");
-        fieldCalle.setText("");
-        fieldColonia.setText("");
-        fieldCodigoPostal.setText("");
-        fieldCiudad.setText("");
-        fieldNumeroEdificio.setText("");
-        contrasenaField.setText("");
-        confirmarContrasenaField.setText("");
-    }//GEN-LAST:event_botonRestablecerActionPerformed
-
-    /**
-     * Agrega un usuario a la base de datos.
+     * Método que se ejecuta al presionar el botón "Agregar Usuario"
      * @param evt
      */
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
-        // Obtener los valores de los campos
-        String nombreUsuario = fieldNombreUsuario.getText().trim();
-        String apellidoUsuario = fieldApellidoUsuario.getText().trim();
-        String telefono = fieldTelefono.getText().trim();
-        String calle = fieldCalle.getText().trim();
-        String colonia = fieldColonia.getText().trim();
-        String codigoPostal = fieldCodigoPostal.getText().trim();
-        String ciudad = fieldCiudad.getText().trim();
-        String numeroEdificio = fieldNumeroEdificio.getText().trim();
-        String contrasena = new String(contrasenaField.getPassword());
-        String confirmarContrasena = new String(confirmarContrasenaField.getPassword());
-        String codigoInterno = fieldCodigoInterno.getText().trim();
-
-        // Validar que ningún campo esté vacío
-        if (nombreUsuario.isEmpty() || apellidoUsuario.isEmpty() || telefono.isEmpty() || calle.isEmpty()
-                || colonia.isEmpty() || codigoPostal.isEmpty() || ciudad.isEmpty() || numeroEdificio.isEmpty()
-                || contrasena.isEmpty() || confirmarContrasena.isEmpty()) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        GestorUsuarios gu = null;
+        try {
+            gu = new GestorUsuarios();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(modificarUsuarioFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // Obtener los datos modificados del usuario desde los campos de texto
+        String nombre = fieldNombreUsuario.getText();
+        String apellido = fieldApellidoUsuario.getText();
+        String puestoStr = (String) cajeroComboBox.getSelectedItem(); // Obtener el puesto seleccionado del ComboBox
+        Puesto puesto = Puesto.valueOf(puestoStr); // Convertir el String a enum Puesto
+        String telefono = fieldTelefono.getText();
+        String contrasena = contrasenaField.getText();
+        String codigoInterno = fieldCodigoInterno.getText();
+        String calle = fieldCalle.getText();
+        String colonia = fieldColonia.getText();
+        String codigoPostal = fieldCodigoPostal.getText();
+        String ciudad = fieldCiudad.getText();
+        String numeroEdificio = fieldNumeroEdificio.getText();
+        String confirmarContrasena = confirmarContrasenaField.getText();
 
         // Validar nombre de usuario
-        if (!nombreUsuario.matches("^[a-zA-Z]+$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Nombre de Usuario solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!nombre.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Nombre de Usuario solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar apellido de usuario
-        if (!apellidoUsuario.matches("^[a-zA-Z]+$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Apellido de Usuario solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!apellido.matches("^[a-zA-Z]+$")) {
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Apellido de Usuario solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar teléfono
         if (!telefono.matches("^\\d{10}$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Teléfono debe contener solo 10 números.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Teléfono debe contener solo 10 números.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar calle
         if (!calle.matches("^[a-zA-Z]+$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Calle solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Calle solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar colonia
         if (!colonia.matches("^[a-zA-Z]+$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Colonia solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Colonia solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar código postal
         if (!codigoPostal.matches("^\\d{5}$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Código Postal debe contener solo 5 números.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Código Postal debe contener solo 5 números.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar ciudad
         if (!ciudad.matches("^[a-zA-Z]+$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Ciudad solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Ciudad solo puede contener letras.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar número de edificio
         if (!numeroEdificio.matches("^\\d+$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Número de Edificio solo puede contener números.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Número de Edificio solo puede contener números.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar contraseña
         if (contrasena.length() < 6) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Contraseña debe tener al menos 6 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Contraseña debe tener al menos 6 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         // Validar confirmar contraseña
         if (!contrasena.equals(confirmarContrasena)) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Confirmar Contraseña debe ser igual a la Contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Confirmar Contraseña debe ser igual a la Contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        // Validar código interno
-        if (!codigoInterno.matches("^[A-Z]{3}\\d{3}$")) {
-            JOptionPane.showMessageDialog(agregarUsuarioFrame.this,
-                    "Código Interno debe tener el formato de 3 letras y luego 3 números (ejemplo: SAB001).", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        GestorUsuarios gu;
+        
+        UsuarioDTO fecha = new UsuarioDTO();
         try {
-            gu = new GestorUsuarios();
-            UsuarioDTO usuario = new UsuarioDTO();
-            usuario.setCodigoInterno(codigoInterno);
-            usuario.setNombre(nombreUsuario);
-            usuario.setApellido(apellidoUsuario);
-            usuario.setFechaContratacion(new Date());
-            String puestoString = (String) cajeroComboBox.getSelectedItem();
-            usuario.setPuesto(getPuestoFromComboBox(puestoString));
-            usuario.setTelefono(telefono);
-            usuario.setContrasena(contrasena);
-            DireccionDTO direccion = new DireccionDTO();
-            direccion.setCalle(calle);
-            direccion.setColonia(colonia);
-            direccion.setCodigoPostal(codigoPostal);
-            direccion.setCiudad(ciudad);
-            direccion.setNumeroEdificio(numeroEdificio);
-            usuario.setDireccion(direccion);
-            try {
-                gu.insertar(usuario);
-                JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Usuario agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } catch (PersistenciaException e) {
-                JOptionPane.showMessageDialog(agregarUsuarioFrame.this, "Error al agregar usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            fecha = gu.consultarPorCodigoInterno(codigoInterno);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(modificarUsuarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        // Crear un nuevo objeto UsuarioDTO con los datos modificados
+        UsuarioDTO usuarioModificado = new UsuarioDTO();
+        usuarioModificado.setCodigoInterno(codigoInterno);
+        usuarioModificado.setNombre(nombre);
+        usuarioModificado.setApellido(apellido);
+        usuarioModificado.setPuesto(puesto);
+        usuarioModificado.setTelefono(telefono);
+        usuarioModificado.setContrasena(contrasena);
+        usuarioModificado.setFechaContratacion(fecha.getFechaContratacion());
+
+        // Crear un nuevo objeto DireccionDTO con los datos de dirección modificados
+        DireccionDTO direccionModificada = new DireccionDTO();
+        direccionModificada.setCalle(calle);
+        direccionModificada.setColonia(colonia);
+        direccionModificada.setCodigoPostal(codigoPostal);
+        direccionModificada.setCiudad(ciudad);
+        direccionModificada.setNumeroEdificio(numeroEdificio);
+
+        // Asignar la dirección modificada al usuario modificado
+        usuarioModificado.setDireccion(direccionModificada);
+
+        // Intentar modificar el usuario en la base de datos
+        try {
+            boolean modificado = gu.modificar(usuarioModificado);
+            if (modificado) {
+                JOptionPane.showMessageDialog(this, "Usuario modificado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                // Cerrar este frame después de la modificación exitosa
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo modificar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (PersistenciaException ex) {
-            Logger.getLogger(agregarUsuarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error al modificar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace(); // Manejar el error según sea necesario
         }
 
         dispose();
-        logFrame log = new logFrame();
-        log.setVisible(true);
     }//GEN-LAST:event_botonAgregarActionPerformed
 
     private void fieldNombreUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNombreUsuarioActionPerformed
@@ -442,7 +444,7 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldNombreUsuarioActionPerformed
 
     /**
-     * Método main de la clase agregarUsuarioFrame.
+     * Método main para probar el frame
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -459,20 +461,21 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(agregarUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modificarUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(agregarUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modificarUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(agregarUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modificarUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(agregarUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(modificarUsuarioFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new agregarUsuarioFrame().setVisible(true);
+                new modificarUsuarioFrame().setVisible(true);
             }
         });
     }
@@ -480,7 +483,6 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregar;
     private javax.swing.JButton botonCancelar;
-    private javax.swing.JButton botonRestablecer;
     private javax.swing.JComboBox<String> cajeroComboBox;
     private javax.swing.JCheckBox checkboxConfirmarMostrarContrasena;
     private javax.swing.JCheckBox checkboxMostrarContrasena;

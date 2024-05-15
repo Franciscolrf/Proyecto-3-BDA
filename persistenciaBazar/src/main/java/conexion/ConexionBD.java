@@ -12,18 +12,30 @@ import com.mongodb.client.MongoDatabase;
 import excepciones.PersistenciaException;
 
 /**
- *
- * @author ID145
+ * Clase que se encarga de la conexión con la base de datos MongoDB
+ * 
+ * @author Fran
  */
 public class ConexionBD {
-    
- private static final String DATABASE_NAME = "bazar";
+    // Atributos
+    private static final String DATABASE_NAME = "bazar";
     private static final String CONNECTION_STRING = "mongodb://localhost:27017";
 
     private static MongoClient mongoClient;
     private static MongoDatabase database;
 
-    // Método para obtener el cliente de MongoDB
+
+    /**
+     * Constructor por defecto.
+     */
+    public ConexionBD() {
+        
+    }
+    /**
+     * Método para obtener el cliente de MongoDB
+     * 
+     * @return el cliente de MongoDB
+     */
     public static MongoClient getMongoClient() {
         if (mongoClient == null) {
             // Configuración del cliente de MongoDB
@@ -38,19 +50,24 @@ public class ConexionBD {
         return mongoClient;
     }
 
-    public static MongoDatabase getDatabase() throws PersistenciaException {
-    try {
+    /**
+     * Método para obtener la base de datos
+     * 
+     * @return la base de datos
+     */
+    public static MongoDatabase getDatabase() {
+
         // Obtener el cliente de MongoDB
         MongoClient client = getMongoClient();
 
         // Obtener la base de datos
         return client.getDatabase(DATABASE_NAME);
-    } catch (Exception ex) {
-        throw new PersistenciaException("Error al obtener la base de datos MongoDB", ex);
-    }
-}
 
-    // Método para cerrar la conexión
+    }
+
+    /**
+     * Método para cerrar la conexión con la base de datos
+     */
     public static void close() {
         if (mongoClient != null) {
             mongoClient.close();
