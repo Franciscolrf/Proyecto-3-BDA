@@ -4,7 +4,22 @@
  */
 package frames;
 
+import dtos.ProductoDTO;
+import dtos.UsuarioDTO;
+import dtos.VentaDTO;
+import dtos.VentaDTO.MetodoPago;
+import excepciones.PersistenciaException;
+import gestores.GestorProductos;
+import gestores.GestorUsuarios;
+import gestores.GestorVentas;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pojos.Producto;
 
 /**
  *
@@ -12,11 +27,23 @@ import javax.swing.JOptionPane;
  */
 public class agregarVentaForm extends javax.swing.JFrame {
 
+    Producto producto;
+    float montoTotal;
+
     /**
      * Creates new form agregarVentaForm
      */
     public agregarVentaForm() {
         initComponents();
+        GestorProductos gestorProductos = new GestorProductos();
+        try {
+
+            List<ProductoDTO> productos = gestorProductos.consultarTodos();
+            agregarVentaForm.ProductosTableModel tableModel = new agregarVentaForm.ProductosTableModel(productos);
+            tablaProductos.setModel(tableModel);
+        } catch (PersistenciaException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los productos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -36,18 +63,18 @@ public class agregarVentaForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         fieldNombreCliente = new javax.swing.JTextField();
         fieldApellidoCliente = new javax.swing.JTextField();
         metodoPagoComboBox = new javax.swing.JComboBox<>();
         fieldTotal = new javax.swing.JTextField();
-        fieldPagoCon = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductosEnVenta = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
         botonAgregarProductoAVenta = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        fieldCodigoInterno = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -116,11 +143,6 @@ public class agregarVentaForm extends javax.swing.JFrame {
         getContentPane().add(jLabel6);
         jLabel6.setBounds(20, 290, 100, 22);
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel7.setText("Pago con:");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(370, 290, 70, 22);
-
         fieldNombreCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         getContentPane().add(fieldNombreCliente);
         fieldNombreCliente.setBounds(140, 110, 360, 26);
@@ -145,8 +167,6 @@ public class agregarVentaForm extends javax.swing.JFrame {
         });
         getContentPane().add(fieldTotal);
         fieldTotal.setBounds(140, 290, 100, 22);
-        getContentPane().add(fieldPagoCon);
-        fieldPagoCon.setBounds(470, 290, 90, 22);
 
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -166,18 +186,14 @@ public class agregarVentaForm extends javax.swing.JFrame {
 
         tablaProductosEnVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"SAB001",  new Float(500.0)},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Nombre", "Precio"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Float.class
+                java.lang.Object.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -187,15 +203,33 @@ public class agregarVentaForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tablaProductosEnVenta);
 
         getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(510, 370, 140, 130);
+        jScrollPane2.setBounds(510, 370, 170, 170);
 
         jLabel8.setText("Productos en la Venta");
         getContentPane().add(jLabel8);
         jLabel8.setBounds(520, 350, 120, 16);
 
         botonAgregarProductoAVenta.setText("Agregar");
+        botonAgregarProductoAVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarProductoAVentaActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonAgregarProductoAVenta);
         botonAgregarProductoAVenta.setBounds(430, 400, 72, 23);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel7.setText("Codigo Interno:");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(330, 230, 120, 22);
+
+        fieldCodigoInterno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldCodigoInternoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(fieldCodigoInterno);
+        fieldCodigoInterno.setBounds(470, 230, 100, 22);
 
         setBounds(0, 0, 707, 655);
     }// </editor-fold>//GEN-END:initComponents
@@ -207,11 +241,21 @@ public class agregarVentaForm extends javax.swing.JFrame {
     private void botonCompletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompletarActionPerformed
         String nombreCliente = fieldNombreCliente.getText().trim();
         String apellidoCliente = fieldApellidoCliente.getText().trim();
-        String pagoConStr = fieldPagoCon.getText().trim();
         String totalStr = fieldTotal.getText().trim();
+        String metodoPagoStr = (String) metodoPagoComboBox.getSelectedItem();
+        String codigoInterno = fieldCodigoInterno.getText().trim();
+        MetodoPago metodoPago;
 
+        if ("EFECTIVO".equals(metodoPagoStr)) {
+            metodoPago = MetodoPago.EFECTIVO;
+        } else if ("TARJETA".equals(metodoPagoStr)) {
+            metodoPago = MetodoPago.TARJETA;
+        } else {
+            JOptionPane.showMessageDialog(this, "Método de pago no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         // Validar que los campos no estén vacíos
-        if (nombreCliente.isEmpty() || apellidoCliente.isEmpty() || pagoConStr.isEmpty()) {
+        if (nombreCliente.isEmpty() || apellidoCliente.isEmpty()) {
             JOptionPane.showMessageDialog(agregarVentaForm.this, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -232,39 +276,104 @@ public class agregarVentaForm extends javax.swing.JFrame {
             return;
         }
 
+        // Validar código interno
+        if (!codigoInterno.matches("^[A-Z]{3}\\d{3}$")) {
+            JOptionPane.showMessageDialog(agregarVentaForm.this,
+                    "Código Interno debe tener el formato de 3 letras y luego 3 números (ejemplo: SAB001).", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         // Validar total y pago con
         double total;
-        double pagoCon;
-        
+
         try {
-            total = Double.parseDouble(totalStr);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(agregarVentaForm.this, "Total debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        try {
-            pagoCon = Double.parseDouble(pagoConStr);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(agregarVentaForm.this, "Pago Con debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        if (pagoCon < total) {
-            JOptionPane.showMessageDialog(agregarVentaForm.this, "Pago Con debe ser mayor o igual al Total.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        if (pagoCon < 0) {
-            JOptionPane.showMessageDialog(agregarVentaForm.this, "Pago Con no puede ser negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+            montoTotal = Float.parseFloat(fieldTotal.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Monto total no válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        UsuarioDTO usuarioLogueado = GestorUsuarios.getUsuarioLogueado();
+        if (usuarioLogueado == null) {
+            JOptionPane.showMessageDialog(this, "No hay usuario logueado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Date fechaVenta = new Date();
+        GestorProductos gp = new GestorProductos();
+        // Obtener la lista de productos vendidos
+        List<ProductoDTO> productosVendidos = new ArrayList<>();
+        DefaultTableModel modelProductosEnVenta = (DefaultTableModel) tablaProductosEnVenta.getModel();
 
-        // Si todas las validaciones son exitosas, proceder con la lógica de completar la venta
-        JOptionPane.showMessageDialog(agregarVentaForm.this, "Venta completada exitosamente.");
+        for (int i = 0; i < modelProductosEnVenta.getRowCount(); i++) {
+            String nombreProducto = (String) modelProductosEnVenta.getValueAt(i, 0); 
+
+            try {
+                Producto producto = gp.consultarPorNombreSingular(nombreProducto);
+                if (producto != null) {
+                    // Obtener el código interno del producto
+                    String codigoInternoProducto = producto.getCodigoInterno();
+
+                    // Consultar el producto por su código interno para obtener todos los detalles
+                    producto = gp.consultarPorCodigoInterno(codigoInternoProducto);
+
+                    // Convertir el objeto Producto a ProductoDTO
+                    ProductoDTO productoDTO = gp.productoToProductoDTO(producto);
+                    productosVendidos.add(productoDTO);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo obtener información del producto con nombre: " + nombreProducto, "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (PersistenciaException ex) {
+                Logger.getLogger(agregarVentaForm.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al obtener información del producto con nombre: " + nombreProducto, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        // Crear la instancia de VentaDTO
+        VentaDTO nuevaVenta = new VentaDTO();
+        nuevaVenta.setCodigoInterno(codigoInterno);
+        nuevaVenta.setNombreCliente(nombreCliente);
+        nuevaVenta.setApellidoCliente(apellidoCliente);
+        nuevaVenta.setMontoTotal(montoTotal);
+        nuevaVenta.setMetodoPago(metodoPago);
+        nuevaVenta.setUsuario(usuarioLogueado);
+        nuevaVenta.setFechaVenta(fechaVenta);
+        nuevaVenta.setProductosVendidos(productosVendidos);
+
+        // Insertar la venta en la base de datos
+        GestorVentas gv = null;
+        try {
+            gv = new GestorVentas();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(agregarVentaForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        boolean ventaInsertada = false;
+        try {
+            ventaInsertada = gv.insertar(nuevaVenta);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(agregarVentaForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (ventaInsertada) {
+            JOptionPane.showMessageDialog(this, "Venta completada exitosamente.");
+            // Limpiar el formulario después de completar la venta
+            limpiarFormulario();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al completar la venta.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_botonCompletarActionPerformed
+    // Método para limpiar el formulario después de completar la venta
 
+    private void limpiarFormulario() {
+        fieldNombreCliente.setText("");
+        fieldApellidoCliente.setText("");
+        fieldTotal.setText("");
+        fieldCodigoInterno.setText("");
+        DefaultTableModel modelProductosEnVenta = (DefaultTableModel) tablaProductosEnVenta.getModel();
+        modelProductosEnVenta.setRowCount(0);
+    }
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_botonSalirActionPerformed
@@ -272,6 +381,37 @@ public class agregarVentaForm extends javax.swing.JFrame {
     private void fieldTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldTotalActionPerformed
         fieldTotal.setEditable(false);
     }//GEN-LAST:event_fieldTotalActionPerformed
+
+    private void botonAgregarProductoAVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarProductoAVentaActionPerformed
+        // Obtener el índice de la fila seleccionada en la tabla de productos
+        int selectedRow = tablaProductos.getSelectedRow();
+
+        // Verificar si se ha seleccionado una fila
+        if (selectedRow != -1) {
+            // Obtener los datos del producto seleccionado
+            String nombre = (String) tablaProductos.getValueAt(selectedRow, 0);
+            float precio = (float) tablaProductos.getValueAt(selectedRow, 2);
+
+            // Crear un arreglo con los datos del producto
+            Object[] productoEnVenta = {nombre, precio};
+
+            // Agregar el producto a la tabla de productos en venta
+            DefaultTableModel modelProductosEnVenta = (DefaultTableModel) tablaProductosEnVenta.getModel();
+            modelProductosEnVenta.addRow(productoEnVenta);
+
+            // Actualizar el monto total de la venta
+            montoTotal += precio;
+            fieldTotal.setText(String.format("%.2f", montoTotal));
+
+            JOptionPane.showMessageDialog(this, "Producto agregado a la venta exitosamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para agregar a la venta.");
+        }
+    }//GEN-LAST:event_botonAgregarProductoAVentaActionPerformed
+
+    private void fieldCodigoInternoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCodigoInternoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldCodigoInternoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -313,8 +453,8 @@ public class agregarVentaForm extends javax.swing.JFrame {
     private javax.swing.JButton botonCompletar;
     private javax.swing.JButton botonSalir;
     private javax.swing.JTextField fieldApellidoCliente;
+    private javax.swing.JTextField fieldCodigoInterno;
     private javax.swing.JTextField fieldNombreCliente;
-    private javax.swing.JTextField fieldPagoCon;
     private javax.swing.JTextField fieldTotal;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -330,4 +470,33 @@ public class agregarVentaForm extends javax.swing.JFrame {
     private javax.swing.JTable tablaProductos;
     private javax.swing.JTable tablaProductosEnVenta;
     // End of variables declaration//GEN-END:variables
+    private class ProductosTableModel extends javax.swing.table.DefaultTableModel {
+
+        private final String[] columnNames = {"Nombre", "Codigo Interno", "Precio", "Fecha Registro"};
+        private final List<ProductoDTO> productos;
+
+        public ProductosTableModel(List<ProductoDTO> productos) {
+            this.productos = productos;
+            setColumnIdentifiers(columnNames);
+            cargarDatos();
+        }
+
+        private void cargarDatos() {
+            for (ProductoDTO producto : productos) {
+                Object[] rowData = {
+                    producto.getNombre(),
+                    producto.getCodigoInterno(),
+                    producto.getPrecio(),
+                    producto.getFechaRegistro()
+                };
+                addRow(rowData);
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Para que las celdas no sean editables
+            return false;
+        }
+    }
 }

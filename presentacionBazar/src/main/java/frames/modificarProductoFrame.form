@@ -46,7 +46,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="175" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="265" max="32767" attributes="0"/>
+                  <EmptySpace pref="238" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -69,7 +69,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Agregar Producto"/>
+            <Property name="text" type="java.lang.String" value="Modificar Producto"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -176,7 +176,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="240" y="320" width="110" height="-1"/>
+          <AbsoluteConstraints x="190" y="320" width="110" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -189,7 +189,20 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="470" y="320" width="140" height="-1"/>
+          <AbsoluteConstraints x="490" y="320" width="100" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JButton" name="botonConsultar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Consultar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonConsultarActionPerformed"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="350" y="320" width="100" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

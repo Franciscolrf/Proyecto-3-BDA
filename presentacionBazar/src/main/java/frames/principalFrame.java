@@ -202,6 +202,11 @@ public class principalFrame extends javax.swing.JFrame {
         menuVentas.setText("Ventas");
 
         jMenuItem3.setText("Agregar Venta");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         menuVentas.add(jMenuItem3);
 
         jMenuItem4.setText("Ver Ventas");
@@ -312,6 +317,11 @@ public class principalFrame extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_botonFiltrarFechasActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        agregarVentaForm ag = new agregarVentaForm();
+        ag.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

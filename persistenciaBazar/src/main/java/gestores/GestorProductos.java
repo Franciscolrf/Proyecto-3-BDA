@@ -163,6 +163,30 @@ public class GestorProductos implements IGestorProductos {
     }
 
     /**
+     * Consulta un producto por nombre.
+     * 
+     * @param nombre Nombre del producto a buscar
+     * @return Producto que coincide con el nombre
+     * @throws PersistenciaException
+     */
+    public Producto consultarPorNombreSingular(String nombre) throws PersistenciaException {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new  PersistenciaException("El nombre no puede ser nulo o vacío");
+        }
+
+        try {
+            Document doc = productosCollection.find(eq("nombre", nombre)).first();
+            if (doc == null) {
+                throw new PersistenciaException("No se encontró el producto");
+            }
+            return documentToProducto(doc);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar el producto por nombre", e);
+        }
+        
+    }
+
+    /**
      * Consulta productos por rango de fechas.
      * 
      * @param desde Fecha de inicio del rango
