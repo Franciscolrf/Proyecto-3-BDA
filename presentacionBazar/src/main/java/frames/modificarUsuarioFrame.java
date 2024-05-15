@@ -384,6 +384,15 @@ public class modificarUsuarioFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(modificarUsuarioFrame.this, "Confirmar Contraseña debe ser igual a la Contraseña.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        UsuarioDTO fecha = new UsuarioDTO();
+        try {
+            fecha = gu.consultarPorCodigoInterno(codigoInterno);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(modificarUsuarioFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
         // Crear un nuevo objeto UsuarioDTO con los datos modificados
         UsuarioDTO usuarioModificado = new UsuarioDTO();
         usuarioModificado.setCodigoInterno(codigoInterno);
@@ -392,6 +401,7 @@ public class modificarUsuarioFrame extends javax.swing.JFrame {
         usuarioModificado.setPuesto(puesto);
         usuarioModificado.setTelefono(telefono);
         usuarioModificado.setContrasena(contrasena);
+        usuarioModificado.setFechaContratacion(fecha.getFechaContratacion());
 
         // Crear un nuevo objeto DireccionDTO con los datos de dirección modificados
         DireccionDTO direccionModificada = new DireccionDTO();
