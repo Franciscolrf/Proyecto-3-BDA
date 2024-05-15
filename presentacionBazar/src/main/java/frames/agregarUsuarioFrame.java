@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ID145
+ * Clase que representa la ventana de agregar usuario.
+ * @author Fran
  */
 public class agregarUsuarioFrame extends javax.swing.JFrame {
 
@@ -442,6 +442,7 @@ public class agregarUsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldNombreUsuarioActionPerformed
 
     /**
+     * Método main de la clase agregarUsuarioFrame.
      * @param args the command line arguments
      */
     public static void main(String args[]) {

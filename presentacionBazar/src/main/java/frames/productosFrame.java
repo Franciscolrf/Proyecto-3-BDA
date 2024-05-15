@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
 import pojos.Producto;
 
 /**
- *
- * @author ID145
+ * Frame para mostrar los productos
+ * @author Fran
  */
 public class productosFrame extends javax.swing.JFrame {
 
@@ -430,6 +430,7 @@ public class productosFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_botonRestablecerActionPerformed
 
     /**
+     * Main
      * @param args the command line arguments
      */
     public static void main(String args[]) {

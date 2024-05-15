@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author ID145 /**
+ * Clase que se encarga de mostrar la ventana de inicio de sesión.
  *
- * @author ID145
+ * @author Fran
  */
 public class logFrame extends javax.swing.JFrame {
 
@@ -250,6 +250,7 @@ public class logFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_botonRestablecerActionPerformed
 
     /**
+     * Método main de la clase.
      * @param args the command line arguments
      */
     public static void main(String args[]) {

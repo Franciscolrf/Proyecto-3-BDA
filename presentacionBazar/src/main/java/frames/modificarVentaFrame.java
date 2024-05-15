@@ -15,8 +15,8 @@ import javax.swing.JOptionPane;
 import pojos.Producto;
 
 /**
- *
- * @author ID145
+ * Frame que permite modificar una venta existente en la base de datos.
+ * @author Fran
  */
 public class modificarVentaFrame extends javax.swing.JFrame {
 
@@ -259,6 +259,7 @@ public class modificarVentaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldCodigoInternoActionPerformed
 
     /**
+     * Método main de la clase.
      * @param args the command line arguments
      */
     public static void main(String args[]) {

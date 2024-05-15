@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author ID145
+ * Frame para modificar un usuario existente en la base de datos
+ * @author Fran
  */
 public class modificarUsuarioFrame extends javax.swing.JFrame {
 
@@ -444,6 +444,7 @@ public class modificarUsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldNombreUsuarioActionPerformed
 
     /**
+     * Método main para probar el frame
      * @param args the command line arguments
      */
     public static void main(String args[]) {

@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author ID145
+ * Frame para mostrar las ventas realizadas.
+ * @author Fran
  */
 public class ventasFrame extends javax.swing.JFrame {
 
@@ -481,6 +481,7 @@ public class ventasFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_botonSalirActionPerformed
 
     /**
+     * Main method to run the frame.
      * @param args the command line arguments
      */
     public static void main(String args[]) {

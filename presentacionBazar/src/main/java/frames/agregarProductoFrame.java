@@ -13,8 +13,8 @@ import excepciones.PersistenciaException;
 import gestores.GestorProductos;
 
 /**
- *
- * @author ID145
+ * Frame para agregar un producto
+ * @author Fran
  */
 public class agregarProductoFrame extends javax.swing.JFrame {
 
@@ -216,6 +216,7 @@ public class agregarProductoFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_botonAgregarActionPerformed
 
     /**
+     * Main
      * @param args the command line arguments
      */
     public static void main(String args[]) {

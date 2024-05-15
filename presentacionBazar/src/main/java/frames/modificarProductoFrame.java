@@ -14,8 +14,8 @@ import gestores.GestorProductos;
 import pojos.Producto;
 
 /**
- *
- * @author ID145
+ * Frame para modificar un producto.
+ * @author Fran
  */
 public class modificarProductoFrame extends javax.swing.JFrame {
 
@@ -23,8 +23,8 @@ public class modificarProductoFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form agregarProductoFrame
+     * @param producto Producto a modificar.
      */
-
     public modificarProductoFrame(Producto producto) {
         this.producto = producto;
         initComponents();
@@ -292,6 +292,7 @@ public class modificarProductoFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_botonAgregarActionPerformed
 
     /**
+     * Main method to run the frame.
      * @param args the command line arguments
      */
     public static void main(String args[]) {

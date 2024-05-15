@@ -22,8 +22,8 @@ import javax.swing.table.DefaultTableModel;
 import pojos.Producto;
 
 /**
- *
- * @author ID145
+ * Clase para agregar una venta
+ * @author Fran
  */
 public class agregarVentaForm extends javax.swing.JFrame {
 
@@ -421,6 +421,8 @@ public class agregarVentaForm extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldCodigoInternoActionPerformed
 
     /**
+     * Clase para el modelo de la tabla de productos
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {

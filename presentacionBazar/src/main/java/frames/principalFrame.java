@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author ID145
+ * Clase que representa la ventana principal de la aplicación.
+ * @author Fran
  */
 public class principalFrame extends javax.swing.JFrame {
 
@@ -491,6 +491,7 @@ public class principalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldFechaDesdeActionPerformed
 
     /**
+     * Método main de la clase principalFrame.
      * @param args the command line arguments
      */
     public static void main(String args[]) {

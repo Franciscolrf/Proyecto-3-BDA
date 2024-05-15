@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author ID145
+ * Frame para visualizar, modificar y eliminar usuarios.
+ * @author Fran
  */
 public class usuariosFrame extends javax.swing.JFrame {
 
@@ -442,6 +442,7 @@ public class usuariosFrame extends javax.swing.JFrame {
     }// GEN-LAST:event_botonModificarActionPerformed
 
     /**
+     * Main
      * @param args the command line arguments
      */
     public static void main(String args[]) {
