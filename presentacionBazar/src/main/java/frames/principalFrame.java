@@ -63,10 +63,11 @@ public class principalFrame extends javax.swing.JFrame {
         botonFIltrarNombre = new javax.swing.JButton();
         fieldNombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        botonSalir1 = new javax.swing.JButton();
+        botonCerrarSesion = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
         botonRestablecer = new javax.swing.JButton();
+        botonSalir2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuProductos = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -189,14 +190,14 @@ public class principalFrame extends javax.swing.JFrame {
         getContentPane().add(jPanel2);
         jPanel2.setBounds(700, 70, 210, 360);
 
-        botonSalir1.setText("Salir");
-        botonSalir1.addActionListener(new java.awt.event.ActionListener() {
+        botonCerrarSesion.setText("Cerrar Sesión");
+        botonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonSalir1ActionPerformed(evt);
+                botonCerrarSesionActionPerformed(evt);
             }
         });
-        getContentPane().add(botonSalir1);
-        botonSalir1.setBounds(360, 380, 72, 23);
+        getContentPane().add(botonCerrarSesion);
+        botonCerrarSesion.setBounds(92, 380, 100, 23);
 
         jScrollPane2.setViewportView(tablaProductos);
 
@@ -211,6 +212,15 @@ public class principalFrame extends javax.swing.JFrame {
         });
         getContentPane().add(botonRestablecer);
         botonRestablecer.setBounds(540, 380, 100, 23);
+
+        botonSalir2.setText("Salir");
+        botonSalir2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalir2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonSalir2);
+        botonSalir2.setBounds(360, 380, 72, 23);
 
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -257,6 +267,11 @@ public class principalFrame extends javax.swing.JFrame {
         menuUsuarios.setText("Usuarios");
 
         jMenuItem5.setText("Agregar Usuario");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         menuUsuarios.add(jMenuItem5);
 
         jMenuItem6.setText("Ver Usuarios");
@@ -276,9 +291,12 @@ public class principalFrame extends javax.swing.JFrame {
         setBounds(0, 0, 939, 540);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalir1ActionPerformed
+    private void botonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarSesionActionPerformed
+        
         dispose();
-    }//GEN-LAST:event_botonSalir1ActionPerformed
+        logFrame lf = new logFrame();
+        lf.setVisible(true);
+    }//GEN-LAST:event_botonCerrarSesionActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         agregarProductoFrame ag = new agregarProductoFrame();
@@ -402,6 +420,15 @@ public class principalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonFIltrarNombreActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+       agregarUsuarioFrame agf = new agregarUsuarioFrame();
+       agf.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void botonSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalir2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonSalir2ActionPerformed
+
     /**
          * @param args the command line arguments
          */
@@ -438,10 +465,11 @@ public class principalFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonCerrarSesion;
     private javax.swing.JButton botonFIltrarNombre;
     private javax.swing.JButton botonFiltrarFechas;
     private javax.swing.JButton botonRestablecer;
-    private javax.swing.JButton botonSalir1;
+    private javax.swing.JButton botonSalir2;
     private javax.swing.JTextField fieldFechaDesde;
     private javax.swing.JTextField fieldFechaHasta;
     private javax.swing.JTextField fieldNombre;
