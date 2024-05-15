@@ -15,9 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 /**
  *
@@ -210,6 +207,11 @@ public class principalFrame extends javax.swing.JFrame {
         menuVentas.add(jMenuItem3);
 
         jMenuItem4.setText("Ver Ventas");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         menuVentas.add(jMenuItem4);
 
         jMenuBar1.add(menuVentas);
@@ -237,7 +239,7 @@ public class principalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalir1ActionPerformed
-        // TODO add your handling code here:
+       dispose();
     }//GEN-LAST:event_botonSalir1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -322,6 +324,16 @@ public class principalFrame extends javax.swing.JFrame {
         agregarVentaForm ag = new agregarVentaForm();
         ag.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ventasFrame vf = null;
+        try {
+            vf = new ventasFrame();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        vf.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments

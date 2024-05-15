@@ -138,6 +138,11 @@ public class ventasFrame extends javax.swing.JFrame {
         botonModificar.setBounds(270, 490, 90, 23);
 
         botonSalir.setText("Salir");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonSalir);
         botonSalir.setBounds(150, 490, 70, 23);
 
@@ -413,9 +418,13 @@ public class ventasFrame extends javax.swing.JFrame {
     } catch (PersistenciaException ex) {
         Logger.getLogger(ventasFrame.class.getName()).log(Level.SEVERE, null, ex);
     }
-
+    dispose();
 
     }//GEN-LAST:event_botonModificarActionPerformed
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_botonSalirActionPerformed
 
     /**
      * @param args the command line arguments

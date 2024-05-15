@@ -4,9 +4,13 @@
  */
 package frames;
 
-
 import dtos.VentaDTO;
 import dtos.VentaDTO.MetodoPago;
+import excepciones.PersistenciaException;
+import gestores.GestorVentas;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import pojos.Producto;
 
@@ -15,6 +19,7 @@ import pojos.Producto;
  * @author ID145
  */
 public class modificarVentaFrame extends javax.swing.JFrame {
+
     VentaDTO venta;
     Producto producto;
     float montoTotal;
@@ -23,7 +28,7 @@ public class modificarVentaFrame extends javax.swing.JFrame {
      * Creates new form agregarVentaForm
      */
     public modificarVentaFrame(VentaDTO venta) {
-        this.venta=venta;
+        this.venta = venta;
         initComponents();
         initFields();
     }
@@ -32,7 +37,7 @@ public class modificarVentaFrame extends javax.swing.JFrame {
         initComponents();
     }
 
-    private void initFields(){
+    private void initFields() {
         fieldNombreCliente.setText(venta.getNombreCliente());
         fieldApellidoCliente.setText(venta.getApellidoCliente());
         fieldTotal.setText(String.valueOf(venta.getMontoTotal()));
@@ -44,6 +49,7 @@ public class modificarVentaFrame extends javax.swing.JFrame {
             metodoPagoComboBox.setSelectedItem(metodoPago.toString());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -181,11 +187,56 @@ public class modificarVentaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_metodoPagoComboBoxActionPerformed
 
     private void botonCompletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCompletarActionPerformed
-        
-    }//GEN-LAST:event_botonCompletarActionPerformed
-    // Método para limpiar el formulario después de completar la venta
+        GestorVentas gv = null;
+        try {
+           gv= new GestorVentas();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(modificarVentaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // Obtener los valores de los campos
+        String nombreCliente = fieldNombreCliente.getText();
+        String apellidoCliente = fieldApellidoCliente.getText();
+        MetodoPago metodoPago = MetodoPago.valueOf(metodoPagoComboBox.getSelectedItem().toString());
+        String codigoInterno = fieldCodigoInterno.getText();
+        float montoTotal = Float.parseFloat(fieldTotal.getText());
 
-   
+        // Crear un objeto VentaDTO con los valores obtenidos
+        VentaDTO ventaModificada = null;
+        try {
+            ventaModificada = gv.consultarPorCodigoInterno(codigoInterno);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(modificarVentaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ventaModificada.setNombreCliente(nombreCliente);
+        ventaModificada.setApellidoCliente(apellidoCliente);
+        ventaModificada.setMetodoPago(metodoPago);
+        ventaModificada.setCodigoInterno(codigoInterno);
+        ventaModificada.setMontoTotal(montoTotal);
+
+        // Intentar modificar la venta en la base de datos
+        boolean exito = false;
+        try {
+            exito = gv.modificar(ventaModificada);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(modificarVentaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "La venta se modificó correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            // Cerrar el frame después de completar la modificación
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo modificar la venta.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        ventasFrame vf = null;
+        try {
+            vf = new ventasFrame();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(modificarVentaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        vf.setVisible(true);
+    }//GEN-LAST:event_botonCompletarActionPerformed
+
+
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_botonSalirActionPerformed
@@ -250,5 +301,5 @@ public class modificarVentaFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox<String> metodoPagoComboBox;
     // End of variables declaration//GEN-END:variables
-    
+
 }
