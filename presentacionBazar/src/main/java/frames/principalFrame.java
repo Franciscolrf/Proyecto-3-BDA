@@ -4,10 +4,20 @@
  */
 package frames;
 
+import dtos.ProductoDTO;
+import java.util.List;
+import gestores.GestorProductos;
+import excepciones.PersistenciaException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-
 
 /**
  *
@@ -19,9 +29,21 @@ public class principalFrame extends javax.swing.JFrame {
      * Creates new form principalFrame
      */
     public principalFrame() {
+        GestorProductos gestorProductos = new GestorProductos();
         initComponents();
+        try {
+
+            List<ProductoDTO> productos = gestorProductos.consultarTodos();
+            ProductosTableModel tableModel = new ProductosTableModel(productos);
+            tablaProductos.setModel(tableModel);
+        } catch (PersistenciaException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los productos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
+    /**
+     *
+     */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,15 +55,15 @@ public class principalFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        fechaDesde = new com.toedter.calendar.JDateChooser();
-        fechaHasta = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        botonFiltrarFechas = new javax.swing.JButton();
+        fieldFechaDesde = new javax.swing.JTextField();
+        fieldFechaHasta = new javax.swing.JTextField();
         botonSalir1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaProductos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuProductos = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -69,7 +91,7 @@ public class principalFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(381, Short.MAX_VALUE)
+                .addContainerGap(451, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(377, 377, 377))
         );
@@ -81,23 +103,7 @@ public class principalFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 6, 850, 60);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Codigo Interno", "Precio", "Fecha Registro"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(6, 66, 604, 329);
+        jPanel1.setBounds(0, 6, 920, 60);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -109,43 +115,53 @@ public class principalFrame extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Hasta:");
 
-        jButton1.setText("Filtrar por Fechas");
+        botonFiltrarFechas.setText("Filtrar por Fechas");
+        botonFiltrarFechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFiltrarFechasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fechaDesde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fechaHasta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(botonFiltrarFechas))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jButton1))
-                        .addGap(0, 68, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(jLabel1))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 32, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(fechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(fechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel2)
+                .addGap(10, 10, 10)
+                .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(botonFiltrarFechas)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(620, 70, 200, 240);
+        jPanel2.setBounds(700, 70, 210, 240);
 
         botonSalir1.setText("Salir");
         botonSalir1.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +170,12 @@ public class principalFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botonSalir1);
-        botonSalir1.setBounds(250, 430, 72, 23);
+        botonSalir1.setBounds(440, 370, 72, 23);
+
+        jScrollPane2.setViewportView(tablaProductos);
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(10, 70, 680, 240);
 
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -207,7 +228,7 @@ public class principalFrame extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        setBounds(0, 0, 868, 540);
+        setBounds(0, 0, 939, 540);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalir1ActionPerformed
@@ -223,6 +244,74 @@ public class principalFrame extends javax.swing.JFrame {
         productosFrame pf = new productosFrame();
         pf.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private boolean validarFormatoFecha(String fecha) {
+        // Expresión regular para validar el formato yyyy-MM-dd
+        String regex = "^\\d{4}-\\d{2}-\\d{2}$";
+        return fecha.matches(regex);
+    }
+
+    private boolean validarValoresFecha(String fecha) {
+        // Obtener los componentes de la fecha
+        String[] componentes = fecha.split("-");
+        int anio = Integer.parseInt(componentes[0]);
+        int mes = Integer.parseInt(componentes[1]);
+        int dia = Integer.parseInt(componentes[2]);
+
+        // Validar que los valores sean válidos
+        if (anio < 0 || mes < 1 || mes > 12 || dia < 1 || dia > 31) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void mostrarProductosEnTabla(List<ProductoDTO> productos) {
+        // Limpiar la tabla
+        DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
+        model.setRowCount(0);
+
+        // Llenar la tabla con los productos
+        for (ProductoDTO producto : productos) {
+            Object[] row = {
+                producto.getNombre(),
+                producto.getCodigoInterno(),
+                producto.getPrecio(),
+                producto.getFechaRegistro()
+            };
+            model.addRow(row);
+        }
+    }
+    private void botonFiltrarFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFiltrarFechasActionPerformed
+        GestorProductos gp = new GestorProductos();
+        // Obtener las fechas ingresadas
+        String fechaDesdeStr = fieldFechaDesde.getText();
+        String fechaHastaStr = fieldFechaHasta.getText();
+
+        // Validar el formato y los valores de las fechas
+        if (!validarFormatoFecha(fechaDesdeStr) || !validarFormatoFecha(fechaHastaStr)) {
+            JOptionPane.showMessageDialog(this, "Ingrese fechas válidas en formato yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Convertir las fechas a un formato más simple
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date fechaInicio = sdf.parse(fechaDesdeStr);
+            Date fechaFin = sdf.parse(fechaHastaStr);
+
+            // Llamar al método para obtener los productos filtrados por fechas
+            List<ProductoDTO> productosFiltrados = gp.consultarPorRangoFechas(fechaInicio, fechaFin);
+
+            // Mostrar los productos filtrados en la tabla
+            mostrarProductosEnTabla(productosFiltrados);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Error al parsear las fechas.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_botonFiltrarFechasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,10 +349,10 @@ public class principalFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonFiltrarFechas;
     private javax.swing.JButton botonSalir1;
-    private com.toedter.calendar.JDateChooser fechaDesde;
-    private com.toedter.calendar.JDateChooser fechaHasta;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField fieldFechaDesde;
+    private javax.swing.JTextField fieldFechaHasta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -277,11 +366,40 @@ public class principalFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenu menuAcercaDe;
     private javax.swing.JMenu menuProductos;
     private javax.swing.JMenu menuUsuarios;
     private javax.swing.JMenu menuVentas;
+    private javax.swing.JTable tablaProductos;
     // End of variables declaration//GEN-END:variables
+    public class ProductosTableModel extends javax.swing.table.DefaultTableModel {
+
+        private final String[] columnNames = {"Nombre", "Codigo Interno", "Precio", "Fecha Registro"};
+        private final List<ProductoDTO> productos;
+
+        public ProductosTableModel(List<ProductoDTO> productos) {
+            this.productos = productos;
+            setColumnIdentifiers(columnNames);
+            cargarDatos();
+        }
+
+        private void cargarDatos() {
+            for (ProductoDTO producto : productos) {
+                Object[] rowData = {
+                    producto.getNombre(),
+                    producto.getCodigoInterno(),
+                    producto.getPrecio(),
+                    producto.getFechaRegistro()
+                };
+                addRow(rowData);
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Para que las celdas no sean editables
+            return false;
+        }
+    }
 }

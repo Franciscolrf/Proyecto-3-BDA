@@ -4,6 +4,19 @@
  */
 package frames;
 
+import dtos.ProductoDTO;
+import java.util.List;
+import gestores.GestorProductos;
+import excepciones.PersistenciaException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pojos.Producto;
+
 /**
  *
  * @author ID145
@@ -15,6 +28,15 @@ public class productosFrame extends javax.swing.JFrame {
      */
     public productosFrame() {
         initComponents();
+        GestorProductos gestorProductos = new GestorProductos();
+        try {
+
+            List<ProductoDTO> productos = gestorProductos.consultarTodos();
+            productosFrame.ProductosTableModel tableModel = new productosFrame.ProductosTableModel(productos);
+            tablaProductos.setModel(tableModel);
+        } catch (PersistenciaException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar los productos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -28,19 +50,17 @@ public class productosFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        fechaDesde = new com.toedter.calendar.JDateChooser();
-        fechaHasta = new com.toedter.calendar.JDateChooser();
-        botonFiltrarFechas = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         botonSalir = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         botonModificar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaProductos = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        botonFiltrarFechas = new javax.swing.JButton();
+        fieldFechaDesde = new javax.swing.JTextField();
+        fieldFechaHasta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -55,10 +75,10 @@ public class productosFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(356, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(354, 354, 354)
                 .addComponent(jLabel4)
-                .addGap(333, 333, 333))
+                .addContainerGap(385, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -69,7 +89,47 @@ public class productosFrame extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 860, 0);
+        jPanel1.setBounds(0, 0, 910, 100);
+
+        botonSalir.setText("Salir");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonSalir);
+        botonSalir.setBounds(150, 490, 72, 23);
+
+        botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonEliminar);
+        botonEliminar.setBounds(520, 490, 90, 23);
+
+        botonModificar.setText("Modificar");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonModificar);
+        botonModificar.setBounds(340, 490, 90, 23);
+
+        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tablaProductos);
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(0, 160, 680, 240);
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -82,92 +142,184 @@ public class productosFrame extends javax.swing.JFrame {
         jLabel2.setText("Hasta:");
 
         botonFiltrarFechas.setText("Filtrar por Fechas");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Buscar por nombre");
+        botonFiltrarFechas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFiltrarFechasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fechaDesde, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fechaHasta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(botonFiltrarFechas))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(botonFiltrarFechas)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 12, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(jLabel1))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 32, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(fechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(fechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel2)
+                .addGap(10, 10, 10)
+                .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonFiltrarFechas)
-                .addGap(29, 29, 29)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(610, 110, 200, 340);
+        jPanel2.setBounds(690, 160, 210, 240);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Codigo Interno", "Precio", "Fecha Registro"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(0, 110, 604, 340);
-
-        botonSalir.setText("Salir");
-        botonSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonSalirActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botonSalir);
-        botonSalir.setBounds(150, 490, 72, 23);
-
-        botonEliminar.setText("Eliminar");
-        getContentPane().add(botonEliminar);
-        botonEliminar.setBounds(520, 490, 90, 23);
-
-        botonModificar.setText("Modificar");
-        getContentPane().add(botonModificar);
-        botonModificar.setBounds(340, 490, 90, 23);
-
-        setBounds(0, 0, 878, 592);
+        setBounds(0, 0, 922, 592);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
+    private boolean validarFormatoFecha(String fecha) {
+        // Expresión regular para validar el formato yyyy-MM-dd
+        String regex = "^\\d{4}-\\d{2}-\\d{2}$";
+        return fecha.matches(regex);
+    }
+
+    private boolean validarValoresFecha(String fecha) {
+        // Obtener los componentes de la fecha
+        String[] componentes = fecha.split("-");
+        int anio = Integer.parseInt(componentes[0]);
+        int mes = Integer.parseInt(componentes[1]);
+        int dia = Integer.parseInt(componentes[2]);
+
+        // Validar que los valores sean válidos
+        if (anio < 0 || mes < 1 || mes > 12 || dia < 1 || dia > 31) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void mostrarProductosEnTabla(List<ProductoDTO> productos) {
+        // Limpiar la tabla
+        DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
+        model.setRowCount(0);
+
+        // Llenar la tabla con los productos
+        for (ProductoDTO producto : productos) {
+            Object[] row = {
+                producto.getNombre(),
+                producto.getCodigoInterno(),
+                producto.getPrecio(),
+                producto.getFechaRegistro()
+            };
+            model.addRow(row);
+        }
+    }
+    private void botonFiltrarFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFiltrarFechasActionPerformed
+        GestorProductos gp = new GestorProductos();
+        // Obtener las fechas ingresadas
+        String fechaDesdeStr = fieldFechaDesde.getText();
+        String fechaHastaStr = fieldFechaHasta.getText();
+
+        // Validar el formato y los valores de las fechas
+        if (!validarFormatoFecha(fechaDesdeStr) || !validarFormatoFecha(fechaHastaStr)) {
+            JOptionPane.showMessageDialog(this, "Ingrese fechas válidas en formato yyyy-MM-dd.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Convertir las fechas a un formato más simple
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date fechaInicio = sdf.parse(fechaDesdeStr);
+            Date fechaFin = sdf.parse(fechaHastaStr);
+
+            // Llamar al método para obtener los productos filtrados por fechas
+            List<ProductoDTO> productosFiltrados = gp.consultarPorRangoFechas(fechaInicio, fechaFin);
+
+            // Mostrar los productos filtrados en la tabla
+            mostrarProductosEnTabla(productosFiltrados);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Error al parsear las fechas.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(principalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botonFiltrarFechasActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        // Obtener el índice de la fila seleccionada en la tabla
+        int selectedRow = tablaProductos.getSelectedRow();
+
+        // Verificar si se ha seleccionado una fila
+        if (selectedRow != -1) {
+            // Obtener el código interno del producto en la fila seleccionada
+            String codigoInterno =(String) tablaProductos.getValueAt(selectedRow, 1);
+
+
+            // Llamar al método para eliminar el producto
+            try {
+                GestorProductos gestorProductos = new GestorProductos();
+                boolean eliminado = gestorProductos.eliminar(codigoInterno);
+
+                if (eliminado) {
+                    // Actualizar la tabla para reflejar los cambios
+                    DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
+                    model.removeRow(selectedRow);
+                    JOptionPane.showMessageDialog(this, "Producto eliminado exitosamente.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al eliminar el producto.");
+                }
+            } catch (PersistenciaException ex) {
+                JOptionPane.showMessageDialog(this, "Error al eliminar el producto: " + ex.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar.");
+        }
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+         // Obtener el índice de la fila seleccionada en la tabla
+    int selectedRow = tablaProductos.getSelectedRow();
+
+    // Verificar si se ha seleccionado una fila
+    if (selectedRow != -1) {
+        // Obtener el código interno del producto en la fila seleccionada
+        String codigoInterno = (String) tablaProductos.getValueAt(selectedRow, 1); // Suponiendo que la columna del código interno es la segunda (índice 1)
+
+        // Obtener el producto del gestor
+        try {
+            GestorProductos gestorProductos = new GestorProductos();
+            Producto producto = gestorProductos.consultarPorCodigoInterno(codigoInterno);
+            if (producto != null) {
+                // Mostrar el frame de modificar producto
+                modificarProductoFrame modificarFrame = new modificarProductoFrame(producto);
+                modificarFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Producto no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (PersistenciaException ex) {
+            JOptionPane.showMessageDialog(this, "Error al obtener el producto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione un producto para modificar.");
+    }
+    }//GEN-LAST:event_botonModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,16 +361,43 @@ public class productosFrame extends javax.swing.JFrame {
     private javax.swing.JButton botonFiltrarFechas;
     private javax.swing.JButton botonModificar;
     private javax.swing.JButton botonSalir;
-    private com.toedter.calendar.JDateChooser fechaDesde;
-    private com.toedter.calendar.JDateChooser fechaHasta;
+    private javax.swing.JTextField fieldFechaDesde;
+    private javax.swing.JTextField fieldFechaHasta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tablaProductos;
     // End of variables declaration//GEN-END:variables
+    private class ProductosTableModel extends javax.swing.table.DefaultTableModel {
+
+        private final String[] columnNames = {"Nombre", "Codigo Interno", "Precio", "Fecha Registro"};
+        private final List<ProductoDTO> productos;
+
+        public ProductosTableModel(List<ProductoDTO> productos) {
+            this.productos = productos;
+            setColumnIdentifiers(columnNames);
+            cargarDatos();
+        }
+
+        private void cargarDatos() {
+            for (ProductoDTO producto : productos) {
+                Object[] rowData = {
+                    producto.getNombre(),
+                    producto.getCodigoInterno(),
+                    producto.getPrecio(),
+                    producto.getFechaRegistro()
+                };
+                addRow(rowData);
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // Para que las celdas no sean editables
+            return false;
+        }
+    }
 }

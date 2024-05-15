@@ -11,6 +11,7 @@ import org.bson.Document;
 
 import dtos.ProductoDTO;
 import excepciones.PersistenciaException;
+import pojos.Producto;
 
 /**
  *
@@ -19,10 +20,11 @@ import excepciones.PersistenciaException;
 public interface IGestorProductos {
     boolean insertar(ProductoDTO producto) throws PersistenciaException;
 
-    boolean eliminar(Long codigoBarras) throws PersistenciaException; 
+    boolean eliminar(String codigoInterno) throws PersistenciaException; 
 
     boolean modificar(ProductoDTO producto) throws PersistenciaException;
 
+    Producto consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException;
     List<ProductoDTO> consultarPorNombre(String nombre) throws PersistenciaException;
 
     List<ProductoDTO> consultarPorRangoFechas(Date desde, Date hasta) throws PersistenciaException;

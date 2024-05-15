@@ -38,16 +38,14 @@ public class ConexionBD {
         return mongoClient;
     }
 
-    public static MongoDatabase getDatabase() throws PersistenciaException {
-    try {
+    public static MongoDatabase getDatabase() {
+
         // Obtener el cliente de MongoDB
         MongoClient client = getMongoClient();
 
         // Obtener la base de datos
         return client.getDatabase(DATABASE_NAME);
-    } catch (Exception ex) {
-        throw new PersistenciaException("Error al obtener la base de datos MongoDB", ex);
-    }
+     
 }
 
     // Método para cerrar la conexión

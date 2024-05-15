@@ -9,6 +9,7 @@ import interfaces.IGestorProductos;
 import pojos.Producto;
 import excepciones.PersistenciaException;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +22,7 @@ import static com.mongodb.client.model.Updates.*;
 /**
  * Clase que se encarga de gestionar los productos en la base de datos MongoDB
  * Implementa la interfaz IGestorProductos
+ * 
  * @author Fran
  */
 public class GestorProductos implements IGestorProductos {
@@ -32,9 +34,10 @@ public class GestorProductos implements IGestorProductos {
 
     /**
      * Constructor por defecto.
+     * 
      * @throws PersistenciaException
      */
-    public GestorProductos() throws PersistenciaException {
+    public GestorProductos() {
         MongoDatabase database = ConexionBD.getDatabase();
         productosCollection = database.getCollection("productos");
     }
@@ -74,12 +77,12 @@ public class GestorProductos implements IGestorProductos {
      * @return true si se eliminó correctamente, false en caso contrario
      */
     @Override
-    public boolean eliminar(Long codigoBarras) throws PersistenciaException {
-        if (codigoBarras == null) {
-            throw new PersistenciaException("El código de barras no puede ser nulo");
+    public boolean eliminar(String codigoInterno) throws PersistenciaException {
+        if (codigoInterno == null) {
+            throw new PersistenciaException("El código interno no puede ser nulo");
         }
         try {
-            productosCollection.deleteOne(eq("codigoBarras", codigoBarras));
+            productosCollection.deleteOne(eq("codigoInterno", codigoInterno));
             return true;
         } catch (Exception e) {
             throw new PersistenciaException("Error al eliminar el producto", e);
@@ -108,6 +111,28 @@ public class GestorProductos implements IGestorProductos {
             return true;
         } catch (Exception e) {
             throw new PersistenciaException("Error al modificar el producto", e);
+        }
+    }
+
+    /**
+     * Consulta un producto por código interno.
+     * 
+     * @param codigoInterno Código interno del producto a buscar
+     * @return Producto que coincide con el código interno
+     */
+    @Override
+    public Producto consultarPorCodigoInterno(String codigoInterno) throws PersistenciaException {
+        if (codigoInterno == null || codigoInterno.isEmpty()) {
+            throw new PersistenciaException("El código interno no puede ser nulo o vacío");
+        }
+        try {
+            Document doc = productosCollection.find(eq("codigoInterno", codigoInterno)).first();
+            if (doc == null) {
+                throw new PersistenciaException("No se encontró el producto");
+            }
+            return documentToProducto(doc);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar el producto por código interno", e);
         }
     }
 
@@ -215,4 +240,39 @@ public class GestorProductos implements IGestorProductos {
                 .append("precio", producto.getPrecio())
                 .append("fechaRegistro", producto.getFechaRegistro());
     }
+
+    /**
+     * Convierte un documento de MongoDB a un objeto Producto.
+     * 
+     * @param doc Documento de MongoDB
+     * @return Producto
+     */
+    private Producto documentToProducto(Document doc) {
+        ObjectId _id = doc.getObjectId("_id");
+        Long codigoBarras = doc.getLong("codigoBarras");
+        String codigoInterno = doc.getString("codigoInterno");
+        String nombre = doc.getString("nombre");
+        Double precioDouble = doc.getDouble("precio");
+        Date fechaRegistro = doc.getDate("fechaRegistro");
+
+        float precio = (precioDouble != null) ? precioDouble.floatValue() : 0.0f;
+        Date fechaRegistroDate = (fechaRegistro != null) ? new Date(fechaRegistro.getTime()) : null;
+
+        return new Producto(codigoBarras, codigoInterno, nombre, precio, fechaRegistroDate);
+    }
+
+    /**
+     * Convierte un objeto Producto a productoDTO.
+     * 
+     */
+    public ProductoDTO productoToProductoDTO(Producto producto) {
+        ProductoDTO productoDTO = new ProductoDTO();
+        productoDTO.setCodigoBarras(producto.getCodigoBarras());
+        productoDTO.setCodigoInterno(producto.getCodigoInterno());
+        productoDTO.setNombre(producto.getNombre());
+        productoDTO.setPrecio(producto.getPrecio());
+        productoDTO.setFechaRegistro(producto.getFechaRegistro());
+        return productoDTO;
+    }
+
 }
