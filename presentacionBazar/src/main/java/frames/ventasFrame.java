@@ -349,6 +349,7 @@ public class ventasFrame extends javax.swing.JFrame {
         }
         fieldFechaDesde.setText("");
         fieldFechaHasta.setText("");
+        fieldNombre.setText("");
         mostrarVentasEnTabla(ventas);
     }//GEN-LAST:event_botonRestableceActionPerformed
 

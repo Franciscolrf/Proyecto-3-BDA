@@ -43,9 +43,9 @@ public class modificarVentaFrame extends javax.swing.JFrame {
         fieldTotal.setText(String.valueOf(venta.getMontoTotal()));
         fieldCodigoInterno.setText(venta.getCodigoInterno());
         fieldTotal.setEditable(false);
+        fieldCodigoInterno.setEditable(false);
         MetodoPago metodoPago = venta.getMetodoPago();
         if (metodoPago != null) {
-            // Suponiendo que metodoPagoComboBox es el nombre del JComboBox
             metodoPagoComboBox.setSelectedItem(metodoPago.toString());
         }
     }

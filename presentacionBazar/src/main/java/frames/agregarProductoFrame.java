@@ -32,7 +32,7 @@ public class agregarProductoFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -61,20 +61,22 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(175, 175, 175)
-                                .addComponent(jLabel4)
-                                .addContainerGap(265, Short.MAX_VALUE)));
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(jLabel4)
+                .addContainerGap(265, Short.MAX_VALUE))
+        );
         jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(jLabel4)
-                                .addContainerGap(31, Short.MAX_VALUE)));
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel4)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 740, 0);
+        jPanel1.setBounds(0, 0, 740, 100);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Código de Barras: ");
@@ -120,12 +122,12 @@ public class agregarProductoFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(fieldRestablecer);
-        fieldRestablecer.setBounds(270, 320, 110, 23);
+        fieldRestablecer.setBounds(240, 320, 110, 23);
 
         botonAgregar.setText("Agregar Producto");
         botonAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
+                try { 
                     botonAgregarActionPerformed(evt);
                 } catch (PersistenciaException e) {
                     e.printStackTrace();
@@ -135,7 +137,7 @@ public class agregarProductoFrame extends javax.swing.JFrame {
         getContentPane().add(botonAgregar);
         botonAgregar.setBounds(470, 320, 140, 23);
 
-        setBounds(0, 0, 658, 403);
+        setBounds(0, 0, 695, 472);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_botonSalirActionPerformed

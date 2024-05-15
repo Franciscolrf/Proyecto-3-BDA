@@ -22,11 +22,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class principalFrame extends javax.swing.JFrame {
 
+    GestorProductos gestorProductos = new GestorProductos();
+
     /**
      * Creates new form principalFrame
      */
     public principalFrame() {
-        GestorProductos gestorProductos = new GestorProductos();
+
         initComponents();
         try {
 
@@ -58,9 +60,13 @@ public class principalFrame extends javax.swing.JFrame {
         botonFiltrarFechas = new javax.swing.JButton();
         fieldFechaDesde = new javax.swing.JTextField();
         fieldFechaHasta = new javax.swing.JTextField();
+        botonFIltrarNombre = new javax.swing.JButton();
+        fieldNombre = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         botonSalir1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
+        botonRestablecer = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuProductos = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -119,10 +125,27 @@ public class principalFrame extends javax.swing.JFrame {
             }
         });
 
+        botonFIltrarNombre.setText("Buscar por Nombre");
+        botonFIltrarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFIltrarNombreActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Nombre:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 32, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -132,14 +155,14 @@ public class principalFrame extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))))
+                            .addComponent(jLabel1)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonFIltrarNombre))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 32, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldFechaDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,11 +177,17 @@ public class principalFrame extends javax.swing.JFrame {
                 .addComponent(fieldFechaHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonFiltrarFechas)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonFIltrarNombre)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(700, 70, 210, 240);
+        jPanel2.setBounds(700, 70, 210, 360);
 
         botonSalir1.setText("Salir");
         botonSalir1.addActionListener(new java.awt.event.ActionListener() {
@@ -167,12 +196,21 @@ public class principalFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botonSalir1);
-        botonSalir1.setBounds(440, 370, 72, 23);
+        botonSalir1.setBounds(360, 380, 72, 23);
 
         jScrollPane2.setViewportView(tablaProductos);
 
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(10, 70, 680, 240);
+
+        botonRestablecer.setText("Restablecer");
+        botonRestablecer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRestablecerActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonRestablecer);
+        botonRestablecer.setBounds(540, 380, 100, 23);
 
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -239,7 +277,7 @@ public class principalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalir1ActionPerformed
-       dispose();
+        dispose();
     }//GEN-LAST:event_botonSalir1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -335,9 +373,38 @@ public class principalFrame extends javax.swing.JFrame {
         vf.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void botonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRestablecerActionPerformed
+        List<ProductoDTO> productos = null;
+        try {
+            productos = gestorProductos.consultarTodos();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(productosFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mostrarProductosEnTabla(productos);
+        fieldFechaDesde.setText("");
+        fieldFechaHasta.setText("");
+        fieldNombre.setText("");
+    }//GEN-LAST:event_botonRestablecerActionPerformed
+
+    private void botonFIltrarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFIltrarNombreActionPerformed
+        String nombre = fieldNombre.getText();
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre para filtrar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            List<ProductoDTO> productosPorNombre = gestorProductos.consultarPorNombre(nombre);
+
+            // Mostrar las ventas filtradas por nombre en la tabla
+            mostrarProductosEnTabla(productosPorNombre);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(productosFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botonFIltrarNombreActionPerformed
+
     /**
-     * @param args the command line arguments
-     */
+         * @param args the command line arguments
+         */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -371,13 +438,17 @@ public class principalFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonFIltrarNombre;
     private javax.swing.JButton botonFiltrarFechas;
+    private javax.swing.JButton botonRestablecer;
     private javax.swing.JButton botonSalir1;
     private javax.swing.JTextField fieldFechaDesde;
     private javax.swing.JTextField fieldFechaHasta;
+    private javax.swing.JTextField fieldNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
